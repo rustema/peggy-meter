@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context="io.peggyjo.peggymeter.MainActivity">
+
+    <fragment
+        android:id="@+id/frag_mood_control"
+        android:name="io.peggyjo.peggymeter.MoodControlFragment"
+        tools:layout="@layout/fragment_mood_control"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <fragment
+        android:id="@+id/frag_history_graph"
+        android:name="io.peggyjo.peggymeter.HistoryGraphFragment"
+        tools:layout="@layout/fragment_history_graph"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/frag_mood_control" />
+
+</RelativeLayout>
