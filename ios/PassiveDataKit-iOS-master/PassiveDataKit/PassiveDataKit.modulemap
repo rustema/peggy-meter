@@ -1,0 +1,3 @@
+framework module PassiveDataKit {
+    umbrella header "PassiveDataKit-Shared.h"
+}

@@ -1,0 +1,435 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0AF47D17204C80A2003FC236 /* PassiveDataKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AF47D16204C80A2003FC236 /* PassiveDataKit.framework */; };
+		0AF47D18204C80A2003FC236 /* PassiveDataKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0AF47D16204C80A2003FC236 /* PassiveDataKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2397B9B47CF0432230729B01 /* Pods_Peggy_Meter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BFBECBF538B5B7FBE08A2E7 /* Pods_Peggy_Meter.framework */; };
+		6A1FB3DA204C0AEF00352D78 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1FB3D9204C0AEF00352D78 /* AppDelegate.swift */; };
+		6A1FB3E1204C0AEF00352D78 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A1FB3DF204C0AEF00352D78 /* Main.storyboard */; };
+		6A1FB3E3204C0AEF00352D78 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A1FB3E2204C0AEF00352D78 /* Assets.xcassets */; };
+		6A1FB3E6204C0AEF00352D78 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A1FB3E4204C0AEF00352D78 /* LaunchScreen.storyboard */; };
+		6A1FB3EE204C0F2900352D78 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1FB3ED204C0F2900352D78 /* MainViewController.swift */; };
+		6A1FB3F0204C154E00352D78 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1FB3EF204C154E00352D78 /* DataController.swift */; };
+		6A1FB3F2204C17AA00352D78 /* MoodRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1FB3F1204C17AA00352D78 /* MoodRecord.swift */; };
+		6A229483204C4C4800EA717F /* PassiveDataKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A229482204C4C4800EA717F /* PassiveDataKit.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		0AF47D19204C80A2003FC236 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				0AF47D18204C80A2003FC236 /* PassiveDataKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0AF47D16204C80A2003FC236 /* PassiveDataKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PassiveDataKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2EB2FBCDF45A673F99769701 /* Pods-Peggy Meter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Peggy Meter.release.xcconfig"; path = "Pods/Target Support Files/Pods-Peggy Meter/Pods-Peggy Meter.release.xcconfig"; sourceTree = "<group>"; };
+		6A1FB3D6204C0AEF00352D78 /* Peggy Meter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Peggy Meter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6A1FB3D9204C0AEF00352D78 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		6A1FB3E0204C0AEF00352D78 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		6A1FB3E2204C0AEF00352D78 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6A1FB3E5204C0AEF00352D78 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		6A1FB3E7204C0AEF00352D78 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6A1FB3ED204C0F2900352D78 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		6A1FB3EF204C154E00352D78 /* DataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
+		6A1FB3F1204C17AA00352D78 /* MoodRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoodRecord.swift; sourceTree = "<group>"; };
+		6A229482204C4C4800EA717F /* PassiveDataKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassiveDataKit.framework; path = "PassiveDataKit-iOS-master/build/Debug-iphoneos/PassiveDataKit.framework"; sourceTree = "<group>"; };
+		9BFBECBF538B5B7FBE08A2E7 /* Pods_Peggy_Meter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Peggy_Meter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BADA24C1002CE095A1F588DE /* Pods-Peggy Meter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Peggy Meter.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Peggy Meter/Pods-Peggy Meter.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6A1FB3D3204C0AEF00352D78 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0AF47D17204C80A2003FC236 /* PassiveDataKit.framework in Frameworks */,
+				6A229483204C4C4800EA717F /* PassiveDataKit.framework in Frameworks */,
+				2397B9B47CF0432230729B01 /* Pods_Peggy_Meter.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		031024AC83964154AC735529 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6A229482204C4C4800EA717F /* PassiveDataKit.framework */,
+				9BFBECBF538B5B7FBE08A2E7 /* Pods_Peggy_Meter.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2FC98A02AE01AD847AB39349 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BADA24C1002CE095A1F588DE /* Pods-Peggy Meter.debug.xcconfig */,
+				2EB2FBCDF45A673F99769701 /* Pods-Peggy Meter.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		6A1FB3CD204C0AEF00352D78 = {
+			isa = PBXGroup;
+			children = (
+				0AF47D16204C80A2003FC236 /* PassiveDataKit.framework */,
+				6A1FB3D8204C0AEF00352D78 /* Peggy Meter */,
+				6A1FB3D7204C0AEF00352D78 /* Products */,
+				2FC98A02AE01AD847AB39349 /* Pods */,
+				031024AC83964154AC735529 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		6A1FB3D7204C0AEF00352D78 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6A1FB3D6204C0AEF00352D78 /* Peggy Meter.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6A1FB3D8204C0AEF00352D78 /* Peggy Meter */ = {
+			isa = PBXGroup;
+			children = (
+				6A1FB3D9204C0AEF00352D78 /* AppDelegate.swift */,
+				6A1FB3DF204C0AEF00352D78 /* Main.storyboard */,
+				6A1FB3E2204C0AEF00352D78 /* Assets.xcassets */,
+				6A1FB3E4204C0AEF00352D78 /* LaunchScreen.storyboard */,
+				6A1FB3E7204C0AEF00352D78 /* Info.plist */,
+				6A1FB3ED204C0F2900352D78 /* MainViewController.swift */,
+				6A1FB3EF204C154E00352D78 /* DataController.swift */,
+				6A1FB3F1204C17AA00352D78 /* MoodRecord.swift */,
+			);
+			path = "Peggy Meter";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6A1FB3D5204C0AEF00352D78 /* Peggy Meter */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6A1FB3EA204C0AEF00352D78 /* Build configuration list for PBXNativeTarget "Peggy Meter" */;
+			buildPhases = (
+				AD68DE9AD8D9E5162D7B2FD1 /* [CP] Check Pods Manifest.lock */,
+				6A1FB3D2204C0AEF00352D78 /* Sources */,
+				6A1FB3D3204C0AEF00352D78 /* Frameworks */,
+				6A1FB3D4204C0AEF00352D78 /* Resources */,
+				43B8D744C1797216948B7245 /* [CP] Embed Pods Frameworks */,
+				24F764BE47F9DE2C77D41DAC /* [CP] Copy Pods Resources */,
+				0AF47D19204C80A2003FC236 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Peggy Meter";
+			productName = "Peggy Meter";
+			productReference = 6A1FB3D6204C0AEF00352D78 /* Peggy Meter.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6A1FB3CE204C0AEF00352D78 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = PeggyJo;
+				TargetAttributes = {
+					6A1FB3D5204C0AEF00352D78 = {
+						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = 639W5UF5H4;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 6A1FB3D1204C0AEF00352D78 /* Build configuration list for PBXProject "Peggy Meter" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 6A1FB3CD204C0AEF00352D78;
+			productRefGroup = 6A1FB3D7204C0AEF00352D78 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6A1FB3D5204C0AEF00352D78 /* Peggy Meter */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6A1FB3D4204C0AEF00352D78 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6A1FB3E6204C0AEF00352D78 /* LaunchScreen.storyboard in Resources */,
+				6A1FB3E3204C0AEF00352D78 /* Assets.xcassets in Resources */,
+				6A1FB3E1204C0AEF00352D78 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		24F764BE47F9DE2C77D41DAC /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Peggy Meter/Pods-Peggy Meter-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		43B8D744C1797216948B7245 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Peggy Meter/Pods-Peggy Meter-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Peggy Meter/Pods-Peggy Meter-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AD68DE9AD8D9E5162D7B2FD1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Peggy Meter-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6A1FB3D2204C0AEF00352D78 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6A1FB3DA204C0AEF00352D78 /* AppDelegate.swift in Sources */,
+				6A1FB3F2204C17AA00352D78 /* MoodRecord.swift in Sources */,
+				6A1FB3F0204C154E00352D78 /* DataController.swift in Sources */,
+				6A1FB3EE204C0F2900352D78 /* MainViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		6A1FB3DF204C0AEF00352D78 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6A1FB3E0204C0AEF00352D78 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		6A1FB3E4204C0AEF00352D78 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6A1FB3E5204C0AEF00352D78 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		6A1FB3E8204C0AEF00352D78 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		6A1FB3E9204C0AEF00352D78 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		6A1FB3EB204C0AEF00352D78 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BADA24C1002CE095A1F588DE /* Pods-Peggy Meter.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 639W5UF5H4;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PassiveDataKit-iOS-master/build/Debug-iphoneos",
+					/Users/rustem/proj/peggymeter/Peggy,
+					Meter/Pods/Charts,
+				);
+				INFOPLIST_FILE = "Peggy Meter/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.peggyjo.Peggy-Meter";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		6A1FB3EC204C0AEF00352D78 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2EB2FBCDF45A673F99769701 /* Pods-Peggy Meter.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 639W5UF5H4;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PassiveDataKit-iOS-master/build/Debug-iphoneos",
+				);
+				INFOPLIST_FILE = "Peggy Meter/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.peggyjo.Peggy-Meter";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6A1FB3D1204C0AEF00352D78 /* Build configuration list for PBXProject "Peggy Meter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6A1FB3E8204C0AEF00352D78 /* Debug */,
+				6A1FB3E9204C0AEF00352D78 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6A1FB3EA204C0AEF00352D78 /* Build configuration list for PBXNativeTarget "Peggy Meter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6A1FB3EB204C0AEF00352D78 /* Debug */,
+				6A1FB3EC204C0AEF00352D78 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6A1FB3CE204C0AEF00352D78 /* Project object */;
+}

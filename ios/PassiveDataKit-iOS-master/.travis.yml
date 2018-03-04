@@ -1,0 +1,28 @@
+language: objective-c
+osx_image: xcode9.1
+
+xcode_project: PassiveDataKit.xcodeproj 
+xcode_scheme: PassiveDataKit
+xcode_sdk: iphonesimulator11.1
+
+before_install:
+ - brew cask uninstall oclint
+ - brew tap oclint/formulae
+ - brew install oclint
+
+script:
+ - xcodebuild test -list -project 'PassiveDataKit.xcodeproj' | xcpretty
+ - xcodebuild test -scheme 'PassiveDataKit' -project 'PassiveDataKit.xcodeproj' -destination 'platform=iOS Simulator,name=iPhone 6s,OS=11.1' | xcpretty
+ - xcodebuild -project 'PassiveDataKit.xcodeproj' -scheme 'PassiveDataKit' | tee xcodebuild.log  | xcpretty
+ - oclint-xcodebuild
+ - oclint-json-compilation-database
+  -e AFNetworking
+  -e DTMHeatmap
+  --
+  -disable-rule=PreferEarlyExit
+  -disable-rule=LongMethod
+  -disable-rule=LongVariableName
+  -disable-rule=HighCyclomaticComplexity 
+  -disable-rule=HighNPathComplexity
+  -disable-rule=HighNcssMethod
+

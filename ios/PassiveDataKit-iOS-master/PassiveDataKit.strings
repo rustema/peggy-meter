@@ -1,0 +1,48 @@
+/* 
+  PassiveDataKit.strings
+  PassiveDataKit
+
+  Created by Chris Karr on 6/25/16.
+  Copyright © 2016 Audacious Software. All rights reserved.
+*/
+
+"title_data_report" = "Data Report";
+"placeholder_select_generator" = "Select data source to visualize…";
+"placeholder_unknown_generator" = "Unknown Data Source";
+
+"name_generator_events" = "Application Events";
+"name_generator_events_mixpanel" = "Application Events (Mixpanel)";
+"name_generator_location" = "Physical Location";
+
+"title_pdk_generator_description" = "Data Collection Description";
+"subtitle_pdk_generator_description" = "Tap here to learn how this app uses your data.";
+
+"title_pdk_location_generator_accuracy" = "Location Accuracy";
+"subtitle_pdk_location_generator_accuracy" = "Tap here to update the accuracy of your data.";
+
+"warning_pdk_missing_resource" = "PDK> Missing Resource: %@\n\nInform developer to continue...\n\nPDK>";
+
+"pdk_title_location_accuracy_best" = "Best Accuracy";
+"pdk_subtitle_location_accuracy_best" = "Best Available Data From Location Hardware";
+
+"pdk_title_accuracy_location_randomized" = "Locally Randomized";
+"pdk_subtitle_accuracy_location_randomized" = "Location Combined With Random Noise";
+
+"pdk_title_accuracy_location_user_provided" = "User Provided";
+"pdk_subtitle_accuracy_location_user_provided" = "Static Location Provided By User";
+
+"pdk_title_accuracy_location_disabled" = "Disabled";
+"pdk_subtitle_accuracy_location_disabled" = "App Does Not Use Location Data";
+
+"pdk_title_specify_location_random" = "Random Range";
+"pdk_message_specify_location_random" = "Specify the range of the random distance that will be used to obfuscate the location.";
+"pdk_placeholder_distance_meters" = "Distance (meters)";
+"pdk_button_title_specify_location_random" = "Save Range";
+
+"pdk_title_specify_location_geocode" = "Specify Location Name";
+"pdk_message_specify_location_geocode" = "Enter the name of the location to use as the location.";
+"pdk_placeholder_location_name" = "Example: New York City, NY";
+"pdk_button_title_specify_location_geocode" = "Use Location";
+
+"title_pdk_events_generator_enable" = "Application Event Collection";
+"subtitle_pdk_events_generator_enable" = "Enable or disable this data source.";
