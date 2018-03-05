@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0AC2A692204CC5D300DAA619 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0AC2A691204CC5D300DAA619 /* GoogleService-Info.plist */; };
 		0AF47D17204C80A2003FC236 /* PassiveDataKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AF47D16204C80A2003FC236 /* PassiveDataKit.framework */; };
 		0AF47D18204C80A2003FC236 /* PassiveDataKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0AF47D16204C80A2003FC236 /* PassiveDataKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2397B9B47CF0432230729B01 /* Pods_Peggy_Meter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BFBECBF538B5B7FBE08A2E7 /* Pods_Peggy_Meter.framework */; };
@@ -35,6 +36,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0AC2A691204CC5D300DAA619 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0AF47D16204C80A2003FC236 /* PassiveDataKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PassiveDataKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EB2FBCDF45A673F99769701 /* Pods-Peggy Meter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Peggy Meter.release.xcconfig"; path = "Pods/Target Support Files/Pods-Peggy Meter/Pods-Peggy Meter.release.xcconfig"; sourceTree = "<group>"; };
 		6A1FB3D6204C0AEF00352D78 /* Peggy Meter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Peggy Meter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -105,6 +107,7 @@
 		6A1FB3D8204C0AEF00352D78 /* Peggy Meter */ = {
 			isa = PBXGroup;
 			children = (
+				0AC2A691204CC5D300DAA619 /* GoogleService-Info.plist */,
 				6A1FB3D9204C0AEF00352D78 /* AppDelegate.swift */,
 				6A1FB3DF204C0AEF00352D78 /* Main.storyboard */,
 				6A1FB3E2204C0AEF00352D78 /* Assets.xcassets */,
@@ -182,6 +185,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6A1FB3E6204C0AEF00352D78 /* LaunchScreen.storyboard in Resources */,
+				0AC2A692204CC5D300DAA619 /* GoogleService-Info.plist in Resources */,
 				6A1FB3E3204C0AEF00352D78 /* Assets.xcassets in Resources */,
 				6A1FB3E1204C0AEF00352D78 /* Main.storyboard in Resources */,
 			);
@@ -196,9 +200,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Peggy Meter/Pods-Peggy Meter-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseUI/FirebaseAuthUI.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseUI/FirebaseGoogleAuthUI.bundle",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FirebaseAuthUI.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FirebaseGoogleAuthUI.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -213,10 +224,18 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Peggy Meter/Pods-Peggy Meter-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -384,7 +403,7 @@
 				);
 				INFOPLIST_FILE = "Peggy Meter/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "io.peggyjo.Peggy-Meter";
+				PRODUCT_BUNDLE_IDENTIFIER = io.peggyjo.peggymeter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -402,7 +421,7 @@
 				);
 				INFOPLIST_FILE = "Peggy Meter/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "io.peggyjo.Peggy-Meter";
+				PRODUCT_BUNDLE_IDENTIFIER = io.peggyjo.peggymeter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

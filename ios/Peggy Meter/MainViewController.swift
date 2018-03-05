@@ -9,8 +9,14 @@
 import UIKit
 import Charts
 import PassiveDataKit
+import FirebaseAuthUI
+import FirebaseGoogleAuthUI
 
-class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FUIAuthDelegate {
+    // Authentication.
+    fileprivate(set) var auth:Auth?
+    fileprivate(set) var authUI: FUIAuth? //only set internally but get externally
+    fileprivate(set) var authStateListenerHandle: AuthStateDidChangeListenerHandle?
     
     var dataController: DataController!
     var transmitter: PDKHttpTransmitter!
@@ -22,10 +28,52 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     let smileys: [String] = ["☹️", "🙂", "😀"]
     
+    @IBAction func loginAction(sender: AnyObject) {
+        // Present the default login view controller provided by authUI
+        let authViewController = authUI?.authViewController();
+        self.present(authViewController!, animated: true, completion: nil)
+    }
+    
+    func authUI(_ authUI: FUIAuth, didSignInWith user: User?, error: Error?) {
+        guard let authError = error else { return }
+        
+        let errorCode = UInt((authError as NSError).code)
+        
+        switch errorCode {
+        case FUIAuthErrorCode.userCancelledSignIn.rawValue:
+            print("User cancelled sign-in");
+            break
+            
+        default:
+            let detailedError = (authError as NSError).userInfo[NSUnderlyingErrorKey] ?? authError
+            print("Login error: \((detailedError as! NSError).localizedDescription)");
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        // Set up authentication.
+        self.auth = Auth.auth()
+        self.authUI = FUIAuth.defaultAuthUI()
+        self.authUI?.delegate = self
+        
+        let providers: [FUIAuthProvider] = [
+            FUIGoogleAuth(),
+            //FUIFacebookAuth(),
+            //FUITwitterAuth(),
+            //FUIPhoneAuth(authUI:FUIAuth.defaultAuthUI()),
+        ]
+        
+        self.authUI?.providers = providers
+        
+        self.authStateListenerHandle = self.auth?.addStateDidChangeListener { (auth, user) in
+            guard user != nil else {
+                self.loginAction(sender: self)
+                return
+            }
+        }
+        
         dataController = DataController()
 
         dateFormatter.dateStyle = .medium
