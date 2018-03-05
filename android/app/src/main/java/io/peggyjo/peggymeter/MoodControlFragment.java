@@ -1,6 +1,8 @@
 package io.peggyjo.peggymeter;
 
 
+import android.annotation.SuppressLint;
+import android.app.LoaderManager;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
@@ -9,6 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
+
+import java.util.Calendar;
+import java.util.List;
 
 
 /**
@@ -32,17 +37,29 @@ public class MoodControlFragment extends Fragment implements View.OnClickListene
         View v = inflater.inflate(R.layout.fragment_mood_control, container, false);
 
         //
-        for (int i = 0; i < buttonIds.length; ++i) {
-            Button b = v.findViewById(buttonIds[i]);
+        for (int buttonId : buttonIds) {
+            Button b = v.findViewById(buttonId);
             b.setOnClickListener(this);
         }
         return v;
     }
 
+    @SuppressLint("DefaultLocale")
     public void onClick(View view) {
         Button b = (Button)view;
+        int mood = -1;
+        for (int i = 0; i < buttonIds.length; i++) {
+            if (buttonIds[i] == b.getId()) {
+              mood = i;
+              break;
+            }
+        }
+
+        MainActivity mainActivity = (MainActivity)getActivity();
+        LogEntry entry = new LogEntry(Calendar.getInstance().getTime(), mood, "");
+        mainActivity.getDataController().addEntry(entry);
+
+                // intentservice (separate background thread ) or async task
         //Log.d("MoodControlFragment -->", "" + b.getId());
-        Toast.makeText(getActivity(), "clicked " + b.getId(), Toast.LENGTH_LONG).show();
-        //toast(ge)
     }
 }

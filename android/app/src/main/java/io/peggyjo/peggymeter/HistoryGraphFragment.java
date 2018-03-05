@@ -22,6 +22,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -35,7 +36,8 @@ public class HistoryGraphFragment extends Fragment {
     private Random mRnd = new Random();
 
     public HistoryGraphFragment() {
-        // Required empty public constructor
+        MainActivity mainActivity = (MainActivity)getActivity();
+//        mainActivity.getDataController().setGraph(this);
     }
 
 
@@ -143,5 +145,9 @@ public class HistoryGraphFragment extends Fragment {
 
         // Set data.
         mHistoryGraph.setData(data);
+    }
+
+    public void refresh(List<LogEntry> entries) {
+        //mHistoryGraph.
     }
 }
