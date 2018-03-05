@@ -36,14 +36,14 @@ public class HistoryGraphFragment extends Fragment {
     private Random mRnd = new Random();
 
     public HistoryGraphFragment() {
-        MainActivity mainActivity = (MainActivity)getActivity();
-//        mainActivity.getDataController().setGraph(this);
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        MainActivity mainActivity = (MainActivity)getActivity();
+//        mainActivity.getDataController().setGraph(this);
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_history_graph, container, false);
 
