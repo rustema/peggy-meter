@@ -35,10 +35,14 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func authUI(_ authUI: FUIAuth, didSignInWith user: User?, error: Error?) {
-        guard let authError = error else { return }
+        guard let authError = error else {
+            print("auth successful")
+            return
+        }
         
         let errorCode = UInt((authError as NSError).code)
         
+        // TODO: handle errors properly. The app should not continue running.
         switch errorCode {
         case FUIAuthErrorCode.userCancelledSignIn.rawValue:
             print("User cancelled sign-in");
@@ -73,7 +77,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 return
             }
         }
-        
+        // Application logic setup.
         dataController = DataController()
 
         dateFormatter.dateStyle = .medium
