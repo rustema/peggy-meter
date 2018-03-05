@@ -9,6 +9,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
+    public MainActivity() {
+
+    }
     private static final String TAG = "PeggiMeter.Main";
 
     public DataController getDataController() {
@@ -20,8 +23,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.dataController = new DataController();
         setContentView(R.layout.activity_main);
-        dataController = new DataController();
     }
 
     @Override

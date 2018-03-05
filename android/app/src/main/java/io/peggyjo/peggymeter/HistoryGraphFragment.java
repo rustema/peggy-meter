@@ -17,10 +17,12 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -43,10 +45,18 @@ public class HistoryGraphFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         MainActivity mainActivity = (MainActivity)getActivity();
-//        mainActivity.getDataController().setGraph(this);
+        DataController dataController = mainActivity.getDataController();
+        dataController.setGraph(this);
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_history_graph, container, false);
+        List<LogEntry> fake_log = new ArrayList<>();
+        fake_log.add(new LogEntry(Calendar.getInstance().getTime(), 3, ""));
 
+        drawGraph(v, fake_log);
+        return v;
+    }
+
+    private void drawGraph(View v, List<LogEntry> log) {
         mHistoryGraph = (LineChart)v.findViewById(R.id.history_graph);
         mHistoryGraph.setTouchEnabled(true);
         mHistoryGraph.setDragDecelerationFrictionCoef(0.9f);
@@ -62,7 +72,7 @@ public class HistoryGraphFragment extends Fragment {
         mHistoryGraph.setViewPortOffsets(0f, 0f, 0f, 0f);
 
         // Add data.
-        setData(100, 30);
+        setData(log);
         mHistoryGraph.invalidate();
 
         // Get the legend (only possible after setting data).
@@ -78,7 +88,7 @@ public class HistoryGraphFragment extends Fragment {
         xAxis.setDrawGridLines(true);
         xAxis.setTextColor(Color.rgb(255, 192, 56));
         xAxis.setCenterAxisLabels(true);
-        xAxis.setGranularity(1f); // one hour
+        xAxis.setGranularity(1f); // one second
         xAxis.setValueFormatter(new IAxisValueFormatter() {
 
             private SimpleDateFormat mFormat = new SimpleDateFormat("dd MMM HH:mm");
@@ -86,7 +96,7 @@ public class HistoryGraphFragment extends Fragment {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
 
-                long millis = TimeUnit.HOURS.toMillis((long) value);
+                long millis = TimeUnit.SECONDS.toMillis((long) value);
                 return mFormat.format(new Date(millis));
             }
         });
@@ -98,31 +108,19 @@ public class HistoryGraphFragment extends Fragment {
         leftAxis.setDrawGridLines(true);
         leftAxis.setGranularityEnabled(true);
         leftAxis.setAxisMinimum(0f);
-        leftAxis.setAxisMaximum(70f);
+        leftAxis.setAxisMaximum(10f);
         leftAxis.setYOffset(-9f);
         leftAxis.setTextColor(Color.rgb(255, 192, 56));
 
         YAxis rightAxis = mHistoryGraph.getAxisRight();
         rightAxis.setEnabled(false);
-        return v;
     }
 
-    private void setData(int count, float range) {
-        // now in hours
-        long now = TimeUnit.MILLISECONDS.toHours(System.currentTimeMillis());
-
+    private void setData(List<LogEntry> entries) {
         ArrayList<Entry> values = new ArrayList<Entry>();
 
-        float from = now;
-
-        // count = hours
-        float to = now + count;
-
-        // increment by 1 hour
-        for (float x = from; x < to; x++) {
-
-            float y = mRnd.nextInt() % 50;
-            values.add(new Entry(x, y)); // add one entry per hour
+        for (LogEntry entry : entries) {
+            values.add(new Entry(entry.getTime().getSeconds(), entry.getMood_level()));
         }
 
         // Create a dataset and give it a type.
@@ -148,6 +146,6 @@ public class HistoryGraphFragment extends Fragment {
     }
 
     public void refresh(List<LogEntry> entries) {
-        //mHistoryGraph.
+        this.drawGraph(this.getView(), entries);
     }
 }
