@@ -9,14 +9,18 @@ import java.util.List;
 
 public class DataController {
     public DataController() {
-        this.entries = new ArrayList<>();
+        this.log = new ArrayList<>();
     }
 
-    private List<LogEntry> entries;
+    public List<LogEntry> getLog() {
+        return log;
+    }
+
+    private List<LogEntry> log;
 
     void addEntry(LogEntry entry) {
-        entries.add(entry);
-        graph.refresh(entries);
+        log.add(entry);
+        graph.refresh(log);
     }
 
 

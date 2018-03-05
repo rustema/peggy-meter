@@ -13,6 +13,19 @@ import java.util.Date;
 class LogEntry {
     @PrimaryKey
     private long uid;
+
+    public Date getTime() {
+        return time;
+    }
+
+    public int getMood_level() {
+        return mood_level;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
     @ColumnInfo(name = "time")
     private Date time;
 

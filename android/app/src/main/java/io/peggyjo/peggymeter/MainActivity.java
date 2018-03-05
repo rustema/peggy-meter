@@ -4,6 +4,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
+    public MainActivity() {
+        this.dataController = new DataController();
+    }
+
     public DataController getDataController() {
         return dataController;
     }
@@ -14,7 +18,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        dataController = new DataController();
     }
 
 }
