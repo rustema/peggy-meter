@@ -7,4 +7,7 @@ target 'Peggy Meter' do
 
   # Pods for Peggy Meter
   pod 'Charts'
+  pod 'Firebase/Core'
+  pod 'FirebaseUI/Auth'
+  pod 'FirebaseUI/Google'
 end

@@ -7,16 +7,33 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuthUI
+
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        FirebaseApp.configure()
         return true
+    }
+    
+    // Handle Google and Facebook sign-in.
+    func application(_ app: UIApplication, open url: URL,
+                     options: [UIApplicationOpenURLOptionsKey : Any]) -> Bool {
+        let sourceApplication = options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String?
+        if FUIAuth.defaultAuthUI()?.handleOpen(url, sourceApplication: sourceApplication) ?? false {
+            print("handling google url: \(String(describing: url))")
+            return true
+        }
+        // other URL handling goes here.
+        print("failure --> !!!")
+        return false
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
