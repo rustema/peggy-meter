@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -20,11 +21,14 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -36,6 +40,7 @@ public class HistoryGraphFragment extends Fragment {
 
     private LineChart mHistoryGraph;
     private Random mRnd = new Random();
+    private long offset;
 
     public HistoryGraphFragment() {
     }
@@ -47,8 +52,14 @@ public class HistoryGraphFragment extends Fragment {
         MainActivity mainActivity = (MainActivity)getActivity();
         DataController dataController = mainActivity.getDataController();
         dataController.setGraph(this);
+        try {
+            this.offset = DateFormat.getInstance().parse("1/1/18 4:5 PM, PDT").getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_history_graph, container, false);
+
         List<LogEntry> fake_log = new ArrayList<>();
         fake_log.add(new LogEntry(Calendar.getInstance().getTime(), 3, ""));
 
@@ -57,23 +68,25 @@ public class HistoryGraphFragment extends Fragment {
     }
 
     private void drawGraph(View v, List<LogEntry> log) {
-        mHistoryGraph = (LineChart)v.findViewById(R.id.history_graph);
+        mHistoryGraph = v.findViewById(R.id.history_graph);
+        mHistoryGraph.invalidate();
+        mHistoryGraph.fitScreen();
+        // Add data.
+        setData(log, mHistoryGraph);
+
         mHistoryGraph.setTouchEnabled(true);
         mHistoryGraph.setDragDecelerationFrictionCoef(0.9f);
 
         // Enable scaling and dragging.
-        mHistoryGraph.setDragEnabled(true);
-        mHistoryGraph.setScaleEnabled(true);
+        mHistoryGraph.setDragXEnabled(true);
+        mHistoryGraph.setDragYEnabled(false);
+        mHistoryGraph.setScaleXEnabled(true);
+        mHistoryGraph.setScaleYEnabled(false);
         mHistoryGraph.setDrawGridBackground(false);
         mHistoryGraph.setHighlightPerDragEnabled(true);
 
         // Set an alternative background color.
         mHistoryGraph.setBackgroundColor(Color.WHITE);
-        mHistoryGraph.setViewPortOffsets(0f, 0f, 0f, 0f);
-
-        // Add data.
-        setData(log);
-        mHistoryGraph.invalidate();
 
         // Get the legend (only possible after setting data).
         Legend l = mHistoryGraph.getLegend();
@@ -82,6 +95,7 @@ public class HistoryGraphFragment extends Fragment {
         XAxis xAxis = mHistoryGraph.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.TOP_INSIDE);
         //xAxis.setTypeface(mTfLight);
+        mHistoryGraph.getDescription().setText("");
         xAxis.setTextSize(10f);
         xAxis.setTextColor(Color.WHITE);
         xAxis.setDrawAxisLine(false);
@@ -91,12 +105,12 @@ public class HistoryGraphFragment extends Fragment {
         xAxis.setGranularity(1f); // one second
         xAxis.setValueFormatter(new IAxisValueFormatter() {
 
-            private SimpleDateFormat mFormat = new SimpleDateFormat("dd MMM HH:mm");
+            private SimpleDateFormat mFormat = new SimpleDateFormat("HH:mm:ss", Locale.US);
 
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
 
-                long millis = TimeUnit.SECONDS.toMillis((long) value);
+                long millis = TimeUnit.SECONDS.toMillis((long) value) + offset;
                 return mFormat.format(new Date(millis));
             }
         });
@@ -116,11 +130,12 @@ public class HistoryGraphFragment extends Fragment {
         rightAxis.setEnabled(false);
     }
 
-    private void setData(List<LogEntry> entries) {
+    private void setData(List<LogEntry> entries, LineChart mHistoryGraph) {
         ArrayList<Entry> values = new ArrayList<Entry>();
 
         for (LogEntry entry : entries) {
-            values.add(new Entry(entry.getTime().getSeconds(), entry.getMood_level()));
+                values.add(new Entry(TimeUnit.MILLISECONDS.toSeconds(
+                        entry.getTime().getTime() - offset), entry.getMood_level()));
         }
 
         // Create a dataset and give it a type.

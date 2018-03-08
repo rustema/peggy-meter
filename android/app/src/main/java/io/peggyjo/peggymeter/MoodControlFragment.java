@@ -57,6 +57,7 @@ public class MoodControlFragment extends Fragment implements View.OnClickListene
 
         MainActivity mainActivity = (MainActivity)getActivity();
         LogEntry entry = new LogEntry(Calendar.getInstance().getTime(), mood, "");
+        Log.e("time", entry.getTime().toString());
         mainActivity.getDataController().addEntry(entry);
 
                 // intentservice (separate background thread ) or async task
