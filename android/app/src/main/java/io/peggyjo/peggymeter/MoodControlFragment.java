@@ -3,13 +3,17 @@ package io.peggyjo.peggymeter;
 
 import android.annotation.SuppressLint;
 import android.app.LoaderManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Calendar;
@@ -44,7 +48,6 @@ public class MoodControlFragment extends Fragment implements View.OnClickListene
         return v;
     }
 
-    @SuppressLint("DefaultLocale")
     public void onClick(View view) {
         Button b = (Button)view;
         int mood = -1;
@@ -56,8 +59,13 @@ public class MoodControlFragment extends Fragment implements View.OnClickListene
         }
 
         MainActivity mainActivity = (MainActivity)getActivity();
-        LogEntry entry = new LogEntry(Calendar.getInstance().getTime(), mood, "");
-        Log.e("time", entry.getTime().toString());
+        TextView commentView = getView().findViewById(R.id.mood_comment);
+        LogEntry entry = new LogEntry(Calendar.getInstance().getTime(), mood,
+                commentView.getText().toString());
+        commentView.setText("");
+        InputMethodManager imm = (InputMethodManager)mainActivity.getSystemService(
+                Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(commentView.getWindowToken(), 0);
         mainActivity.getDataController().addEntry(entry);
 
                 // intentservice (separate background thread ) or async task

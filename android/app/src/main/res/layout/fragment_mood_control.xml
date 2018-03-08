@@ -1,80 +1,103 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="top|center"
-    android:layout_gravity="top|center"
-    tools:context="io.peggyjo.peggymeter.MoodControlFragment">
+    android:layout_weight="1"
+    android:orientation="vertical"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
-    <Button
-        android:id="@+id/mood0"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_weight="1"
-        android:background="@android:color/black" />
 
-    <Button
-        android:id="@+id/mood1"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_weight="1"
-        android:background="@android:color/darker_gray" />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center"
+        android:gravity="top|center"
+        tools:context="io.peggyjo.peggymeter.MoodControlFragment">
 
-    <Button
-        android:id="@+id/mood2"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_weight="1"
-        android:background="@android:color/holo_blue_dark" />
+        <Button
+            android:id="@+id/mood0"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@android:color/black" />
 
-    <Button
-        android:id="@+id/mood3"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_weight="1"
-        android:background="@android:color/holo_blue_bright" />
 
-    <Button
-        android:id="@+id/mood4"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_weight="1"
-        android:background="@android:color/holo_green_dark" />
+        <Button
+            android:id="@+id/mood1"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@android:color/darker_gray" />
 
-    <Button
-        android:id="@+id/mood5"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_weight="1"
-        android:background="@android:color/holo_green_light" />
+        <Button
+            android:id="@+id/mood2"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@android:color/holo_blue_dark" />
 
-    <Button
-        android:id="@+id/mood6"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_weight="1"
-        android:background="@android:color/holo_orange_dark" />
+        <Button
+            android:id="@+id/mood3"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@android:color/holo_blue_bright" />
 
-    <Button
-        android:id="@+id/mood7"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_weight="1"
-        android:background="@android:color/holo_orange_light" />
 
-    <Button
-        android:id="@+id/mood8"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_weight="1"
-        android:background="@android:color/holo_red_light" />
+        <Button
+            android:id="@+id/mood4"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@android:color/holo_green_dark" />
 
-    <Button
-        android:id="@+id/mood9"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        <Button
+            android:id="@+id/mood5"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@android:color/holo_green_light" />
+
+        <Button
+            android:id="@+id/mood6"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@android:color/holo_orange_dark" />
+
+        <Button
+            android:id="@+id/mood7"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@android:color/holo_orange_light" />
+
+        <Button
+            android:id="@+id/mood8"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@android:color/holo_red_light" />
+
+        <Button
+            android:id="@+id/mood9"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@android:color/holo_red_dark" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/mood_comment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@android:color/holo_red_dark" />
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="@string/comment_hint" />
 
 </LinearLayout>
+
