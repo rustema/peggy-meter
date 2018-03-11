@@ -10,4 +10,5 @@ target 'Peggy Meter' do
   pod 'Firebase/Core'
   pod 'FirebaseUI/Auth'
   pod 'FirebaseUI/Google'
+  pod 'SQLite.swift', '~> 0.11.4'
 end

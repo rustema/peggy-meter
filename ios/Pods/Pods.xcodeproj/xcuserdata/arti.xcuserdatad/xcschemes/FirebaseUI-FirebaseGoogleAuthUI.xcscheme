@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "1552E1AB754B3ECBCB16DEC9C43996C1"
-               BuildableName = "Pods_Peggy_Meter.framework"
-               BlueprintName = "Pods-Peggy Meter"
+               BlueprintIdentifier = "5B2D16978FAE7F5EF527016989F99F2E"
+               BuildableName = "FirebaseGoogleAuthUI.bundle"
+               BlueprintName = "FirebaseUI-FirebaseGoogleAuthUI"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -47,9 +47,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "1552E1AB754B3ECBCB16DEC9C43996C1"
-            BuildableName = "Pods_Peggy_Meter.framework"
-            BlueprintName = "Pods-Peggy Meter"
+            BlueprintIdentifier = "5B2D16978FAE7F5EF527016989F99F2E"
+            BuildableName = "FirebaseGoogleAuthUI.bundle"
+            BlueprintName = "FirebaseUI-FirebaseGoogleAuthUI"
             ReferencedContainer = "container:Pods.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
