@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A05B6E12057994200389608 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0A05B6E02057994200389608 /* Settings.bundle */; };
+		0A05B6E320579C3400389608 /* SettingsBundleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A05B6E220579C3400389608 /* SettingsBundleHelper.swift */; };
 		0AC2A692204CC5D300DAA619 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0AC2A691204CC5D300DAA619 /* GoogleService-Info.plist */; };
 		0AF47D17204C80A2003FC236 /* PassiveDataKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AF47D16204C80A2003FC236 /* PassiveDataKit.framework */; };
 		0AF47D18204C80A2003FC236 /* PassiveDataKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0AF47D16204C80A2003FC236 /* PassiveDataKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -37,6 +39,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0A05B6E02057994200389608 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		0A05B6E220579C3400389608 /* SettingsBundleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsBundleHelper.swift; sourceTree = "<group>"; };
 		0AC2A691204CC5D300DAA619 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0AF47D16204C80A2003FC236 /* PassiveDataKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PassiveDataKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EB2FBCDF45A673F99769701 /* Pods-Peggy Meter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Peggy Meter.release.xcconfig"; path = "Pods/Target Support Files/Pods-Peggy Meter/Pods-Peggy Meter.release.xcconfig"; sourceTree = "<group>"; };
@@ -120,6 +124,8 @@
 				6A1FB3ED204C0F2900352D78 /* MainViewController.swift */,
 				6A1FB3EF204C154E00352D78 /* DataController.swift */,
 				6A1FB3F1204C17AA00352D78 /* MoodRecord.swift */,
+				0A05B6E02057994200389608 /* Settings.bundle */,
+				0A05B6E220579C3400389608 /* SettingsBundleHelper.swift */,
 			);
 			path = "Peggy Meter";
 			sourceTree = "<group>";
@@ -160,7 +166,6 @@
 				TargetAttributes = {
 					6A1FB3D5204C0AEF00352D78 = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = RBRFJZERMH;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -190,6 +195,7 @@
 			files = (
 				6A1FB3E6204C0AEF00352D78 /* LaunchScreen.storyboard in Resources */,
 				0AC2A692204CC5D300DAA619 /* GoogleService-Info.plist in Resources */,
+				0A05B6E12057994200389608 /* Settings.bundle in Resources */,
 				6A1FB3E3204C0AEF00352D78 /* Assets.xcassets in Resources */,
 				6A1FB3E1204C0AEF00352D78 /* Main.storyboard in Resources */,
 			);
@@ -276,6 +282,7 @@
 				6A1FB3DA204C0AEF00352D78 /* AppDelegate.swift in Sources */,
 				6A1FB3F2204C17AA00352D78 /* MoodRecord.swift in Sources */,
 				6A1FB3F0204C154E00352D78 /* DataController.swift in Sources */,
+				0A05B6E320579C3400389608 /* SettingsBundleHelper.swift in Sources */,
 				6A1FB3EE204C0F2900352D78 /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -400,7 +407,9 @@
 			baseConfigurationReference = BADA24C1002CE095A1F588DE /* Pods-Peggy Meter.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = RBRFJZERMH;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/PassiveDataKit-iOS-master/build/Debug-iphoneos",
@@ -408,10 +417,11 @@
 					Meter/Pods/Charts,
 				);
 				INFOPLIST_FILE = "Peggy Meter/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.peggyjo.peggymeter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -421,16 +431,19 @@
 			baseConfigurationReference = 2EB2FBCDF45A673F99769701 /* Pods-Peggy Meter.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = RBRFJZERMH;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/PassiveDataKit-iOS-master/build/Debug-iphoneos",
 				);
 				INFOPLIST_FILE = "Peggy Meter/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.peggyjo.peggymeter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

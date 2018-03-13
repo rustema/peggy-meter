@@ -21,20 +21,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { (granted, error) in
-            self.scheduleReminderNotification()
-        }
         return true
     }
     
-    func scheduleReminderNotification() {
-        let content = UNMutableNotificationContent()
-        content.body = "How do you feel?"
-        content.sound = UNNotificationSound.default()
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 3600, repeats: true)
-        let request = UNNotificationRequest(identifier: "MoodLogReminder", content: content, trigger: trigger)
-        let center = UNUserNotificationCenter.current()
-        center.add(request, withCompletionHandler: nil)
+    func scheduleReminderNotification(_ reminders_enabled: Bool) {
+        if #available(iOS 10.0, *) {
+            if reminders_enabled {
+                print("scheduling reminders")
+                let content = UNMutableNotificationContent()
+                content.body = "How do you feel?"
+                content.sound = UNNotificationSound.default()
+                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 3600, repeats: true)
+                let request = UNNotificationRequest(identifier: "MoodLogReminder", content: content, trigger: trigger)
+                let center = UNUserNotificationCenter.current()
+                center.add(request, withCompletionHandler: nil)
+            } else {
+                // Remove any outstanding reminder requests.
+                UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+                print("cancelling outstanding reminders")
+            }
+        }
     }
 
     // Handle Google and Facebook sign-in.
@@ -66,6 +72,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+
+        let defaults = UserDefaults()
+        defaults.synchronize()
+        if #available(iOS 10.0, *) {
+            
+            let reminders_enabled = defaults.bool(forKey: SettingsBundleHelper.SettingsBundleKeys.RemindersEnabled)
+            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { (granted, error) in
+                self.scheduleReminderNotification(reminders_enabled)
+            }
+        }
+        SettingsBundleHelper.setVersionAndBuildNumber()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
