@@ -18,4 +18,5 @@
         completions."
     </string>
     <string name="comment_hint">"What's going on?"</string>
+    <string name="title_activity_login2">Sign in</string>
 </resources>
