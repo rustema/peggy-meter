@@ -53,6 +53,7 @@ PODS:
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
+  - ResearchKit (1.5.2)
   - SQLite.swift (0.11.4):
     - SQLite.swift/standard (= 0.11.4)
   - SQLite.swift/standard (0.11.4)
@@ -62,6 +63,7 @@ DEPENDENCIES:
   - Firebase/Core
   - FirebaseUI/Auth
   - FirebaseUI/Google
+  - ResearchKit
   - SQLite.swift (~> 0.11.4)
 
 SPEC CHECKSUMS:
@@ -77,8 +79,9 @@ SPEC CHECKSUMS:
   GTMOAuth2: c77fe325e4acd453837e72d91e3b5f13116857b2
   GTMSessionFetcher: 390ea358e5a0d0133153806f744662dad933d06b
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
+  ResearchKit: a5770681dd61afddd3d1f24d232b9abf00cba454
   SQLite.swift: 3e3bee21da701b5b9f87c4a672cb54f233505692
 
-PODFILE CHECKSUM: 0d2c5e5362396768dd23a4ebd1d361ead1cc2bbc
+PODFILE CHECKSUM: 2f1d50e22346f4a873ba09b387b69213f9ab6baa
 
 COCOAPODS: 1.4.0

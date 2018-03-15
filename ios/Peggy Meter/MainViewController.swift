@@ -57,7 +57,15 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // Hide the "Back" button.
+        // The simple fix: "self.navigationItem.hidesBackButton = true"
+        // is not working for some reason.
+        // A more sophisticated solution per https://stackoverflow.com/questions/28091015/hide-back-button-in-navigation-bar-with-hidesbackbutton-in-swift
+        let backButton = UIBarButtonItem(title: "", style: .plain, target: navigationController, action: nil)
+        self.navigationItem.leftBarButtonItem = backButton
+        
         // Set up authentication.
+        // TODO(rustem): change to FB anonymous login.
         self.auth = Auth.auth()
         self.authUI = FUIAuth.defaultAuthUI()
         self.authUI?.delegate = self
