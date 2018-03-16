@@ -96,6 +96,8 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         
         startPDK()
+        
+        updateChart()
     }
 
     override func didReceiveMemoryWarning() {
@@ -125,7 +127,11 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         for (index, moodRecord) in self.dataController.getMoodRecords().enumerated() {
             points.append(ChartDataEntry(x: Double(index), y: Double(moodRecord.moodLevel)))
         }
-        lineChartView.data = LineChartData(dataSet: LineChartDataSet(values: points, label: ""))
+        if points.count > 0 {
+            lineChartView.data = LineChartData(dataSet: LineChartDataSet(values: points, label: ""))
+        } else {
+            lineChartView.data?.clearValues()
+        }
         lineChartView.notifyDataSetChanged()
     }
 

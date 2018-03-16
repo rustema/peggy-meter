@@ -24,7 +24,10 @@ class DataController: NSObject {
     override init() {
         super.init()
         
-        let documentsDirectory = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString) as String
+        var documentsDirectory = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString) as String
+        if documentsDirectory.last! != "/" {
+            documentsDirectory.append("/")
+        }
         self.pathToDatabase = documentsDirectory.appending("database.sqlite")
         createDatabaseIfNeeded()
     }
