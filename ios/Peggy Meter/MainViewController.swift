@@ -157,4 +157,8 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             self.updateChart()
         }
     }
+    
+    @IBAction func feedbackButtonClicked(_ sender: Any) {
+        UIApplication.shared.openURL(URL(string: "http://peggy.io")!)
+    }
 }

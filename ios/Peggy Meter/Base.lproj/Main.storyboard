@@ -228,7 +228,13 @@
                             <constraint firstAttribute="trailing" secondItem="5Xv-0b-mtp" secondAttribute="trailing" id="sHw-1W-cIo"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Mood Log" id="9XY-hw-dnc"/>
+                    <navigationItem key="navigationItem" title="Mood Log" id="9XY-hw-dnc">
+                        <barButtonItem key="rightBarButtonItem" title="Feedback" id="TaK-4Y-uKf">
+                            <connections>
+                                <action selector="feedbackButtonClicked:" destination="kMC-iH-BJO" id="vBx-Ch-zVw"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="historyTableView" destination="C2Z-Md-a73" id="HjS-Uk-04n"/>
                         <outlet property="lineChartView" destination="Ukh-Eg-xeH" id="7Bd-rN-TF7"/>
