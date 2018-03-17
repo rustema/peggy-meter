@@ -13,11 +13,8 @@ import FirebaseAuthUI
 import FirebaseGoogleAuthUI
 
 class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FUIAuthDelegate {
-    // Authentication.
-    fileprivate(set) var auth:Auth?
-    fileprivate(set) var authUI: FUIAuth? //only set internally but get externally
-    fileprivate(set) var authStateListenerHandle: AuthStateDidChangeListenerHandle?
-    
+    var user: User?
+ 
     var dataController: DataController!
     var transmitter: PDKHttpTransmitter!
     let dateFormatter = DateFormatter()
@@ -27,30 +24,15 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var lineChartView: LineChartView!
     
     let smileys: [String] = ["☹️", "🙂", "😀"]
-    
-    @IBAction func loginAction(sender: AnyObject) {
-        // Present the default login view controller provided by authUI
-        let authViewController = authUI?.authViewController();
-        self.present(authViewController!, animated: true, completion: nil)
-    }
-    
-    func authUI(_ authUI: FUIAuth, didSignInWith user: User?, error: Error?) {
-        guard let authError = error else {
-            print("auth successful")
-            return
-        }
-        
-        let errorCode = UInt((authError as NSError).code)
-        
-        // TODO: handle errors properly. The app should not continue running.
-        switch errorCode {
-        case FUIAuthErrorCode.userCancelledSignIn.rawValue:
-            print("User cancelled sign-in");
-            break
-            
-        default:
-            let detailedError = (authError as NSError).userInfo[NSUnderlyingErrorKey] ?? authError
-            print("Login error: \((detailedError as! NSError).localizedDescription)");
+
+    func login() {
+        Auth.auth().signInAnonymously() { (user, error) in
+            guard error == nil else {
+                print("failed to authenticate: \(String(describing: error))")
+                exit(0)
+            }
+            print("Successfully logged in to FB: \(String(describing: user!.uid))")
+            self.user = user
         }
     }
     
@@ -64,29 +46,12 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let backButton = UIBarButtonItem(title: "", style: .plain, target: navigationController, action: nil)
         self.navigationItem.leftBarButtonItem = backButton
         
-        // Set up authentication.
-        // TODO(rustem): change to FB anonymous login.
-        self.auth = Auth.auth()
-        self.authUI = FUIAuth.defaultAuthUI()
-        self.authUI?.delegate = self
+        // Sign in anonymously.
+        login()
         
-        let providers: [FUIAuthProvider] = [
-            FUIGoogleAuth(),
-            //FUIFacebookAuth(),
-            //FUITwitterAuth(),
-            //FUIPhoneAuth(authUI:FUIAuth.defaultAuthUI()),
-        ]
-        
-        self.authUI?.providers = providers
-        
-        self.authStateListenerHandle = self.auth?.addStateDidChangeListener { (auth, user) in
-            guard user != nil else {
-                self.loginAction(sender: self)
-                return
-            }
-        }
         // Application logic setup.
-        dataController = DataController()
+        dataController = SQLiteDataController()
+        //dataController = FirebaseDataController()
 
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .medium

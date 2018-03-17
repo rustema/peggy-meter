@@ -8,8 +8,79 @@
 
 import UIKit
 import SQLite
+import FirebaseDatabase
+import FirebaseAuth
 
-class DataController: NSObject {
+protocol DataController {
+    func getMoodRecords() -> [MoodRecord]
+    func saveMoodRecord(_ record: MoodRecord)
+    func deleteMoodRecord(_ record: MoodRecord)
+}
+
+class FirebaseDataController: NSObject, DataController {
+    var nextId: Int64 = 1
+    var ref: DatabaseReference!
+    override init() {
+        super.init()
+        
+        ref = Database.database().reference()
+    }
+
+    private func readData(completion: @escaping ([MoodRecord]) -> ()) {
+        let uid = Auth.auth().currentUser?.uid
+        print("uid = \(uid)")
+        let moodRecords = ref.child("users").child(uid!).child("moods").queryOrdered(byChild: "timestamp")
+        moodRecords.observeSingleEvent(of: .value, with: { (snapshot) in
+            var result: [MoodRecord] = []
+            let values = snapshot.value as? NSArray
+            var i = 0
+            if (values) != nil {
+                for record in values! {
+                    let value = record as? NSDictionary
+                    let moodRecord = MoodRecord()
+                    moodRecord.id = Int64(i)
+                    i = i + 1
+                    moodRecord.timestamp = Date(timeIntervalSince1970: TimeInterval(value?["timestamp"] as? Int ?? 0))
+                    moodRecord.moodLevel = value?["moodLevel"] as? Int ?? 0
+                    moodRecord.comment = value?["comment"] as? String ?? ""
+                    result.append(moodRecord)
+                }
+            }
+            completion(result)
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+        
+    }
+    
+    func getMoodRecords() -> [MoodRecord] {
+
+        readData{ result in
+            print("result.count = \(result.count)")
+            
+        }
+        return []
+    }
+    
+    func saveMoodRecord(_ record: MoodRecord) {
+        let uid = Auth.auth().currentUser?.uid
+        // TODO: implement.
+        let recordDict = [
+            "timestamp": Int(record.timestamp.timeIntervalSince1970),
+            "moodLevel": record.moodLevel,
+            "comment": record.comment] as [String : Any]
+        let record_ref = ref.child("users").child(uid!).child("moods").childByAutoId()
+        record_ref.setValue(recordDict)
+        let childautoID = record_ref.key
+        print("new record: \(childautoID)")
+    }
+    
+    func deleteMoodRecord(_ record: MoodRecord) {
+        // TODO: implement.
+    }
+}
+
+class SQLiteDataController: NSObject, DataController {
     
     var nextId: Int64 = 1;
     var pathToDatabase: String = "";
