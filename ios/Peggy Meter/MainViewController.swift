@@ -63,6 +63,8 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         startPDK()
         
         updateChart()
+        
+        self.lineChartView.chartDescription!.text = ""
     }
 
     override func didReceiveMemoryWarning() {
@@ -87,13 +89,32 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         pdk.add(transmitter)
     }
 
+    class GraphValueFormatter: DefaultValueFormatter {
+        
+        var smileys: [String] = []
+        
+        init(_ smileys: [String]) {
+            super.init()
+            self.smileys = smileys
+        }
+        
+        override func stringForValue(_ value: Double, entry: ChartDataEntry, dataSetIndex: Int, viewPortHandler: ViewPortHandler?) -> String {
+            return self.smileys[Int(value) - 1]
+        }
+    }
+    
     func updateChart() {
         var points: [ChartDataEntry] = []
-        for (index, moodRecord) in self.dataController.getMoodRecords().enumerated() {
-            points.append(ChartDataEntry(x: Double(index), y: Double(moodRecord.moodLevel)))
+        let now = Date()
+        for moodRecord in self.dataController.getMoodRecords() {
+            if moodRecord.timestamp >= now.addingTimeInterval(-3 * 24 * 3600) {
+                points.append(ChartDataEntry(x: Double((moodRecord.timestamp.timeIntervalSince1970 - now.timeIntervalSince1970) / 60), y: Double(moodRecord.moodLevel)))
+            }
         }
         if points.count > 0 {
-            lineChartView.data = LineChartData(dataSet: LineChartDataSet(values: points, label: ""))
+            let dataSet = LineChartDataSet(values: points, label: "")
+            dataSet.valueFormatter = GraphValueFormatter(smileys)
+            lineChartView.data = LineChartData(dataSet: dataSet)
         } else {
             lineChartView.data?.clearValues()
         }
