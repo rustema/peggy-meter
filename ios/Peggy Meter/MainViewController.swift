@@ -180,6 +180,6 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     @IBAction func feedbackButtonClicked(_ sender: Any) {
-        UIApplication.shared.openURL(URL(string: "http://peggy.io")!)
+        UIApplication.shared.openURL(URL(string: "http://www.peggyjo.io")!)
     }
 }
