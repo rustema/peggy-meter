@@ -67,39 +67,64 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
                                         <subviews>
                                             <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gpj-Eb-2Q1">
-                                                <rect key="frame" x="24" y="6.5" width="55" height="51"/>
+                                                <rect key="frame" x="0.0" y="6.5" width="75" height="51"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="32"/>
                                                 <state key="normal" title="Bad"/>
                                                 <connections>
                                                     <action selector="moodLevelButtonClicked:" destination="kMC-iH-BJO" eventType="touchUpInside" id="4Pg-CR-NKz"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YHn-IJ-ed0">
-                                                <rect key="frame" x="165" y="6.5" width="44" height="51"/>
+                                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YHn-IJ-ed0">
+                                                <rect key="frame" x="150" y="6.5" width="75" height="51"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="32"/>
                                                 <state key="normal" title="OK"/>
                                                 <connections>
                                                     <action selector="moodLevelButtonClicked:" destination="kMC-iH-BJO" eventType="touchUpInside" id="Ycj-a8-b5D"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qsm-uw-Op1">
-                                                <rect key="frame" x="275" y="6.5" width="76" height="51"/>
+                                            <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qsm-uw-Op1">
+                                                <rect key="frame" x="300" y="6.5" width="75" height="51"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="32"/>
                                                 <state key="normal" title="Good"/>
                                                 <connections>
                                                     <action selector="moodLevelButtonClicked:" destination="kMC-iH-BJO" eventType="touchUpInside" id="3Uk-WK-gVz"/>
                                                 </connections>
                                             </button>
+                                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rfc-zu-iHj">
+                                                <rect key="frame" x="75" y="7" width="75" height="51"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                                <state key="normal" title="So-so"/>
+                                                <connections>
+                                                    <action selector="moodLevelButtonClicked:" destination="kMC-iH-BJO" eventType="touchUpInside" id="Zan-FM-Dpo"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="33Z-f8-4sw">
+                                                <rect key="frame" x="225" y="6.5" width="75" height="51"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                                <state key="normal" title="Not bad"/>
+                                                <connections>
+                                                    <action selector="moodLevelButtonClicked:" destination="kMC-iH-BJO" eventType="touchUpInside" id="juJ-xG-nc8"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" red="0.39607843139999999" green="0.78039215689999997" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
+                                            <constraint firstItem="gpj-Eb-2Q1" firstAttribute="leading" secondItem="ZyI-Q9-vfd" secondAttribute="leading" id="7SP-kv-hG0"/>
+                                            <constraint firstItem="Qsm-uw-Op1" firstAttribute="width" secondItem="gpj-Eb-2Q1" secondAttribute="width" id="9c4-iH-13x"/>
                                             <constraint firstAttribute="height" constant="64" id="Ecb-8d-M2w"/>
+                                            <constraint firstItem="YHn-IJ-ed0" firstAttribute="width" secondItem="gpj-Eb-2Q1" secondAttribute="width" id="Ias-Ix-i7i"/>
                                             <constraint firstItem="YHn-IJ-ed0" firstAttribute="centerY" secondItem="ZyI-Q9-vfd" secondAttribute="centerY" id="O2y-X5-sqY"/>
-                                            <constraint firstItem="gpj-Eb-2Q1" firstAttribute="leading" secondItem="ZyI-Q9-vfd" secondAttribute="leading" constant="24" id="UDj-r9-Wht"/>
+                                            <constraint firstItem="YHn-IJ-ed0" firstAttribute="leading" secondItem="Rfc-zu-iHj" secondAttribute="trailing" id="OIU-MM-zhW"/>
                                             <constraint firstItem="Qsm-uw-Op1" firstAttribute="centerY" secondItem="ZyI-Q9-vfd" secondAttribute="centerY" id="UGe-lZ-qbm"/>
+                                            <constraint firstItem="Rfc-zu-iHj" firstAttribute="width" secondItem="gpj-Eb-2Q1" secondAttribute="width" id="VJw-is-LVW"/>
+                                            <constraint firstItem="33Z-f8-4sw" firstAttribute="width" secondItem="gpj-Eb-2Q1" secondAttribute="width" id="eCb-Ib-B0E"/>
+                                            <constraint firstItem="Qsm-uw-Op1" firstAttribute="leading" secondItem="33Z-f8-4sw" secondAttribute="trailing" id="fwr-Bl-GSV"/>
                                             <constraint firstItem="gpj-Eb-2Q1" firstAttribute="centerY" secondItem="ZyI-Q9-vfd" secondAttribute="centerY" id="glX-TB-yqo"/>
-                                            <constraint firstItem="YHn-IJ-ed0" firstAttribute="centerX" secondItem="ZyI-Q9-vfd" secondAttribute="centerX" id="gxR-wm-TZe"/>
-                                            <constraint firstAttribute="trailing" secondItem="Qsm-uw-Op1" secondAttribute="trailing" constant="24" id="uIp-Xv-rXw"/>
+                                            <constraint firstItem="Rfc-zu-iHj" firstAttribute="centerY" secondItem="ZyI-Q9-vfd" secondAttribute="centerY" id="lXe-HC-M9h"/>
+                                            <constraint firstItem="Rfc-zu-iHj" firstAttribute="leading" secondItem="gpj-Eb-2Q1" secondAttribute="trailing" id="ml6-uR-mQX"/>
+                                            <constraint firstItem="33Z-f8-4sw" firstAttribute="centerY" secondItem="ZyI-Q9-vfd" secondAttribute="centerY" id="qJQ-tA-qQ4"/>
+                                            <constraint firstItem="33Z-f8-4sw" firstAttribute="leading" secondItem="YHn-IJ-ed0" secondAttribute="trailing" id="v9Z-gh-d2s"/>
+                                            <constraint firstAttribute="trailing" secondItem="Qsm-uw-Op1" secondAttribute="trailing" id="xhY-K7-Jkh"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="38u-84-d6Q">
@@ -207,9 +232,11 @@
                     <connections>
                         <outlet property="historyTableView" destination="C2Z-Md-a73" id="HjS-Uk-04n"/>
                         <outlet property="lineChartView" destination="Ukh-Eg-xeH" id="7Bd-rN-TF7"/>
-                        <outletCollection property="moodButtons" destination="gpj-Eb-2Q1" collectionClass="NSMutableArray" id="Bch-gs-qZe"/>
-                        <outletCollection property="moodButtons" destination="YHn-IJ-ed0" collectionClass="NSMutableArray" id="Skk-BZ-hAS"/>
-                        <outletCollection property="moodButtons" destination="Qsm-uw-Op1" collectionClass="NSMutableArray" id="FlR-9J-5wm"/>
+                        <outletCollection property="moodButtons" destination="gpj-Eb-2Q1" collectionClass="NSMutableArray" id="AGi-Je-hSG"/>
+                        <outletCollection property="moodButtons" destination="Rfc-zu-iHj" collectionClass="NSMutableArray" id="NH2-Ey-rJH"/>
+                        <outletCollection property="moodButtons" destination="YHn-IJ-ed0" collectionClass="NSMutableArray" id="BZ6-Nk-FMd"/>
+                        <outletCollection property="moodButtons" destination="33Z-f8-4sw" collectionClass="NSMutableArray" id="gXA-Db-hhM"/>
+                        <outletCollection property="moodButtons" destination="Qsm-uw-Op1" collectionClass="NSMutableArray" id="CBP-vj-qat"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kS7-QF-6SG" userLabel="First Responder" sceneMemberID="firstResponder"/>

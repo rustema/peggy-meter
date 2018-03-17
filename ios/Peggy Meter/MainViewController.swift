@@ -23,7 +23,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet var moodButtons: [UIButton]!
     @IBOutlet weak var lineChartView: LineChartView!
     
-    let smileys: [String] = ["☹️", "🙂", "😀"]
+    let smileys: [String] = ["😢", "☹️", "🙂", "😀", "😃"]
 
     func login() {
         Auth.auth().signInAnonymously() { (user, error) in
