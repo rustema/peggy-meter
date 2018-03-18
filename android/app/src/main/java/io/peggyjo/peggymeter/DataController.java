@@ -37,7 +37,7 @@ public class DataController implements ValueEventListener {
             firebaseAuth.signInAnonymously().addOnCompleteListener((x) -> initDB());
         } else {
             initDB();
-            Log.i(TAG, "Logged as user " + user.getEmail());
+            Log.i(TAG, "Logged as user " + user.getUid());
         }
         this.logs = new ArrayList<>();
     }
