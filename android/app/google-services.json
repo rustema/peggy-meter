@@ -1,94 +1,27 @@
 {
   "project_info": {
-    "project_number": "629440938888",
-    "firebase_url": "https://scorer-128b9.firebaseio.com",
-    "project_id": "scorer-128b9",
-    "storage_bucket": "scorer-128b9.appspot.com"
+    "project_number": "869368265555",
+    "firebase_url": "https://peggy-meter.firebaseio.com",
+    "project_id": "peggy-meter",
+    "storage_bucket": "peggy-meter.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:629440938888:android:00adee8387bc7f23",
-        "android_client_info": {
-          "package_name": "indo.demetr.scorer"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "629440938888-gh2dp26cgr3f1knk28gdc4pvqv1tbm88.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "indo.demetr.scorer",
-            "certificate_hash": "738f6c405490002a2e10232c46503af79d1f7dc0"
-          }
-        },
-        {
-          "client_id": "629440938888-954bt5asblipc7vmg2tvcmcsm9ja7jeg.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "indo.demetr.scorer",
-            "certificate_hash": "5f391cb6750d3daa1d515dee900e4defa7299d40"
-          }
-        },
-        {
-          "client_id": "629440938888-05snuh6j0gk7qmv8c7pobt5mhem4r723.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCEXcw0kmEHwALekSpzkl5E25ErWwnDTSo"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "629440938888-05snuh6j0gk7qmv8c7pobt5mhem4r723.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "629440938888-mgd2qf548b1uiat03n6f10064mvtv1b7.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "io.peggyjo.peggymeter"
-              }
-            }
-          ]
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:629440938888:android:38b64f903438aa65",
+        "mobilesdk_app_id": "1:869368265555:android:38b64f903438aa65",
         "android_client_info": {
           "package_name": "io.peggyjo.peggymeter"
         }
       },
       "oauth_client": [
         {
-          "client_id": "629440938888-tan9d89fld7lb3v1s6kk1ne941qllcdt.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "io.peggyjo.peggymeter",
-            "certificate_hash": "738f6c405490002a2e10232c46503af79d1f7dc0"
-          }
-        },
-        {
-          "client_id": "629440938888-05snuh6j0gk7qmv8c7pobt5mhem4r723.apps.googleusercontent.com",
+          "client_id": "869368265555-iv9fbqt5bqv77c2v03lnr4vho6e32gge.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCEXcw0kmEHwALekSpzkl5E25ErWwnDTSo"
+          "current_key": "AIzaSyAh7yvj41BiKkrLKBjRVffIEKZHJXqPS0A"
         }
       ],
       "services": {
@@ -96,20 +29,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "629440938888-05snuh6j0gk7qmv8c7pobt5mhem4r723.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "629440938888-mgd2qf548b1uiat03n6f10064mvtv1b7.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "io.peggyjo.peggymeter"
-              }
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2
