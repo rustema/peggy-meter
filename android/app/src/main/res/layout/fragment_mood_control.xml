@@ -5,16 +5,16 @@
     android:layout_weight="1"
     android:orientation="vertical"
     android:focusable="true"
-    android:focusableInTouchMode="true">
+    android:focusableInTouchMode="true"
+    tools:context="io.peggyjo.peggymeter.MoodControlFragment">
 
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|center"
         android:gravity="top|center"
-        tools:context="io.peggyjo.peggymeter.MoodControlFragment">
+        >
 
         <Button
             android:id="@+id/mood0"
@@ -90,14 +90,29 @@
 
     </LinearLayout>
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
     <EditText
         android:id="@+id/mood_comment"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:ems="10"
         android:inputType="textPersonName"
         android:hint="@string/comment_hint" />
+
+
+    <ImageButton
+        android:id="@+id/mic_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/ic_btn_speak_now"
+        android:contentDescription="@string/mic_button_description" />
+    </LinearLayout>
+
 
 </LinearLayout>
 
