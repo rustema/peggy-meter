@@ -3,6 +3,7 @@ package io.peggyjo.peggymeter;
 import android.util.Log;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -12,6 +13,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -79,6 +81,7 @@ public class DataController implements ValueEventListener {
                         ((Long) entry.get("moodLevel")).intValue(),
                         "" +entry.get("comment")));
             }
+            Collections.sort(logs, (a, b) -> a.getTime().compareTo(b.getTime()));
             if (graph != null) {
                 graph.refresh(logs);
             }
