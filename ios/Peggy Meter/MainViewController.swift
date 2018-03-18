@@ -13,11 +13,8 @@ import FirebaseAuthUI
 import FirebaseGoogleAuthUI
 
 class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FUIAuthDelegate {
-    // Authentication.
-    fileprivate(set) var auth:Auth?
-    fileprivate(set) var authUI: FUIAuth? //only set internally but get externally
-    fileprivate(set) var authStateListenerHandle: AuthStateDidChangeListenerHandle?
-    
+    //var user: User?
+ 
     var dataController: DataController!
     var transmitter: PDKHttpTransmitter!
     let dateFormatter = DateFormatter()
@@ -26,59 +23,26 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet var moodButtons: [UIButton]!
     @IBOutlet weak var lineChartView: LineChartView!
     
-    let smileys: [String] = ["☹️", "🙂", "😀"]
-    
-    @IBAction func loginAction(sender: AnyObject) {
-        // Present the default login view controller provided by authUI
-        let authViewController = authUI?.authViewController();
-        self.present(authViewController!, animated: true, completion: nil)
-    }
-    
-    func authUI(_ authUI: FUIAuth, didSignInWith user: User?, error: Error?) {
-        guard let authError = error else {
-            print("auth successful")
-            return
-        }
-        
-        let errorCode = UInt((authError as NSError).code)
-        
-        // TODO: handle errors properly. The app should not continue running.
-        switch errorCode {
-        case FUIAuthErrorCode.userCancelledSignIn.rawValue:
-            print("User cancelled sign-in");
-            break
-            
-        default:
-            let detailedError = (authError as NSError).userInfo[NSUnderlyingErrorKey] ?? authError
-            print("Login error: \((detailedError as! NSError).localizedDescription)");
-        }
-    }
+    let smileys: [String] = ["😢", "☹️", "🙂", "😀", "😃"]
+
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Set up authentication.
-        self.auth = Auth.auth()
-        self.authUI = FUIAuth.defaultAuthUI()
-        self.authUI?.delegate = self
+        // Hide the "Back" button.
+        // The simple fix: "self.navigationItem.hidesBackButton = true"
+        // is not working for some reason.
+        // A more sophisticated solution per https://stackoverflow.com/questions/28091015/hide-back-button-in-navigation-bar-with-hidesbackbutton-in-swift
+        let backButton = UIBarButtonItem(title: "", style: .plain, target: navigationController, action: nil)
+        self.navigationItem.leftBarButtonItem = backButton
         
-        let providers: [FUIAuthProvider] = [
-            FUIGoogleAuth(),
-            //FUIFacebookAuth(),
-            //FUITwitterAuth(),
-            //FUIPhoneAuth(authUI:FUIAuth.defaultAuthUI()),
-        ]
+        // Sign in anonymously.
+        //login()
         
-        self.authUI?.providers = providers
-        
-        self.authStateListenerHandle = self.auth?.addStateDidChangeListener { (auth, user) in
-            guard user != nil else {
-                self.loginAction(sender: self)
-                return
-            }
-        }
         // Application logic setup.
-        dataController = DataController()
+        //dataController = SQLiteDataController(self.reloadViews)
+        dataController = FirebaseDataController(self.reloadViews)
 
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .medium
@@ -88,6 +52,10 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         
         startPDK()
+        
+        //updateChart()
+        
+        self.lineChartView.chartDescription!.text = ""
     }
 
     override func didReceiveMemoryWarning() {
@@ -112,13 +80,41 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         pdk.add(transmitter)
     }
 
+    class GraphValueFormatter: DefaultValueFormatter {
+        
+        var smileys: [String] = []
+        
+        init(_ smileys: [String]) {
+            super.init()
+            self.smileys = smileys
+        }
+        
+        override func stringForValue(_ value: Double, entry: ChartDataEntry, dataSetIndex: Int, viewPortHandler: ViewPortHandler?) -> String {
+            return self.smileys[Int(value) - 1]
+        }
+    }
+    
     func updateChart() {
         var points: [ChartDataEntry] = []
-        for (index, moodRecord) in self.dataController.getMoodRecords().enumerated() {
-            points.append(ChartDataEntry(x: Double(index), y: Double(moodRecord.moodLevel)))
+        let now = Date()
+        for moodRecord in self.dataController.getMoodRecords() {
+            if moodRecord.timestamp >= now.addingTimeInterval(-3 * 24 * 3600) {
+                points.append(ChartDataEntry(x: Double((moodRecord.timestamp.timeIntervalSince1970 - now.timeIntervalSince1970) / 60), y: Double(moodRecord.moodLevel)))
+            }
         }
-        lineChartView.data = LineChartData(dataSet: LineChartDataSet(values: points, label: ""))
+        if points.count > 0 {
+            let dataSet = LineChartDataSet(values: points, label: "")
+            dataSet.valueFormatter = GraphValueFormatter(smileys)
+            lineChartView.data = LineChartData(dataSet: dataSet)
+        } else {
+            lineChartView.data?.clearValues()
+        }
         lineChartView.notifyDataSetChanged()
+    }
+    
+    func reloadViews() {
+        self.historyTableView.reloadData()
+        self.updateChart()
     }
 
     @IBAction func toggleGraphButtonClicked(_ sender: Any) {
@@ -142,8 +138,8 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             record.comment = textField.text!
             self.dataController.saveMoodRecord(record)
             
-            self.historyTableView.reloadData()
-            self.updateChart()
+            //
+            //self.reloadViews()
         }))
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
@@ -177,5 +173,9 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             tableView.deleteRows(at: [indexPath], with: .fade)
             self.updateChart()
         }
+    }
+    
+    @IBAction func feedbackButtonClicked(_ sender: Any) {
+        UIApplication.shared.openURL(URL(string: "http://www.peggyjo.io")!)
     }
 }

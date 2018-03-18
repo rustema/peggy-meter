@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UserNotifications
 import Firebase
 import FirebaseAuthUI
 
@@ -23,17 +24,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         return true
     }
     
-    // Handle Google and Facebook sign-in.
-    func application(_ app: UIApplication, open url: URL,
-                     options: [UIApplicationOpenURLOptionsKey : Any]) -> Bool {
-        let sourceApplication = options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String?
-        if FUIAuth.defaultAuthUI()?.handleOpen(url, sourceApplication: sourceApplication) ?? false {
-            print("handling google url: \(String(describing: url))")
-            return true
+    func scheduleReminderNotification(_ reminders_enabled: Bool) {
+        if #available(iOS 10.0, *) {
+            if reminders_enabled {
+                print("scheduling reminders")
+                let content = UNMutableNotificationContent()
+                content.body = "How do you feel?"
+                content.sound = UNNotificationSound.default()
+                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 3600, repeats: true)
+                let request = UNNotificationRequest(identifier: "MoodLogReminder", content: content, trigger: trigger)
+                let center = UNUserNotificationCenter.current()
+                center.add(request, withCompletionHandler: nil)
+            } else {
+                // Remove any outstanding reminder requests.
+                UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+                print("cancelling outstanding reminders")
+            }
         }
-        // other URL handling goes here.
-        print("failure --> !!!")
-        return false
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -52,6 +59,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+
+        let defaults = UserDefaults()
+        defaults.synchronize()
+        if #available(iOS 10.0, *) {
+            
+            let reminders_enabled = defaults.bool(forKey: SettingsBundleHelper.SettingsBundleKeys.RemindersEnabled)
+            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { (granted, error) in
+                self.scheduleReminderNotification(reminders_enabled)
+            }
+        }
+        SettingsBundleHelper.setVersionAndBuildNumber()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {

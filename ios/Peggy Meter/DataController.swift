@@ -7,36 +7,183 @@
 //
 
 import UIKit
+import SQLite
+import FirebaseDatabase
+import FirebaseAuth
 
-class DataController: NSObject {
+protocol DataController {
+    func getMoodRecords() -> [MoodRecord]
+    func saveMoodRecord(_ record: MoodRecord)
+    func deleteMoodRecord(_ record: MoodRecord)
+}
+
+class FirebaseDataController: NSObject, DataController {
+    var nextId: Int64 = 1
+    var ref: DatabaseReference!
+    var records: [MoodRecord] = []
+    var completionHandler:(() -> Void)!
+    var user: User!
     
-    var moodRecords: [MoodRecord] = []
-    var nextId: Int64 = 1;
-
-    func findRecordIndex(_ record: MoodRecord) -> Int {
-        for (i, existingRecord) in moodRecords.enumerated() {
-            if existingRecord.id == record.id {
-                return i
+    private func setupFirebase() {
+        ref = Database.database().reference()
+        
+        Auth.auth().signInAnonymously() { (user, error) in
+            guard error == nil else {
+                print("failed to authenticate: \(String(describing: error))")
+                exit(0)
             }
+            print("Successfully logged in to FB: \(String(describing: user!.uid))")
+            self.user = user!
+            
+            let uid = self.user.uid
+            // Set up read handler.
+            self.ref.child("users").child(uid).child("moods").observe(.childAdded, with: { (snapshot) in
+                let recordDict = snapshot.value as? [String : AnyObject] ?? [:]
+                let moodRecord = MoodRecord()
+                moodRecord.id = 0
+                
+                let ts = recordDict["timestamp"] as? Int ?? 0
+                // Default to 1 since mood levels are 1-based.
+                let moodLevel = recordDict["moodLevel"] as? Int ?? 1
+                let comment = recordDict["comment"] as? String ?? ""
+                moodRecord.timestamp = Date(timeIntervalSince1970: TimeInterval(ts))
+                moodRecord.moodLevel = moodLevel
+                moodRecord.comment = comment
+                self.records.append(moodRecord)
+                self.completionHandler()
+            })
         }
-        return -1
+    }
+    
+    init(_ completionHandler: @escaping (() -> Void)) {
+        super.init()
+        
+        self.completionHandler = completionHandler
+        setupFirebase()
+    }
+
+    func getMoodRecords() -> [MoodRecord] {
+        return self.records
     }
     
     func saveMoodRecord(_ record: MoodRecord) {
-        if record.id > 0 {
-            moodRecords[findRecordIndex(record)] = record
-            return
-        }
-        record.id = nextId
-        nextId += 1
-        moodRecords.append(record)
+        let uid = self.user.uid
+        // TODO: implement.
+        let recordDict = [
+            "timestamp": Int(record.timestamp.timeIntervalSince1970),
+            "moodLevel": record.moodLevel,
+            "comment": record.comment] as [String : Any]
+        let record_ref = ref.child("users").child(uid).child("moods").childByAutoId()
+        record_ref.setValue(recordDict)
+        let childautoID = record_ref.key
+        print("new record: \(childautoID)")
     }
     
     func deleteMoodRecord(_ record: MoodRecord) {
-        moodRecords.remove(at: findRecordIndex(record))
+        // TODO: implement.
+    }
+}
+
+class SQLiteDataController: NSObject, DataController {
+    var nextId: Int64 = 1;
+    var pathToDatabase: String = "";
+    var database: Connection! = nil;
+    
+    let moodRecordsTable = Table("mood_records")
+    let moodRecordId = Expression<Int64>("id")
+    let moodRecordTimestamp = Expression<Int>("timestamp")
+    let moodRecordMoodLevel = Expression<Int>("mood_level")
+    let moodRecordComment = Expression<String>("comment")
+    
+    var completionHandler:(() -> Void)!
+    
+    init(_ completionHandler: @escaping (() -> Void)) {
+        super.init()
+        
+        self.completionHandler = completionHandler
+        var documentsDirectory = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString) as String
+        if documentsDirectory.last! != "/" {
+            documentsDirectory.append("/")
+        }
+        self.pathToDatabase = documentsDirectory.appending("database.sqlite")
+        createDatabaseIfNeeded()
+    }
+    
+    func openDatabase() -> Bool {
+        if database != nil {
+            return true
+        }
+
+        if FileManager.default.fileExists(atPath: pathToDatabase) {
+            do {
+                try database = Connection(pathToDatabase)
+                return true
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        return false
+    }
+
+    func createDatabaseIfNeeded() {
+        if !FileManager.default.fileExists(atPath: self.pathToDatabase) {
+            do {
+                try database = Connection(pathToDatabase)
+                try database.run(moodRecordsTable.create { t in
+                    t.column(moodRecordId, primaryKey: .autoincrement)
+                    t.column(moodRecordTimestamp)
+                    t.column(moodRecordMoodLevel)
+                    t.column(moodRecordComment)
+                })
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func saveMoodRecord(_ record: MoodRecord) {
+        if self.openDatabase() {
+            do {
+                if record.id > 0 {
+                    // TODO: Update the record
+                } else {
+                    let insert = moodRecordsTable.insert(moodRecordTimestamp <- Int(record.timestamp.timeIntervalSince1970), moodRecordMoodLevel <- record.moodLevel, moodRecordComment <- record.comment)
+                    try database.run(insert)
+                }
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        self.completionHandler()
+    }
+    
+    func deleteMoodRecord(_ record: MoodRecord) {
+        if self.openDatabase() {
+            do {
+                try database.run(moodRecordsTable.filter(moodRecordId == record.id).delete())
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
     }
     
     func getMoodRecords() -> [MoodRecord] {
+        var moodRecords: [MoodRecord] = []
+        if self.openDatabase() {
+            do {
+                for record in try database.prepare(moodRecordsTable) {
+                    let moodRecord = MoodRecord()
+                    moodRecord.id = record[moodRecordId]
+                    moodRecord.timestamp = Date(timeIntervalSince1970: TimeInterval(record[moodRecordTimestamp]))
+                    moodRecord.moodLevel = record[moodRecordMoodLevel]
+                    moodRecord.comment = record[moodRecordComment]
+                    moodRecords.append(moodRecord)
+                }
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
         return moodRecords
     }
 }

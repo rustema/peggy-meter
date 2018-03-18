@@ -1,23 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context="io.peggyjo.peggymeter.MainActivity">
-
-    <fragment
-        android:id="@+id/frag_mood_control"
-        android:name="io.peggyjo.peggymeter.MoodControlFragment"
-        tools:layout="@layout/fragment_mood_control"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+    <FrameLayout
+        android:id="@+id/content_frame"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <fragment
-        android:id="@+id/frag_history_graph"
-        android:name="io.peggyjo.peggymeter.HistoryGraphFragment"
-        tools:layout="@layout/fragment_history_graph"
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/frag_mood_control" />
+        android:layout_height="match_parent" >
 
-</RelativeLayout>
+        <LinearLayout
+            android:id="@+id/login_form"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:id="@+id/email_login_form"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="?attr/colorPrimary"
+                    android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:context="io.peggyjo.peggymeter.MainActivity"
+                    android:orientation="vertical">
+
+                    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/MOOD_CONTROL_FRAGMENT_CONTAINER"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/GRAPH_FRAGMENT_CONTAINER"
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent" >
+
+                    </FrameLayout>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </FrameLayout>
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:menu="@menu/drawer_view"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/modeSwitchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:text="@string/toggleViewText" />
+    </RelativeLayout>
+
+
+
+
+</android.support.v4.widget.DrawerLayout>
+

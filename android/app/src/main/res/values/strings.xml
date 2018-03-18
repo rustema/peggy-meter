@@ -19,4 +19,5 @@
     </string>
     <string name="comment_hint">"What's going on?"</string>
     <string name="mic_button_description">Say you mood</string>
+    <string name="toggleViewText">📈</string>
 </resources>
