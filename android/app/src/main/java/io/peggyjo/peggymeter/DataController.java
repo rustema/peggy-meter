@@ -47,7 +47,7 @@ public class DataController implements ValueEventListener {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser user = firebaseAuth.getCurrentUser();
         uid = user.getUid();
-        moods = database.getReference("message").child(uid).child("mood").getRef();
+        moods = database.getReference("users").child(uid).child("mood").getRef();
         moods.addValueEventListener(this);
     }
 
