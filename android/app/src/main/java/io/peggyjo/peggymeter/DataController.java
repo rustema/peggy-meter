@@ -23,7 +23,7 @@ public class DataController implements ValueEventListener {
     private static final String TAG = "PeggiMeter.DataCtrl";
 
     private List<LogEntry> logs;
-    private HistoryGraphFragment graph;
+    private HistoryView historyView;
     private DatabaseReference moods;
     private String uid;
 
@@ -51,7 +51,7 @@ public class DataController implements ValueEventListener {
 
     void addEntry(LogEntry entry) {
         logs.add(entry);
-        graph.refresh(logs);
+        historyView.refresh(logs);
         DatabaseReference newEntry = moods.push();
         newEntry.setValue(ImmutableMap.<String, Object>builder()
                 .put("timestamp", entry.getTime().getTime())
@@ -60,8 +60,9 @@ public class DataController implements ValueEventListener {
                 .build());
     }
 
-    void setGraph(HistoryGraphFragment graph) {
-        this.graph = graph;
+    void setHistoryView(HistoryView historyView) {
+        this.historyView = historyView;
+        historyView.refresh(logs);
     }
 
     @Override
@@ -79,8 +80,8 @@ public class DataController implements ValueEventListener {
                         ((Long) entry.get("moodLevel")).intValue(),
                         "" +entry.get("comment")));
             }
-            if (graph != null) {
-                graph.refresh(logs);
+            if (historyView != null) {
+                historyView.refresh(logs);
             }
         }
     }

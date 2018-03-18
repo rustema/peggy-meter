@@ -9,8 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "PeggiMeter.Main";
@@ -18,6 +17,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout mDrawerLayout;
 
     private DataController dataController;
+    private HistoryGraphFragment historyGraphFragment;
+    private ViewMode currentMode;
+    private HistoryTextFragment historyTextFragment;
 
     public DataController getDataController() {
         return dataController;
@@ -39,12 +41,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     private void showStatScreen() {
-        HistoryGraphFragment historyGraphFragment = new HistoryGraphFragment();
-        dataController.setGraph(historyGraphFragment);
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.MOOD_CONTROL_FRAGMENT_CONTAINER, new MoodControlFragment())
-                .add(R.id.GRAPH_FRAGMENT_CONTAINER, historyGraphFragment)
-                .commit();
+        switch (currentMode) {
+            case Graph:
+                if (historyGraphFragment == null) {
+                    historyGraphFragment = new HistoryGraphFragment();
+                }
+                dataController.setHistoryView(historyGraphFragment);
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.MOOD_CONTROL_FRAGMENT_CONTAINER, new MoodControlFragment())
+                        .add(R.id.GRAPH_FRAGMENT_CONTAINER, historyGraphFragment)
+                        .commit();
+                break;
+            case Text:
+                if (historyTextFragment == null) {
+
+                }
+
+                break;
+        }
     }
 
     private void installMenu() {
@@ -90,6 +104,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         return true;
+    }
+
+    public void onToggleButtonClick(View view) {
+
     }
 
     // Menu navigation ends
