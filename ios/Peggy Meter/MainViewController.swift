@@ -13,7 +13,7 @@ import FirebaseAuthUI
 import FirebaseGoogleAuthUI
 
 class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FUIAuthDelegate {
-    var user: User?
+    //var user: User?
  
     var dataController: DataController!
     var transmitter: PDKHttpTransmitter!
@@ -25,16 +25,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     let smileys: [String] = ["😢", "☹️", "🙂", "😀", "😃"]
 
-    func login() {
-        Auth.auth().signInAnonymously() { (user, error) in
-            guard error == nil else {
-                print("failed to authenticate: \(String(describing: error))")
-                exit(0)
-            }
-            print("Successfully logged in to FB: \(String(describing: user!.uid))")
-            self.user = user
-        }
-    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,11 +38,11 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.navigationItem.leftBarButtonItem = backButton
         
         // Sign in anonymously.
-        login()
+        //login()
         
         // Application logic setup.
-        dataController = SQLiteDataController()
-        //dataController = FirebaseDataController()
+        //dataController = SQLiteDataController(self.reloadViews)
+        dataController = FirebaseDataController(self.reloadViews)
 
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .medium
@@ -62,7 +53,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         startPDK()
         
-        updateChart()
+        //updateChart()
         
         self.lineChartView.chartDescription!.text = ""
     }
@@ -120,6 +111,11 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         lineChartView.notifyDataSetChanged()
     }
+    
+    func reloadViews() {
+        self.historyTableView.reloadData()
+        self.updateChart()
+    }
 
     @IBAction func toggleGraphButtonClicked(_ sender: Any) {
         self.lineChartView.isHidden = !self.lineChartView.isHidden
@@ -142,8 +138,8 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             record.comment = textField.text!
             self.dataController.saveMoodRecord(record)
             
-            self.historyTableView.reloadData()
-            self.updateChart()
+            //
+            //self.reloadViews()
         }))
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
