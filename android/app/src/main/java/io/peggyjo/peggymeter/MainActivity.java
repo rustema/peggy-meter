@@ -35,15 +35,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onStart() {
         super.onStart();
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        if (user == null) {
-            Log.i(TAG, "Logging user");
-            firebaseAuth.signInAnonymously();
-        } else {
-            Log.i(TAG, "Logged as user " + user.getEmail());
-        }
     }
 
 

@@ -24,34 +24,44 @@ class FirebaseDataController: NSObject, DataController {
     var completionHandler:(() -> Void)!
     var user: User!
     
+    private func setupMoodAddedObserver() {
+        let uid = self.user.uid
+        // Set up read handler.
+        self.ref.child("users").child(uid).child("moods").observe(.childAdded, with: { (snapshot) in
+            let recordDict = snapshot.value as? [String : AnyObject] ?? [:]
+            let moodRecord = MoodRecord()
+            moodRecord.id = 0
+            
+            let ts = recordDict["timestamp"] as? Int ?? 0
+            // Default to 1 since mood levels are 1-based.
+            let moodLevel = recordDict["moodLevel"] as? Int ?? 1
+            let comment = recordDict["comment"] as? String ?? ""
+            moodRecord.timestamp = Date(timeIntervalSince1970: TimeInterval(ts))
+            moodRecord.moodLevel = moodLevel
+            moodRecord.comment = comment
+            self.records.append(moodRecord)
+            self.completionHandler()
+        })
+    }
     private func setupFirebase() {
         ref = Database.database().reference()
         
-        Auth.auth().signInAnonymously() { (user, error) in
-            guard error == nil else {
-                print("failed to authenticate: \(String(describing: error))")
-                exit(0)
-            }
-            print("Successfully logged in to FB: \(String(describing: user!.uid))")
-            self.user = user!
-            
-            let uid = self.user.uid
-            // Set up read handler.
-            self.ref.child("users").child(uid).child("moods").observe(.childAdded, with: { (snapshot) in
-                let recordDict = snapshot.value as? [String : AnyObject] ?? [:]
-                let moodRecord = MoodRecord()
-                moodRecord.id = 0
+        // If already authenticated, reuse the existing auth info.
+        if Auth.auth().currentUser != nil {
+            self.user = Auth.auth().currentUser!
+            print("reusing existing user id: \(self.user.uid)")
+            self.setupMoodAddedObserver()
+        } else {
+            Auth.auth().signInAnonymously() { (user, error) in
+                guard error == nil else {
+                    print("failed to authenticate: \(String(describing: error))")
+                    exit(0)
+                }
+                print("Successfully logged in to FB: \(String(describing: user!.uid))")
+                self.user = user!
                 
-                let ts = recordDict["timestamp"] as? Int ?? 0
-                // Default to 1 since mood levels are 1-based.
-                let moodLevel = recordDict["moodLevel"] as? Int ?? 1
-                let comment = recordDict["comment"] as? String ?? ""
-                moodRecord.timestamp = Date(timeIntervalSince1970: TimeInterval(ts))
-                moodRecord.moodLevel = moodLevel
-                moodRecord.comment = comment
-                self.records.append(moodRecord)
-                self.completionHandler()
-            })
+                self.setupMoodAddedObserver()
+            }
         }
     }
     

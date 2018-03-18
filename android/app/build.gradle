@@ -16,6 +16,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
 }
 
 dependencies {
@@ -45,6 +49,8 @@ dependencies {
     annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
 
     compile 'com.google.android.gms:play-services-auth:11.8.0'
+    compile 'com.google.firebase:firebase-database:11.8.0'
+    compile 'com.google.guava:guava:24.1-android'
 
     compile 'com.google.firebase:firebase-core:11.8.0'
 
