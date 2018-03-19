@@ -107,7 +107,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         
         override func stringForValue(_ value: Double, entry: ChartDataEntry, dataSetIndex: Int, viewPortHandler: ViewPortHandler?) -> String {
-            return self.smileys[Int(value) - 1]
+            return self.smileys[Int(value)]
         }
     }
     
@@ -179,7 +179,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "MoodRecordCell")!
         let record: MoodRecord = self.dataController.getMoodRecords()[indexPath.row]
         (cell.viewWithTag(1) as! UILabel).text = dateFormatter.string(from: record.timestamp)
-        (cell.viewWithTag(2) as! UILabel).text = self.smileys[record.moodLevel - 1]
+        (cell.viewWithTag(2) as! UILabel).text = self.smileys[record.moodLevel]
         (cell.viewWithTag(3) as! UILabel).text = record.comment
         return cell
     }
