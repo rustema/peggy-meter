@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C8706E65B4EBFD3D0EA48EECEBCC4FD8"
+               BlueprintIdentifier = "E1FD3CA7202540F70D21FC07BCE24A5F"
                BuildableName = "Pods_Peggy_Meter.framework"
                BlueprintName = "Pods-Peggy Meter"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -47,7 +47,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C8706E65B4EBFD3D0EA48EECEBCC4FD8"
+            BlueprintIdentifier = "E1FD3CA7202540F70D21FC07BCE24A5F"
             BuildableName = "Pods_Peggy_Meter.framework"
             BlueprintName = "Pods-Peggy Meter"
             ReferencedContainer = "container:Pods.xcodeproj">
