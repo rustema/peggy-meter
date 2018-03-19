@@ -1,0 +1,64 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#09C"
+    android:padding="@dimen/widget_margin">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center"
+        android:gravity="top|center"
+        >
+
+        <Button
+            android:id="@+id/widget_mood0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:textSize="@dimen/smileySize"
+            android:text="😢"/>
+
+
+        <Button
+            android:id="@+id/widget_mood1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:textSize="@dimen/smileySize"
+            android:text="☹️" />
+
+        <Button
+            android:id="@+id/widget_mood2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:textSize="@dimen/smileySize"
+
+            android:text="🙂" />
+
+        <Button
+            android:id="@+id/widget_mood3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:textSize="@dimen/smileySize"
+            android:text="😀" />
+
+
+        <Button
+            android:id="@+id/widget_mood4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:textSize="@dimen/smileySize"
+            android:text="😃" />
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -20,4 +20,7 @@
     <string name="comment_hint">"What's going on?"</string>
     <string name="mic_button_description">Say you mood</string>
     <string name="toggleViewText">📈</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="configure">Configure</string>
+    <string name="add_widget">Add widget</string>
 </resources>
