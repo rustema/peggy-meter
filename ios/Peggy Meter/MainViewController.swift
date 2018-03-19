@@ -9,15 +9,15 @@
 import UIKit
 import Charts
 import PassiveDataKit
-import FirebaseAuthUI
-import FirebaseGoogleAuthUI
 
-class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FUIAuthDelegate {
+class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     //var user: User?
  
     var dataController: DataController!
-    var transmitter: PDKHttpTransmitter!
+    //var transmitter: PDKHttpTransmitter!
     let dateFormatter = DateFormatter()
+    
+    //var pdkListener: PDKFirebaseListener!
 
     @IBOutlet weak var historyTableView: UITableView!
     @IBOutlet var moodButtons: [UIButton]!
@@ -51,7 +51,9 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             moodButton.setTitle(smileys[index], for: .normal)
         }
         
-        startPDK()
+        if let pdkListener = dataController as? PDKDataListener {
+            startPDK(withListener: pdkListener)
+        }
         
         //updateChart()
         
@@ -63,7 +65,8 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // Dispose of any resources that can be recreated.
     }
 
-    func startPDK() {
+    func startPDK(withListener listener: PDKDataListener) {
+        /*
         let transOpts = [
             PDK_TRANSMITTER_UPLOAD_URL_KEY: "https://us-central1-peggy-192804.cloudfunctions.net/ingest-test",
             PDK_SOURCE_KEY: "test_ios",
@@ -71,13 +74,27 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         ]
         
         transmitter = PDKHttpTransmitter(options: transOpts)
-        
+        */
+        //self.pdkListener = PDKFirebaseListener()
         let pdk = PassiveDataKit.sharedInstance()!
+        
+        
+        let rl = pdk.register(listener, for: PDKDataGenerator.location, options: [:])
+        print("registered for location --> \(rl)")
+        
+        let bl = pdk.register(listener, for: PDKDataGenerator.battery, options: [:])
+        print("registered for battery --> \(bl)")
+        
+        let ahl = pdk.register(listener, for: PDKDataGenerator.appleHealthKit, options: [:])
+        print("registered for apple health --> \(ahl)")
+        /*
         pdk.register(transmitter, for: PDKDataGenerator.location)
         pdk.register(transmitter, for: PDKDataGenerator.battery)
         //pdk.register(transmitter, for: PDKDataGenerator.pedometer)
         pdk.register(transmitter, for: PDKDataGenerator.appleHealthKit)
         pdk.add(transmitter)
+        */
+        //print("pending size = \(transmitter.())")
     }
 
     class GraphValueFormatter: DefaultValueFormatter {
