@@ -21,6 +21,7 @@ public class UpdateMoodActivity extends AppCompatActivity {
             controller.addEntry(new LogEntry(
                     new Date(), Integer.valueOf(getIntent().getAction().substring(9)), ""));
         }
+        finish();
 
     }
 }
