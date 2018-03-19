@@ -18,5 +18,6 @@
         completions."
     </string>
     <string name="comment_hint">"What's going on?"</string>
-    <string name="title_activity_login2">Sign in</string>
+    <string name="mic_button_description">Say you mood</string>
+    <string name="toggleViewText">📈</string>
 </resources>

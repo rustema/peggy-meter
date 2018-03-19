@@ -34,9 +34,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HistoryGraphFragment extends Fragment {
+public class HistoryGraphFragment extends Fragment implements HistoryView {
 
-    private LineChart mHistoryGraph;
     private Random mRnd = new Random();
     private long offset;
 
@@ -47,26 +46,22 @@ public class HistoryGraphFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        MainActivity mainActivity = (MainActivity)getActivity();
-        DataController dataController = mainActivity.getDataController();
-        dataController.setGraph(this);
         try {
             this.offset = DateFormat.getInstance().parse("1/1/18 4:5 PM, PDT").getTime();
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        MainActivity mainActivity = (MainActivity)getActivity();
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_history_graph, container, false);
-
-        List<LogEntry> fake_log = new ArrayList<>();
-        fake_log.add(new LogEntry(Calendar.getInstance().getTime(), 3, ""));
-
-        drawGraph(v, fake_log);
+        DataController dataController = mainActivity.getDataController();
+        dataController.setHistoryView(this);
+        drawGraph(v, dataController.getLogs());
         return v;
     }
 
     private void drawGraph(View v, List<LogEntry> log) {
-        mHistoryGraph = v.findViewById(R.id.history_graph);
+        LineChart mHistoryGraph = v.findViewById(R.id.history_graph);
         mHistoryGraph.invalidate();
         mHistoryGraph.fitScreen();
         // Add data.
@@ -120,7 +115,7 @@ public class HistoryGraphFragment extends Fragment {
         leftAxis.setDrawGridLines(true);
         leftAxis.setGranularityEnabled(true);
         leftAxis.setAxisMinimum(0f);
-        leftAxis.setAxisMaximum(10f);
+        leftAxis.setAxisMaximum(4f);
         leftAxis.setYOffset(-9f);
         leftAxis.setTextColor(Color.rgb(255, 192, 56));
 
@@ -129,6 +124,10 @@ public class HistoryGraphFragment extends Fragment {
     }
 
     private void setData(List<LogEntry> entries, LineChart mHistoryGraph) {
+        if (entries.isEmpty()) {
+          //mHistoryGraph.clearValues();
+          return;
+        }
         ArrayList<Entry> values = new ArrayList<Entry>();
 
         for (LogEntry entry : entries) {
@@ -158,6 +157,7 @@ public class HistoryGraphFragment extends Fragment {
         mHistoryGraph.setData(data);
     }
 
+    @Override
     public void refresh(List<LogEntry> entries) {
         this.drawGraph(this.getView(), entries);
     }

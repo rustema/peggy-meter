@@ -10,14 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <ScrollView
+        <LinearLayout
             android:id="@+id/login_form"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <LinearLayout
                 android:id="@+id/email_login_form"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
@@ -29,25 +29,27 @@
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     xmlns:tools="http://schemas.android.com/tools"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     tools:context="io.peggyjo.peggymeter.MainActivity"
                     android:orientation="vertical">
 
                     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:id="@+id/fragment_container"
+                        android:id="@+id/MOOD_CONTROL_FRAGMENT_CONTAINER"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="wrap_content" />
                     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:id="@+id/fragment_container2"
+                        android:id="@+id/HISTORY_FRAGMENT_CONTAINER"
                         android:layout_width="fill_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent" >
+
+                    </FrameLayout>
 
 
                 </LinearLayout>
 
             </LinearLayout>
 
-        </ScrollView>
+        </LinearLayout>
     </FrameLayout>
 
     <android.support.design.widget.NavigationView
@@ -57,6 +59,28 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:menu="@menu/drawer_view"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/modeToggleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:minHeight="0px"
+            android:minWidth="0px"
+            android:textSize="30sp"
+            android:paddingBottom="30sp"
+            android:paddingStart="30sp"
+            android:onClick="onToggleButtonClick"
+            android:background="@android:color/transparent"
+            android:text="@string/toggleViewText" />
+    </RelativeLayout>
+
+
+
 
 </android.support.v4.widget.DrawerLayout>
 
