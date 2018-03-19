@@ -18,6 +18,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -61,6 +62,9 @@ public class HistoryGraphFragment extends Fragment implements HistoryView {
     }
 
     private void drawGraph(View v, List<LogEntry> log) {
+        if (v == null) {
+            return; // No active graphs.
+        }
         LineChart mHistoryGraph = v.findViewById(R.id.history_graph);
         mHistoryGraph.invalidate();
         mHistoryGraph.fitScreen();
@@ -89,16 +93,16 @@ public class HistoryGraphFragment extends Fragment implements HistoryView {
         xAxis.setPosition(XAxis.XAxisPosition.TOP_INSIDE);
         //xAxis.setTypeface(mTfLight);
         mHistoryGraph.getDescription().setText("");
-        xAxis.setTextSize(10f);
+        xAxis.setTextSize(9f);
         xAxis.setTextColor(Color.WHITE);
         xAxis.setDrawAxisLine(false);
         xAxis.setDrawGridLines(true);
         xAxis.setTextColor(Color.rgb(255, 192, 56));
         xAxis.setCenterAxisLabels(true);
-        xAxis.setGranularity(1f); // one second
+        xAxis.setGranularity(60f); // one minute
         xAxis.setValueFormatter(new IAxisValueFormatter() {
 
-            private SimpleDateFormat mFormat = new SimpleDateFormat("HH:mm:ss", Locale.US);
+            private SimpleDateFormat mFormat = new SimpleDateFormat("MMM dd, h a", Locale.US);
 
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
@@ -110,6 +114,7 @@ public class HistoryGraphFragment extends Fragment implements HistoryView {
 
         YAxis leftAxis = mHistoryGraph.getAxisLeft();
         leftAxis.setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART);
+        leftAxis.setDrawLabels(false);
         //leftAxis.setTypeface(mTfLight);
         leftAxis.setTextColor(ColorTemplate.getHoloBlue());
         leftAxis.setDrawGridLines(true);
@@ -141,12 +146,13 @@ public class HistoryGraphFragment extends Fragment implements HistoryView {
         set1.setColor(ColorTemplate.getHoloBlue());
         set1.setValueTextColor(ColorTemplate.getHoloBlue());
         set1.setLineWidth(1.5f);
-        set1.setDrawCircles(false);
-        set1.setDrawValues(false);
+        set1.setDrawCircles(true);
+        set1.setDrawValues(true);
         set1.setFillAlpha(65);
         set1.setFillColor(ColorTemplate.getHoloBlue());
         set1.setHighLightColor(Color.rgb(244, 117, 117));
         set1.setDrawCircleHole(false);
+        set1.setValueFormatter(new SmileyValueFormatter());
 
         // Create a data object with the datasets.
         LineData data = new LineData(set1);
@@ -160,5 +166,12 @@ public class HistoryGraphFragment extends Fragment implements HistoryView {
     @Override
     public void refresh(List<LogEntry> entries) {
         this.drawGraph(this.getView(), entries);
+    }
+
+    private class SmileyValueFormatter implements com.github.mikephil.charting.formatter.IValueFormatter {
+        @Override
+        public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+            return TableRowAdapter.smileys[(int)value];
+        }
     }
 }

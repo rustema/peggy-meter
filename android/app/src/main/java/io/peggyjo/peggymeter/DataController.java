@@ -57,7 +57,9 @@ public class DataController implements ValueEventListener {
 
     void addEntry(LogEntry entry) {
         logs.add(entry);
-        historyView.refresh(logs);
+        if (historyView != null) {
+            historyView.refresh(logs);
+        }
         DatabaseReference newEntry = moods.push();
         newEntry.setValue(ImmutableMap.<String, Object>builder()
                 .put("timestamp", entry.getTime().getTime())
