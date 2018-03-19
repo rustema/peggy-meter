@@ -18,6 +18,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -147,6 +148,7 @@ public class HistoryGraphFragment extends Fragment implements HistoryView {
         set1.setFillColor(ColorTemplate.getHoloBlue());
         set1.setHighLightColor(Color.rgb(244, 117, 117));
         set1.setDrawCircleHole(false);
+        set1.setValueFormatter(new SmileyValueFormatter());
 
         // Create a data object with the datasets.
         LineData data = new LineData(set1);
@@ -160,5 +162,12 @@ public class HistoryGraphFragment extends Fragment implements HistoryView {
     @Override
     public void refresh(List<LogEntry> entries) {
         this.drawGraph(this.getView(), entries);
+    }
+
+    private class SmileyValueFormatter implements com.github.mikephil.charting.formatter.IValueFormatter {
+        @Override
+        public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+            return TableRowAdapter.smileys[(int)value];
+        }
     }
 }
