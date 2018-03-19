@@ -38,7 +38,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:id="@+id/GRAPH_FRAGMENT_CONTAINER"
+                        android:id="@+id/HISTORY_FRAGMENT_CONTAINER"
                         android:layout_width="fill_parent"
                         android:layout_height="match_parent" >
 
@@ -71,8 +71,11 @@
             android:layout_alignParentStart="true"
             android:minHeight="0px"
             android:minWidth="0px"
-            android:textSize="50sp"
+            android:textSize="30sp"
+            android:paddingBottom="30sp"
+            android:paddingStart="30sp"
             android:onClick="onToggleButtonClick"
+            android:background="@android:color/transparent"
             android:text="@string/toggleViewText" />
     </RelativeLayout>
 

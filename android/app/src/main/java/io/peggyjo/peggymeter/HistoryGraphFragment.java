@@ -56,6 +56,7 @@ public class HistoryGraphFragment extends Fragment implements HistoryView {
         View v = inflater.inflate(R.layout.fragment_history_graph, container, false);
         DataController dataController = mainActivity.getDataController();
         dataController.setHistoryView(this);
+        drawGraph(v, dataController.getLogs());
         return v;
     }
 
@@ -123,6 +124,10 @@ public class HistoryGraphFragment extends Fragment implements HistoryView {
     }
 
     private void setData(List<LogEntry> entries, LineChart mHistoryGraph) {
+        if (entries.isEmpty()) {
+          //mHistoryGraph.clearValues();
+          return;
+        }
         ArrayList<Entry> values = new ArrayList<Entry>();
 
         for (LogEntry entry : entries) {

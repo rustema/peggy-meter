@@ -3,6 +3,7 @@ package io.peggyjo.peggymeter;
 import android.util.Log;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -12,6 +13,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +23,10 @@ import java.util.Map;
  */
 public class DataController implements ValueEventListener {
     private static final String TAG = "PeggiMeter.DataCtrl";
+
+    public List<LogEntry> getLogs() {
+        return logs;
+    }
 
     private List<LogEntry> logs;
     private HistoryView historyView;
@@ -35,7 +41,7 @@ public class DataController implements ValueEventListener {
             firebaseAuth.signInAnonymously().addOnCompleteListener((x) -> initDB());
         } else {
             initDB();
-            Log.i(TAG, "Logged as user " + user.getEmail());
+            Log.i(TAG, "Logged as user " + user.getUid());
         }
         this.logs = new ArrayList<>();
     }
@@ -45,7 +51,7 @@ public class DataController implements ValueEventListener {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser user = firebaseAuth.getCurrentUser();
         uid = user.getUid();
-        moods = database.getReference("message").child(uid).child("mood").getRef();
+        moods = database.getReference("users").child(uid).child("mood").getRef();
         moods.addValueEventListener(this);
     }
 
@@ -62,7 +68,6 @@ public class DataController implements ValueEventListener {
 
     void setHistoryView(HistoryView historyView) {
         this.historyView = historyView;
-        historyView.refresh(logs);
     }
 
     @Override
@@ -80,6 +85,7 @@ public class DataController implements ValueEventListener {
                         ((Long) entry.get("moodLevel")).intValue(),
                         "" +entry.get("comment")));
             }
+            Collections.sort(logs, (a, b) -> a.getTime().compareTo(b.getTime()));
             if (historyView != null) {
                 historyView.refresh(logs);
             }

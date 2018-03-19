@@ -18,8 +18,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private DataController dataController;
     private HistoryGraphFragment historyGraphFragment;
-    private ViewMode currentMode;
+    private ViewMode currentMode = ViewMode.Graph;
     private HistoryTextFragment historyTextFragment;
+    private MoodControlFragment moodControlFragment;
 
     public DataController getDataController() {
         return dataController;
@@ -41,21 +42,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     private void showStatScreen() {
+        if (moodControlFragment == null) {
+            moodControlFragment = new MoodControlFragment();
+        }
         switch (currentMode) {
             case Graph:
                 if (historyGraphFragment == null) {
                     historyGraphFragment = new HistoryGraphFragment();
                 }
                 dataController.setHistoryView(historyGraphFragment);
+
                 getSupportFragmentManager().beginTransaction()
-                        .add(R.id.MOOD_CONTROL_FRAGMENT_CONTAINER, new MoodControlFragment())
-                        .add(R.id.GRAPH_FRAGMENT_CONTAINER, historyGraphFragment)
+                        .replace(R.id.MOOD_CONTROL_FRAGMENT_CONTAINER, moodControlFragment)
+                        .replace(R.id.HISTORY_FRAGMENT_CONTAINER, historyGraphFragment)
                         .commit();
                 break;
             case Text:
                 if (historyTextFragment == null) {
-
+                    historyTextFragment = new HistoryTextFragment();
                 }
+                getSupportFragmentManager().beginTransaction().replace(
+                        R.id.MOOD_CONTROL_FRAGMENT_CONTAINER, moodControlFragment).
+                        replace(R.id.HISTORY_FRAGMENT_CONTAINER, historyTextFragment).commit();
 
                 break;
         }
@@ -107,7 +115,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void onToggleButtonClick(View view) {
+        switch (currentMode) {
+            case Text:
+                currentMode = ViewMode.Graph;
+                break;
+            case Graph:
+                currentMode = ViewMode.Text;
+                break;
+            default:
+                Log.w(TAG, "Unknown mode of history: " + currentMode.toString());
+        }
 
+        showStatScreen();
     }
 
     // Menu navigation ends

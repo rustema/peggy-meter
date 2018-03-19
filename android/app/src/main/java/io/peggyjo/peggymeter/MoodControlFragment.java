@@ -77,7 +77,7 @@ public class MoodControlFragment extends Fragment implements View.OnClickListene
         InputMethodManager imm = (InputMethodManager)mainActivity.getSystemService(
                 Context.INPUT_METHOD_SERVICE);
         if (imm != null) {
-       //     imm.hideSoftInputFromWindow(commentView.getWindowToken(), 0);
+            imm.hideSoftInputFromWindow(commentView.getWindowToken(), 0);
         }
         mainActivity.getDataController().addEntry(entry);
 
