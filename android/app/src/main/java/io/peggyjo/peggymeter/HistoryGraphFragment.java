@@ -62,6 +62,9 @@ public class HistoryGraphFragment extends Fragment implements HistoryView {
     }
 
     private void drawGraph(View v, List<LogEntry> log) {
+        if (v == null) {
+            return; // No active graphs.
+        }
         LineChart mHistoryGraph = v.findViewById(R.id.history_graph);
         mHistoryGraph.invalidate();
         mHistoryGraph.fitScreen();
