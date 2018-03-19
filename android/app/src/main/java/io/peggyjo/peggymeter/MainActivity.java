@@ -9,8 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "PeggiMeter.Main";
@@ -18,6 +17,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout mDrawerLayout;
 
     private DataController dataController;
+    private HistoryGraphFragment historyGraphFragment;
+    private ViewMode currentMode = ViewMode.Graph;
+    private HistoryTextFragment historyTextFragment;
+    private MoodControlFragment moodControlFragment;
 
     public DataController getDataController() {
         return dataController;
@@ -39,12 +42,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     private void showStatScreen() {
-        HistoryGraphFragment historyGraphFragment = new HistoryGraphFragment();
-        dataController.setGraph(historyGraphFragment);
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.MOOD_CONTROL_FRAGMENT_CONTAINER, new MoodControlFragment())
-                .add(R.id.GRAPH_FRAGMENT_CONTAINER, historyGraphFragment)
-                .commit();
+        if (moodControlFragment == null) {
+            moodControlFragment = new MoodControlFragment();
+        }
+        switch (currentMode) {
+            case Graph:
+                if (historyGraphFragment == null) {
+                    historyGraphFragment = new HistoryGraphFragment();
+                }
+                dataController.setHistoryView(historyGraphFragment);
+
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.MOOD_CONTROL_FRAGMENT_CONTAINER, moodControlFragment)
+                        .replace(R.id.HISTORY_FRAGMENT_CONTAINER, historyGraphFragment)
+                        .commit();
+                break;
+            case Text:
+                if (historyTextFragment == null) {
+                    historyTextFragment = new HistoryTextFragment();
+                }
+                getSupportFragmentManager().beginTransaction().replace(
+                        R.id.MOOD_CONTROL_FRAGMENT_CONTAINER, moodControlFragment).
+                        replace(R.id.HISTORY_FRAGMENT_CONTAINER, historyTextFragment).commit();
+
+                break;
+        }
     }
 
     private void installMenu() {
@@ -90,6 +112,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         return true;
+    }
+
+    public void onToggleButtonClick(View view) {
+        switch (currentMode) {
+            case Text:
+                currentMode = ViewMode.Graph;
+                break;
+            case Graph:
+                currentMode = ViewMode.Text;
+                break;
+            default:
+                Log.w(TAG, "Unknown mode of history: " + currentMode.toString());
+        }
+
+        showStatScreen();
     }
 
     // Menu navigation ends

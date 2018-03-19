@@ -24,8 +24,12 @@ import java.util.Map;
 public class DataController implements ValueEventListener {
     private static final String TAG = "PeggiMeter.DataCtrl";
 
+    public List<LogEntry> getLogs() {
+        return logs;
+    }
+
     private List<LogEntry> logs;
-    private HistoryGraphFragment graph;
+    private HistoryView historyView;
     private DatabaseReference moods;
     private String uid;
 
@@ -53,8 +57,8 @@ public class DataController implements ValueEventListener {
 
     void addEntry(LogEntry entry) {
         logs.add(entry);
-        if (graph != null) {
-            graph.refresh(logs);
+        if (historyView != null) {
+            historyView.refresh(logs);
         }
         DatabaseReference newEntry = moods.push();
         newEntry.setValue(ImmutableMap.<String, Object>builder()
@@ -64,8 +68,8 @@ public class DataController implements ValueEventListener {
                 .build());
     }
 
-    void setGraph(HistoryGraphFragment graph) {
-        this.graph = graph;
+    void setHistoryView(HistoryView historyView) {
+        this.historyView = historyView;
     }
 
     @Override
@@ -84,8 +88,8 @@ public class DataController implements ValueEventListener {
                         "" +entry.get("comment")));
             }
             Collections.sort(logs, (a, b) -> a.getTime().compareTo(b.getTime()));
-            if (graph != null) {
-                graph.refresh(logs);
+            if (historyView != null) {
+                historyView.refresh(logs);
             }
         }
     }
