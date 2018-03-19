@@ -23,6 +23,8 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet var moodButtons: [UIButton]!
     @IBOutlet weak var lineChartView: LineChartView!
     
+    weak var axisFormatDelegate: IAxisValueFormatter?
+    
     let smileys: [String] = ["😢", "☹️", "🙂", "😀", "😃"]
 
 
@@ -58,6 +60,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         //updateChart()
         
         self.lineChartView.chartDescription!.text = ""
+        axisFormatDelegate = self as! IAxisValueFormatter
     }
 
     override func didReceiveMemoryWarning() {
@@ -113,11 +116,12 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func updateChart() {
         var points: [ChartDataEntry] = []
-        let now = Date()
+        //let now = Date()
         for moodRecord in self.dataController.getMoodRecords() {
-            if moodRecord.timestamp >= now.addingTimeInterval(-3 * 24 * 3600) {
-                points.append(ChartDataEntry(x: Double((moodRecord.timestamp.timeIntervalSince1970 - now.timeIntervalSince1970) / 60), y: Double(moodRecord.moodLevel)))
-            }
+            //if moodRecord.timestamp >= now.addingTimeInterval(-3 * 24 * 3600) {
+                //points.append(ChartDataEntry(x: Double((moodRecord.timestamp.timeIntervalSince1970 - now.timeIntervalSince1970) / 60), y: Double(moodRecord.moodLevel)))
+            //}
+            points.append(ChartDataEntry(x: Double((moodRecord.timestamp.timeIntervalSince1970)), y: Double(moodRecord.moodLevel)))
         }
         if points.count > 0 {
             let dataSet = LineChartDataSet(values: points, label: "")
@@ -127,6 +131,12 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             lineChartView.data?.clearValues()
         }
         lineChartView.notifyDataSetChanged()
+        let xaxis = lineChartView.xAxis
+        xaxis.valueFormatter = axisFormatDelegate
+        
+        let yaxis = lineChartView.getAxis(YAxis.AxisDependency.left)
+        yaxis.axisMinimum = 0
+        yaxis.axisMaximum = 4
     }
     
     func reloadViews() {
@@ -154,9 +164,6 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             record.moodLevel = (sender as! UIButton).tag
             record.comment = textField.text!
             self.dataController.saveMoodRecord(record)
-            
-            //
-            //self.reloadViews()
         }))
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
@@ -194,5 +201,15 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @IBAction func feedbackButtonClicked(_ sender: Any) {
         UIApplication.shared.openURL(URL(string: "http://www.peggyjo.io")!)
+    }
+}
+
+// MARK: axisFormatDelegate
+extension MainViewController: IAxisValueFormatter {
+    func stringForValue(_ value: Double, axis: AxisBase?) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM dd,\nHH:mm:ss"
+        //dateFormatter.dateFormat = "HH:mm"
+        return dateFormatter.string(from: Date(timeIntervalSince1970: value))
     }
 }
