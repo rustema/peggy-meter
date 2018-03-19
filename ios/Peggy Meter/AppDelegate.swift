@@ -9,9 +9,6 @@
 import UIKit
 import UserNotifications
 import Firebase
-import FirebaseAuthUI
-
-
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {

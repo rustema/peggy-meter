@@ -8,8 +8,10 @@
 
 import UIKit
 import SQLite
+import Firebase
 import FirebaseDatabase
 import FirebaseAuth
+import PassiveDataKit
 
 protocol DataController {
     func getMoodRecords() -> [MoodRecord]
@@ -17,9 +19,10 @@ protocol DataController {
     func deleteMoodRecord(_ record: MoodRecord)
 }
 
-class FirebaseDataController: NSObject, DataController {
+class FirebaseDataController: NSObject, DataController, PDKDataListener {
     var nextId: Int64 = 1
     var ref: DatabaseReference!
+    var db: Firestore!
     var records: [MoodRecord] = []
     var completionHandler:(() -> Void)!
     var user: User!
@@ -45,6 +48,7 @@ class FirebaseDataController: NSObject, DataController {
     }
     private func setupFirebase() {
         ref = Database.database().reference()
+        db = Firestore.firestore()
         
         // If already authenticated, reuse the existing auth info.
         if Auth.auth().currentUser != nil {
@@ -91,6 +95,56 @@ class FirebaseDataController: NSObject, DataController {
     
     func deleteMoodRecord(_ record: MoodRecord) {
         // TODO: implement.
+    }
+    
+    // PDKDataListener methods.
+    func receivedData(_ data: [AnyHashable : Any]!, forCustomGenerator generatorId: String!) {
+        //
+        print("custom generator --> \(generatorId)")
+        print("custom data --> \(data)")
+    }
+    
+    func receivedData(_ data: [AnyHashable : Any]!, for dataGenerator: PDKDataGenerator) {
+        print("pdk data generator --> \(dataGenerator)")
+        
+        /*
+        if dataGenerator == PDKDataGenerator.battery {
+            print("battery")
+        } else
+        if dataGenerator == PDKDataGenerator.location {
+            print("location")
+        }
+        */
+        let generatorId2Name = [
+            PDKDataGenerator.battery: "battery",
+            PDKDataGenerator.location: "location",
+            PDKDataGenerator.appleHealthKit: "healthkit",
+            PDKDataGenerator.events: "events",
+            PDKDataGenerator.googlePlaces: "places"
+        ]
+        let genName = generatorId2Name[dataGenerator] ?? "UNK"
+        print("pdk data --> \(data)")
+
+        if let records = data as? [String: Any] {
+            let uid = self.user.uid
+            let batch = self.db.batch()
+            
+            let d = Int(Date().timeIntervalSince1970)
+            let docKey = "\(uid)-\(String(describing: genName))-\(d)"
+            let docRef = self.db.collection("pdk").document(docKey)
+            batch.setData(records, forDocument: docRef)
+
+            // Commit the batch
+            batch.commit() { err in
+                if let err = err {
+                    print("Error writing batch \(err)")
+                } else {
+                    print("Batch write succeeded.")
+                }
+            }
+        } else {
+            print("PDK Listener - couldn't convert \(data) to [String: Any] :-(")
+        }
     }
 }
 
