@@ -106,15 +106,6 @@ class FirebaseDataController: NSObject, DataController, PDKDataListener {
     
     func receivedData(_ data: [AnyHashable : Any]!, for dataGenerator: PDKDataGenerator) {
         print("pdk data generator --> \(dataGenerator)")
-        
-        /*
-        if dataGenerator == PDKDataGenerator.battery {
-            print("battery")
-        } else
-        if dataGenerator == PDKDataGenerator.location {
-            print("location")
-        }
-        */
         let generatorId2Name = [
             PDKDataGenerator.battery: "battery",
             PDKDataGenerator.location: "location",
@@ -124,7 +115,18 @@ class FirebaseDataController: NSObject, DataController, PDKDataListener {
         ]
         let genName = generatorId2Name[dataGenerator] ?? "UNK"
         print("pdk data --> \(data)")
-
+        if data.isEmpty {
+            print("empty data dictionary for \(genName)")
+            return
+        }
+        // Handle a special case for googlePlaces: a lot of de-facto empty events.
+        if dataGenerator == PDKDataGenerator.googlePlaces, data.count == 1 {
+            let v = data["PDKGooglePlacesInstance"] as? Array<Any> ?? []
+            if v.isEmpty {
+                print("no data for \(genName), key: PDKGooglePlacesInstance")
+                return
+            }
+        }
         if let records = data as? [String: Any] {
             let uid = self.user.uid
             let batch = self.db.batch()

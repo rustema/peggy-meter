@@ -90,14 +90,17 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         let ahl = pdk.register(listener, for: PDKDataGenerator.appleHealthKit, options: [:])
         print("registered for apple health --> \(ahl)")
-        /*
-        pdk.register(transmitter, for: PDKDataGenerator.location)
-        pdk.register(transmitter, for: PDKDataGenerator.battery)
-        //pdk.register(transmitter, for: PDKDataGenerator.pedometer)
-        pdk.register(transmitter, for: PDKDataGenerator.appleHealthKit)
-        pdk.add(transmitter)
-        */
-        //print("pending size = \(transmitter.())")
+        
+        let el = pdk.register(listener, for: PDKDataGenerator.events, options: [:])
+        print("registered for apple health --> \(el)")
+        
+        let pl = pdk.register(listener, for: PDKDataGenerator.googlePlaces, options: [:])
+        print("registered for apple health --> \(pl)")
+
+        if #available(iOS 10.0, *) {
+            let pdl = pdk.register(listener, for: PDKDataGenerator.pedometer, options: [:])
+            print("registered for apple health --> \(pdl)")
+        }
     }
 
     class GraphValueFormatter: DefaultValueFormatter {
@@ -134,9 +137,9 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let xaxis = lineChartView.xAxis
         xaxis.valueFormatter = axisFormatDelegate
         
-        let yaxis = lineChartView.getAxis(YAxis.AxisDependency.left)
-        yaxis.axisMinimum = 0
-        yaxis.axisMaximum = 4
+        lineChartView.getAxis(YAxis.AxisDependency.left).enabled = false
+        lineChartView.getAxis(YAxis.AxisDependency.right).enabled = false
+        //yaxis.enabled = false
     }
     
     func reloadViews() {
@@ -206,9 +209,10 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
 // MARK: axisFormatDelegate
 extension MainViewController: IAxisValueFormatter {
+    // Graph date formatter.
     func stringForValue(_ value: Double, axis: AxisBase?) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM dd,\nHH:mm:ss"
+        dateFormatter.dateFormat = "MMM dd,\nHH:mm"
         //dateFormatter.dateFormat = "HH:mm"
         return dateFormatter.string(from: Date(timeIntervalSince1970: value))
     }

@@ -37,7 +37,6 @@ import java.util.concurrent.TimeUnit;
  */
 public class HistoryGraphFragment extends Fragment implements HistoryView {
 
-    private Random mRnd = new Random();
     private long offset;
 
     public HistoryGraphFragment() {
@@ -171,7 +170,14 @@ public class HistoryGraphFragment extends Fragment implements HistoryView {
     private class SmileyValueFormatter implements com.github.mikephil.charting.formatter.IValueFormatter {
         @Override
         public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
-            return TableRowAdapter.smileys[(int)value];
+            String[] smileys = {
+                    getResources().getString(R.string.smile0),
+                    getResources().getString(R.string.smile1),
+                    getResources().getString(R.string.smile2),
+                    getResources().getString(R.string.smile3),
+                    getResources().getString(R.string.smile4)};
+
+            return smileys[(int)value];
         }
     }
 }

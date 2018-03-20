@@ -42,7 +42,13 @@ public class HistoryTextFragment extends Fragment implements HistoryView {
 
     private void renderLog(View view, List<LogEntry> logs) {
         ListView table = view.findViewById(R.id.LOG_ENTRIES_CONTAINER);
-        table.setAdapter(new TableRowAdapter(getContext(), R.layout.listview_item_row, reverse(logs)));
+        String[] smileys = new String[]{
+                getResources().getString(R.string.smile0),
+                getResources().getString(R.string.smile1),
+                getResources().getString(R.string.smile2),
+                getResources().getString(R.string.smile3),
+                getResources().getString(R.string.smile4)};
+        table.setAdapter(new TableRowAdapter(getContext(), R.layout.listview_item_row, reverse(logs), smileys));
     }
 
     @Override

@@ -24,11 +24,12 @@ public class TableRowAdapter extends ArrayAdapter<LogEntry> {
     private SimpleDateFormat mFormat = new SimpleDateFormat("MMM dd, YYYY, HH:mm:ss", Locale.US);
     private int resource;
     private List<LogEntry> entries;
-    public static String[] smileys = {"😢", "☹️", "🙂", "😀", "😃"};
+    private String[] smileys;
 
-    public TableRowAdapter(@NonNull Context context, int resource, @NonNull List<LogEntry> objects) {
+    public TableRowAdapter(@NonNull Context context, int resource, @NonNull List<LogEntry> objects, String[] smileys) {
         super(context, resource, objects);
         this.resource = resource;
+        this.smileys = smileys;
         entries = objects;
     }
 
@@ -36,7 +37,7 @@ public class TableRowAdapter extends ArrayAdapter<LogEntry> {
     @Override
     public View getView(int position, View row, @NonNull ViewGroup parent) {
         TextView date, comment, mood;
-        LayoutInflater inflater = ((Activity)getContext()).getLayoutInflater();
+        LayoutInflater inflater = ((Activity) getContext()).getLayoutInflater();
         row = inflater.inflate(resource, parent, false);
 
         date = row.findViewById(R.id.ENTRY_DATE);
