@@ -23,7 +23,7 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:textSize="@dimen/smileySize"
-            android:text="😢"/>
+            android:text="@string/smile0"/>
 
 
         <Button
@@ -33,7 +33,7 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:textSize="@dimen/smileySize"
-            android:text="☹️" />
+            android:text="@string/smile1" />
 
         <Button
             android:id="@+id/mood2"
@@ -43,7 +43,7 @@
             android:background="@android:color/transparent"
             android:textSize="@dimen/smileySize"
 
-            android:text="🙂" />
+            android:text="@string/smile2" />
 
         <Button
             android:id="@+id/mood3"
@@ -52,7 +52,7 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:textSize="@dimen/smileySize"
-            android:text="😀" />
+            android:text="@string/smile3" />
 
 
         <Button
@@ -62,7 +62,7 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:textSize="@dimen/smileySize"
-            android:text="😃" />
+            android:text="@string/smile4" />
     </LinearLayout>
 
 
