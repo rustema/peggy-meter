@@ -24,13 +24,12 @@ public class TableRowAdapter extends ArrayAdapter<LogEntry> {
     private SimpleDateFormat mFormat = new SimpleDateFormat("MMM dd, YYYY, HH:mm:ss", Locale.US);
     private int resource;
     private List<LogEntry> entries;
-    static String[] smileys = {String.valueOf(R.string.smile0), String.valueOf(R.string.smile0),
-            String.valueOf(R.string.smile0), String.valueOf(R.string.smile0),
-            String.valueOf(R.string.smile0)};
+    private String[] smileys;
 
-    public TableRowAdapter(@NonNull Context context, int resource, @NonNull List<LogEntry> objects) {
+    public TableRowAdapter(@NonNull Context context, int resource, @NonNull List<LogEntry> objects, String[] smileys) {
         super(context, resource, objects);
         this.resource = resource;
+        this.smileys = smileys;
         entries = objects;
     }
 
