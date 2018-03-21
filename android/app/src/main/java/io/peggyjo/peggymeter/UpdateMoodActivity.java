@@ -1,7 +1,5 @@
 package io.peggyjo.peggymeter;
 
-import android.content.Context;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +8,9 @@ import android.widget.Toast;
 import com.google.common.collect.ImmutableList;
 
 import java.util.Date;
+
+import io.peggyjo.peggymeter.database.DataController;
+import io.peggyjo.peggymeter.model.LogEntry;
 
 public class UpdateMoodActivity extends AppCompatActivity {
     private static final ImmutableList<String> messages = ImmutableList.of(
@@ -29,7 +30,7 @@ public class UpdateMoodActivity extends AppCompatActivity {
         if (getIntent().getAction().startsWith("SET_MOOD_")) {
             Log.i(TAG, getIntent().getAction());
             int mood = Integer.valueOf(getIntent().getAction().substring(9));
-            controller.addEntry(new LogEntry(
+            controller.getMoodAdapter().addEntry(new LogEntry(
                     new Date(), mood, ""));
             Toast toast = Toast.makeText(getApplicationContext(), messages.get(mood), Toast.LENGTH_SHORT);
             toast.show();

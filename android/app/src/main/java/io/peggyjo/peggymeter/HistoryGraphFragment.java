@@ -24,18 +24,20 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
+
+import io.peggyjo.peggymeter.database.DataController;
+import io.peggyjo.peggymeter.model.MoodListener;
+import io.peggyjo.peggymeter.model.LogEntry;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HistoryGraphFragment extends Fragment implements HistoryView {
+public class HistoryGraphFragment extends Fragment implements MoodListener {
 
     private long offset;
 
@@ -55,8 +57,8 @@ public class HistoryGraphFragment extends Fragment implements HistoryView {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_history_graph, container, false);
         DataController dataController = mainActivity.getDataController();
-        dataController.setHistoryView(this);
-        drawGraph(v, dataController.getLogs());
+        dataController.getMoodAdapter().addListener(this);
+        drawGraph(v, dataController.getMoodAdapter().getLogs());
         return v;
     }
 

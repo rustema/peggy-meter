@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
+import io.peggyjo.peggymeter.database.DataController;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "PeggiMeter.Main";
 
@@ -22,6 +24,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private HistoryTextFragment historyTextFragment;
     private MoodControlFragment moodControlFragment;
 
+    public MainActivity() {
+        this.dataController = new DataController();
+    }
+
     public DataController getDataController() {
         return dataController;
     }
@@ -29,7 +35,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.dataController = new DataController();
         showStatScreen();
         setContentView(R.layout.activity_main);
         installMenu();
@@ -50,7 +55,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (historyGraphFragment == null) {
                     historyGraphFragment = new HistoryGraphFragment();
                 }
-                dataController.setHistoryView(historyGraphFragment);
+                dataController.getMoodAdapter().addListener(historyGraphFragment);
+//                dataController.getSettingAdapter().add
 
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.MOOD_CONTROL_FRAGMENT_CONTAINER, moodControlFragment)

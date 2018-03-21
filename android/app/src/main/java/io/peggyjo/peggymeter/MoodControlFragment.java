@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 import java.util.Calendar;
 
+import io.peggyjo.peggymeter.model.LogEntry;
+
 import static android.Manifest.permission.RECORD_AUDIO;
 import static android.support.v4.content.PermissionChecker.checkCallingOrSelfPermission;
 /**
@@ -79,7 +81,7 @@ public class MoodControlFragment extends Fragment implements View.OnClickListene
         if (imm != null) {
             imm.hideSoftInputFromWindow(commentView.getWindowToken(), 0);
         }
-        mainActivity.getDataController().addEntry(entry);
+        mainActivity.getDataController().getMoodAdapter().addEntry(entry);
 
                 // intentservice (separate background thread ) or async task
         //Log.d("MoodControlFragment -->", "" + b.getId());

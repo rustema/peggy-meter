@@ -6,18 +6,13 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import java.text.SimpleDateFormat;
-import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
+
+import io.peggyjo.peggymeter.database.DataController;
+import io.peggyjo.peggymeter.model.MoodListener;
+import io.peggyjo.peggymeter.model.LogEntry;
 
 import static com.google.common.collect.Lists.reverse;
 
@@ -25,7 +20,7 @@ import static com.google.common.collect.Lists.reverse;
  * Created by vyakunin on 3/18/18.
  */
 
-public class HistoryTextFragment extends Fragment implements HistoryView {
+public class HistoryTextFragment extends Fragment implements MoodListener {
     public HistoryTextFragment() {
     }
 
@@ -33,10 +28,10 @@ public class HistoryTextFragment extends Fragment implements HistoryView {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         MainActivity mainActivity = (MainActivity)getActivity();
         DataController dataController = mainActivity.getDataController();
-        dataController.setHistoryView(this);
+        dataController.getMoodAdapter().addListener(this);
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_history_text, container, false);
-        renderLog(view, dataController.getLogs());
+        renderLog(view, dataController.getMoodAdapter().getLogs());
         return view;
     }
 
