@@ -25,7 +25,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     weak var axisFormatDelegate: IAxisValueFormatter?
     
-    let smileys: [String] = ["😢", "☹️", "🙂", "😀", "😃"]
+    let smileys: [String] = ["😢", "☹️", "😐", "🙂", "😀"]
 
 
     
