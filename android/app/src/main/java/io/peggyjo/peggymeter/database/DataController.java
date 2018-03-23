@@ -15,7 +15,6 @@ public class DataController {
 
     private MoodAdapter moodAdapter;
     private SettingAdapter settingAdapter;
-    private DatabaseReference settings;
     private String uid;
 
     public DataController() {

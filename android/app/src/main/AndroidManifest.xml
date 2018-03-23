@@ -33,7 +33,11 @@
                 android:resource="@xml/mood_widget_info" />
         </receiver>
 
-        <activity android:name=".UpdateMoodActivity"></activity>
+        <activity android:name=".UpdateMoodActivity" />
+        <activity
+            android:name=".FirstTimeActivity"
+            android:label="@string/title_activity_first_time"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
     </application>
 
 </manifest>

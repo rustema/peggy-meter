@@ -16,6 +16,8 @@ import java.util.Map;
 import io.peggyjo.peggymeter.model.LogEntry;
 import io.peggyjo.peggymeter.model.SettingListener;
 
+import static io.peggyjo.peggymeter.model.Constants.SYSTEM_PROPERTY;
+
 /**
  * Created by demetr on 3/20/18.
  */
@@ -39,7 +41,7 @@ public class SettingAdapter implements ValueEventListener {
     public void onDataChange(DataSnapshot dataSnapshot) {
         Object values = dataSnapshot.getValue(Object.class);
         if (values == null) {
-            // TODO init database.
+            settings.child(SYSTEM_PROPERTY).setValue(android.os.Build.VERSION.SDK_INT);
         } else if (values instanceof Map) {
             Map<String, Object> data = (Map<String, Object>) values;
             Log.i(TAG, "" + data);
@@ -58,5 +60,9 @@ public class SettingAdapter implements ValueEventListener {
     public void setProperty(String key, Object value) {
         settingsLocalCache.put(key, value);
         settings.child(key).setValue(value);
+    }
+
+    public void addListener(SettingListener settingListener) {
+        listeners.add(settingListener);
     }
 }

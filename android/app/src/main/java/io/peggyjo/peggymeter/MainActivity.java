@@ -1,5 +1,6 @@
 package io.peggyjo.peggymeter;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,6 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import io.peggyjo.peggymeter.database.DataController;
+
+import static io.peggyjo.peggymeter.model.Constants.OPT_IN_PROPERTY;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "PeggiMeter.Main";
@@ -56,7 +59,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     historyGraphFragment = new HistoryGraphFragment();
                 }
                 dataController.getMoodAdapter().addListener(historyGraphFragment);
-//                dataController.getSettingAdapter().add
+                dataController.getSettingAdapter().addListener((setting) -> {
+                    if (!setting.containsKey(OPT_IN_PROPERTY)) {
+                        startFirstTimeActivity();
+                    } else if ((boolean) setting.get(OPT_IN_PROPERTY)) {
+                        // Start PDK
+                    } else {
+                        // Stop PDK
+                    }
+                });
 
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.MOOD_CONTROL_FRAGMENT_CONTAINER, moodControlFragment)
@@ -73,6 +84,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 break;
         }
+    }
+
+    private void startFirstTimeActivity() {
+        startActivity(new Intent(getApplicationContext(), FirstTimeActivity.class));
     }
 
     private void installMenu() {
