@@ -28,7 +28,7 @@ public class HistoryTextFragment extends Fragment implements MoodListener {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         MainActivity mainActivity = (MainActivity)getActivity();
         DataController dataController = mainActivity.getDataController();
-        dataController.getMoodAdapter().addListener(this);
+        dataController.addMoodListener(this);
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_history_text, container, false);
         renderLog(view, dataController.getMoodAdapter().getLogs());

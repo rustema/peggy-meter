@@ -58,8 +58,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (historyGraphFragment == null) {
                     historyGraphFragment = new HistoryGraphFragment();
                 }
-                dataController.getMoodAdapter().addListener(historyGraphFragment);
-                dataController.getSettingAdapter().addListener((setting) -> {
+                dataController.addMoodListener(historyGraphFragment);
+                dataController.addSettingListener((setting) -> {
                     if (!setting.containsKey(OPT_IN_PROPERTY)) {
                         startFirstTimeActivity();
                     } else if ((boolean) setting.get(OPT_IN_PROPERTY)) {

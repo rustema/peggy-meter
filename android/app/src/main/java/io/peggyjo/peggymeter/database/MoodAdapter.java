@@ -79,7 +79,7 @@ public class MoodAdapter implements ValueEventListener {
                 .build());
     }
 
-    public void addListener(MoodListener listener) {
+    void addListener(MoodListener listener) {
         this.listeners.add(listener);
     }
 }

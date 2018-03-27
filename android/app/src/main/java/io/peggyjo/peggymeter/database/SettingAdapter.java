@@ -62,7 +62,7 @@ public class SettingAdapter implements ValueEventListener {
         settings.child(key).setValue(value);
     }
 
-    public void addListener(SettingListener settingListener) {
+    void addListener(SettingListener settingListener) {
         listeners.add(settingListener);
     }
 }
