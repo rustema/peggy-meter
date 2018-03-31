@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="M4Y-Lb-cyx">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Peggy Widget View Controller-->
+        <scene sceneID="cwh-vc-ff4">
+            <objects>
+                <viewController id="M4Y-Lb-cyx" customClass="PeggyWidgetViewController" customModule="Peggy_Meter_WIdget" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="hvX-mv-eGT">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PuM-Kz-tOu">
+                                <rect key="frame" x="0.0" y="6.5" width="64" height="51"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <state key="normal" title="Bad"/>
+                                <connections>
+                                    <action selector="moodLevelButtonClicked:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="YTj-jX-HXQ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nle-hi-cH6">
+                                <rect key="frame" x="128" y="6.5" width="64" height="51"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <state key="normal" title="OK"/>
+                                <connections>
+                                    <action selector="moodLevelButtonClicked:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="s5R-Ms-gha"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DnT-vJ-lGa">
+                                <rect key="frame" x="256" y="6.5" width="64" height="51"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <state key="normal" title="Good"/>
+                                <connections>
+                                    <action selector="moodLevelButtonClicked:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="gfE-FO-jeP"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Je3-zU-bvo">
+                                <rect key="frame" x="64" y="6.5" width="64" height="51"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <state key="normal" title="So-so"/>
+                                <connections>
+                                    <action selector="moodLevelButtonClicked:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="HQA-he-4YD"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SVM-pg-Wej">
+                                <rect key="frame" x="192" y="6.5" width="64" height="51"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <state key="normal" title="Not bad"/>
+                                <connections>
+                                    <action selector="moodLevelButtonClicked:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="j5f-Dn-72p"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.39607843139999999" green="0.78039215689999997" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="SVM-pg-Wej" firstAttribute="width" secondItem="PuM-Kz-tOu" secondAttribute="width" id="0YS-Bx-Hmc"/>
+                            <constraint firstItem="Je3-zU-bvo" firstAttribute="width" secondItem="PuM-Kz-tOu" secondAttribute="width" id="5FT-KS-LD5"/>
+                            <constraint firstItem="PuM-Kz-tOu" firstAttribute="centerY" secondItem="hvX-mv-eGT" secondAttribute="centerY" id="8I0-xC-u3E"/>
+                            <constraint firstAttribute="trailing" secondItem="DnT-vJ-lGa" secondAttribute="trailing" id="A4k-TH-a0g"/>
+                            <constraint firstItem="DnT-vJ-lGa" firstAttribute="leading" secondItem="SVM-pg-Wej" secondAttribute="trailing" id="Cuf-gI-tLM"/>
+                            <constraint firstItem="nle-hi-cH6" firstAttribute="width" secondItem="PuM-Kz-tOu" secondAttribute="width" id="LhM-JC-Ebv"/>
+                            <constraint firstItem="nle-hi-cH6" firstAttribute="centerY" secondItem="hvX-mv-eGT" secondAttribute="centerY" id="Lhw-YQ-RqG"/>
+                            <constraint firstItem="DnT-vJ-lGa" firstAttribute="width" secondItem="PuM-Kz-tOu" secondAttribute="width" id="NCC-A5-4Vr"/>
+                            <constraint firstItem="nle-hi-cH6" firstAttribute="leading" secondItem="Je3-zU-bvo" secondAttribute="trailing" id="T3t-8E-OtG"/>
+                            <constraint firstItem="Je3-zU-bvo" firstAttribute="centerY" secondItem="hvX-mv-eGT" secondAttribute="centerY" id="cH6-2y-5qW"/>
+                            <constraint firstItem="SVM-pg-Wej" firstAttribute="leading" secondItem="nle-hi-cH6" secondAttribute="trailing" id="oOO-bS-uey"/>
+                            <constraint firstAttribute="height" constant="64" id="pug-BL-ySo"/>
+                            <constraint firstItem="PuM-Kz-tOu" firstAttribute="leading" secondItem="hvX-mv-eGT" secondAttribute="leading" id="r1b-WW-tUJ"/>
+                            <constraint firstItem="DnT-vJ-lGa" firstAttribute="centerY" secondItem="hvX-mv-eGT" secondAttribute="centerY" id="r7K-eL-r0R"/>
+                            <constraint firstItem="SVM-pg-Wej" firstAttribute="centerY" secondItem="hvX-mv-eGT" secondAttribute="centerY" id="sM1-Fl-HnS"/>
+                            <constraint firstItem="Je3-zU-bvo" firstAttribute="leading" secondItem="PuM-Kz-tOu" secondAttribute="trailing" id="ugH-Bm-6Tt"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="nbc-FI-mcX"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="64"/>
+                    <connections>
+                        <outletCollection property="moodButtons" destination="PuM-Kz-tOu" collectionClass="NSMutableArray" id="lAm-C6-TgJ"/>
+                        <outletCollection property="moodButtons" destination="Je3-zU-bvo" collectionClass="NSMutableArray" id="Qlg-ry-XMd"/>
+                        <outletCollection property="moodButtons" destination="nle-hi-cH6" collectionClass="NSMutableArray" id="YHq-8Q-4Xt"/>
+                        <outletCollection property="moodButtons" destination="SVM-pg-Wej" collectionClass="NSMutableArray" id="Tkf-W9-hpe"/>
+                        <outletCollection property="moodButtons" destination="DnT-vJ-lGa" collectionClass="NSMutableArray" id="B5B-9M-37W"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vXp-U4-Rya" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+    </scenes>
+</document>

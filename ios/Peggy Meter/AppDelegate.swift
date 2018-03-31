@@ -73,5 +73,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    func application(_ app: UIApplication,
+                      open url: URL,
+                      options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        NotificationCenter.default.post(name: Notification.Name("MoodLevelClick"), object: nil, userInfo: ["MoodLevel":url.host])
+        return true
+    }
 }
 

@@ -26,8 +26,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     weak var axisFormatDelegate: IAxisValueFormatter?
     
     let smileys: [String] = ["😢", "☹️", "😐", "🙂", "😀"]
-
-
+    let moodLevelDescription: [String] = ["Bad", "So-so", "OK", "Good", "Excellent"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,6 +60,8 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         self.lineChartView.chartDescription!.text = ""
         axisFormatDelegate = self as! IAxisValueFormatter
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.moodLevelClickEventReceived(_:)), name: Notification.Name("MoodLevelClick"), object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -152,8 +153,16 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.historyTableView.isHidden = !self.historyTableView.isHidden
     }
     
+    func moodLevelClickEventReceived(_ notification: Notification) {
+        self.processMoodLevelClick(Int(notification.userInfo!["MoodLevel"] as! String)!)
+    }
+    
     @IBAction func moodLevelButtonClicked(_ sender: Any) {
-        let alert = UIAlertController(title: "Feeling \((sender as! UIButton).titleLabel!.text ?? "normal")", message: "Enter a comment (optional)", preferredStyle: .alert)
+        self.processMoodLevelClick((sender as! UIButton).tag)
+    }
+    
+    func processMoodLevelClick(_ level: Int) {
+        let alert = UIAlertController(title: "Feeling \(moodLevelDescription[level])", message: "Enter a comment (optional)", preferredStyle: .alert)
         
         alert.addTextField { (textField) in
             textField.placeholder = "Just god a job offer!"
@@ -164,7 +173,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             print("Text field: \(String(describing: textField.text))")
             
             let record: MoodRecord = MoodRecord()
-            record.moodLevel = (sender as! UIButton).tag
+            record.moodLevel = level
             record.comment = textField.text!
             self.dataController.saveMoodRecord(record)
         }))
