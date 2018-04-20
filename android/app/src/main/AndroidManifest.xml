@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="io.peggyjo.peggymeter">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
@@ -14,7 +15,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        tools:replace="android:supportsRtl,android:allowBackup,android:theme">
+        <meta-data
+            android:name="com.google.android.awareness.API_KEY"
+            android:value="AIzaSyByT4M30zaJdWnNtYxwTfROFTxNWxC6azo"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

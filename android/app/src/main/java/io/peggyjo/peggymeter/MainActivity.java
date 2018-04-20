@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.audacious_software.passive_data_kit.PassiveDataKit;
+
 import io.peggyjo.peggymeter.database.DataController;
 
 import static io.peggyjo.peggymeter.model.Constants.OPT_IN_PROPERTY;
@@ -63,7 +65,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     if (!setting.containsKey(OPT_IN_PROPERTY)) {
                         startFirstTimeActivity();
                     } else if ((boolean) setting.get(OPT_IN_PROPERTY)) {
-                        // Start PDK
+                        PassiveDataKit pdk = PassiveDataKit.getInstance(this);
+                        pdk.setStartForegroundService(true);
+                        pdk.start();
                     } else {
                         // Stop PDK
                     }
