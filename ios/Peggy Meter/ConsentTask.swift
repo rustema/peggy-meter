@@ -15,9 +15,9 @@ public var ConsentTask: ORKOrderedTask {
     
     let sectionTypes: [ORKConsentSectionType] = [
         .overview,
-        .dataGathering,
+        //.dataGathering,
         .privacy,
-        .dataUse,
+        //.dataUse,
         //.timeCommitment,
         //.studySurvey,
         //.studyTasks,
@@ -26,8 +26,14 @@ public var ConsentTask: ORKOrderedTask {
     
     let consentSections: [ORKConsentSection] = sectionTypes.map { contentSectionType in
         let consentSection = ORKConsentSection(type: contentSectionType)
-        consentSection.summary = "Complete the study"
-        consentSection.content = "This survey will ask you three questions and you will also measure your tapping speed by performing a small activity."
+        if contentSectionType == ORKConsentSectionType.overview {
+            consentSection.summary = "Welcome to PeggyJo Mood Meter Alpha!"
+            consentSection.htmlContent = "Our mission is to help you to better understand yourself and improve your wellbeing. You can register your mood with our widget or application and if you agree we'll anonymously collect passive mobile data to give you additional insights in the future <a href='http://www.peggyjo.io'>learn why you should believe in us and our privacy promise</a>.<br><br>This is our Alpha product and we really appreciate your feedback!<br><br>Help us with our mission by sharing your anonymized data?"
+            
+        } else if contentSectionType == ORKConsentSectionType.privacy {
+            consentSection.summary = "Privacy Policy"
+            consentSection.htmlContent = "By tapping Agree you agree to the terms of our privacy policy: <a href='http://www.peggyjo.io/privacy'>www.peggyjo.io/privacy</a>."
+        }
         return consentSection
     }
     
