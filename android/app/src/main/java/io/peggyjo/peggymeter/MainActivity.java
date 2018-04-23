@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ViewMode currentMode = ViewMode.Graph;
     private HistoryTextFragment historyTextFragment;
     private MoodControlFragment moodControlFragment;
+    private PDKListener pdkListener;
 
     public MainActivity() {
         this.dataController = new DataController();
@@ -68,6 +69,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         PassiveDataKit pdk = PassiveDataKit.getInstance(this);
                         pdk.setStartForegroundService(true);
                         pdk.start();
+                        pdkListener = new PDKListener();
+                        pdkListener.initialize(this);
                     } else {
                         // Stop PDK
                     }
