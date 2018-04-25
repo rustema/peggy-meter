@@ -32,7 +32,7 @@ public var ConsentTask: ORKOrderedTask {
             
         } else if contentSectionType == ORKConsentSectionType.privacy {
             consentSection.summary = "Privacy Policy"
-            consentSection.htmlContent = "By tapping Agree you agree to the terms of our privacy policy: <a href='http://www.peggyjo.io/privacy'>www.peggyjo.io/privacy</a>."
+            consentSection.htmlContent = "By tapping Agree you agree to the terms of <a href='https://docs.google.com/document/d/e/2PACX-1vSgaPTCkD7vaIJH2P9Y2KR0WxTvcDqGtjS1EGp7V35ZCYVtW3EIKAUENOCqHA-W5tPKJ_-dMa0vOMdK/pub'>our privacy policy</a>."
         }
         return consentSection
     }
