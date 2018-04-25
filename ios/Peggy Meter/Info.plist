@@ -36,13 +36,21 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>3</string>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Record video data for ML</string>
+	<key>NSHealthShareUsageDescription</key>
+	<string>Record health data for ML</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>Record health update usage for ML</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Track location</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Record mic usage data for ML</string>
 	<key>NSMotionUsageDescription</key>
 	<string>Track motion</string>
 	<key>UILaunchStoryboardName</key>
