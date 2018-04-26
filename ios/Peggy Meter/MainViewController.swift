@@ -12,22 +12,22 @@ import PassiveDataKit
 
 class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     //var user: User?
- 
+
     var dataController: DataController!
     //var transmitter: PDKHttpTransmitter!
     let dateFormatter = DateFormatter()
-    
+
     //var pdkListener: PDKFirebaseListener!
 
     @IBOutlet weak var historyTableView: UITableView!
     @IBOutlet var moodButtons: [UIButton]!
     @IBOutlet weak var lineChartView: LineChartView!
-    
+
     weak var axisFormatDelegate: IAxisValueFormatter?
-    
+
     let smileys: [String] = ["😢", "☹️", "😐", "🙂", "😀"]
     let moodLevelDescription: [String] = ["Bad", "So-so", "OK", "Good", "Excellent"]
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -37,30 +37,30 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // A more sophisticated solution per https://stackoverflow.com/questions/28091015/hide-back-button-in-navigation-bar-with-hidesbackbutton-in-swift
         let backButton = UIBarButtonItem(title: "", style: .plain, target: navigationController, action: nil)
         self.navigationItem.leftBarButtonItem = backButton
-        
+
         // Sign in anonymously.
         //login()
-        
+
         // Application logic setup.
         //dataController = SQLiteDataController(self.reloadViews)
         dataController = FirebaseDataController(self.reloadViews)
 
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .medium
-        
+
         for (index, moodButton) in moodButtons.enumerated() {
             moodButton.setTitle(smileys[index], for: .normal)
         }
-        
+
         if let pdkListener = dataController as? PDKDataListener {
             startPDK(withListener: pdkListener)
         }
-        
+
         //updateChart()
-        
+
         self.lineChartView.chartDescription!.text = ""
         axisFormatDelegate = self as! IAxisValueFormatter
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(self.moodLevelClickEventReceived(_:)), name: Notification.Name("MoodLevelClick"), object: nil)
     }
 
@@ -76,25 +76,25 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             PDK_SOURCE_KEY: "test_ios",
             PDK_TRANSMITTER_ID_KEY: "test_user_ios"
         ]
-        
+
         transmitter = PDKHttpTransmitter(options: transOpts)
         */
         //self.pdkListener = PDKFirebaseListener()
         let pdk = PassiveDataKit.sharedInstance()!
-        
-        
+
+
         let rl = pdk.register(listener, for: PDKDataGenerator.location, options: [:])
         print("registered for location --> \(rl)")
-        
+
         let bl = pdk.register(listener, for: PDKDataGenerator.battery, options: [:])
         print("registered for battery --> \(bl)")
-        
+
         let ahl = pdk.register(listener, for: PDKDataGenerator.appleHealthKit, options: [:])
         print("registered for apple health --> \(ahl)")
-        
+
         let el = pdk.register(listener, for: PDKDataGenerator.events, options: [:])
         print("registered for apple health --> \(el)")
-        
+
         let pl = pdk.register(listener, for: PDKDataGenerator.googlePlaces, options: [:])
         print("registered for apple health --> \(pl)")
 
@@ -105,19 +105,19 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
 
     class GraphValueFormatter: DefaultValueFormatter {
-        
+
         var smileys: [String] = []
-        
+
         init(_ smileys: [String]) {
             super.init()
             self.smileys = smileys
         }
-        
+
         override func stringForValue(_ value: Double, entry: ChartDataEntry, dataSetIndex: Int, viewPortHandler: ViewPortHandler?) -> String {
             return self.smileys[Int(value)]
         }
     }
-    
+
     func updateChart() {
         var points: [ChartDataEntry] = []
         //let now = Date()
@@ -137,12 +137,12 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         lineChartView.notifyDataSetChanged()
         let xaxis = lineChartView.xAxis
         xaxis.valueFormatter = axisFormatDelegate
-        
+
         lineChartView.getAxis(YAxis.AxisDependency.left).enabled = false
         lineChartView.getAxis(YAxis.AxisDependency.right).enabled = false
         //yaxis.enabled = false
     }
-    
+
     func reloadViews() {
         self.historyTableView.reloadData()
         self.updateChart()
@@ -152,47 +152,47 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.lineChartView.isHidden = !self.lineChartView.isHidden
         self.historyTableView.isHidden = !self.historyTableView.isHidden
     }
-    
+
     func moodLevelClickEventReceived(_ notification: Notification) {
         self.processMoodLevelClick(Int(notification.userInfo!["MoodLevel"] as! String)!)
     }
-    
+
     @IBAction func moodLevelButtonClicked(_ sender: Any) {
         self.processMoodLevelClick((sender as! UIButton).tag)
     }
-    
+
     func processMoodLevelClick(_ level: Int) {
         let alert = UIAlertController(title: "Feeling \(moodLevelDescription[level])", message: "Enter a comment (optional)", preferredStyle: .alert)
-        
+
         alert.addTextField { (textField) in
-            textField.placeholder = "Just god a job offer!"
+            textField.placeholder = "Just got a job offer!"
         }
-        
+
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
             let textField = alert!.textFields![0]
             print("Text field: \(String(describing: textField.text))")
-            
+
             let record: MoodRecord = MoodRecord()
             record.moodLevel = level
             record.comment = textField.text!
             self.dataController.saveMoodRecord(record)
         }))
-        
+
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        
+
         self.present(alert, animated: true, completion: nil)
     }
-    
+
     func tableView(_ tableView: UITableView,
                    heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 64.0
     }
-    
+
     func tableView(_ tableView: UITableView,
                    numberOfRowsInSection section: Int) -> Int {
         return self.dataController.getMoodRecords().count
     }
-    
+
     func tableView(_ tableView: UITableView,
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "MoodRecordCell")!
@@ -202,7 +202,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         (cell.viewWithTag(3) as! UILabel).text = record.comment
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             self.dataController.deleteMoodRecord(self.dataController.getMoodRecords()[indexPath.row])
@@ -210,7 +210,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             self.updateChart()
         }
     }
-    
+
     @IBAction func feedbackButtonClicked(_ sender: Any) {
         UIApplication.shared.openURL(URL(string: "http://www.peggyjo.io")!)
     }
