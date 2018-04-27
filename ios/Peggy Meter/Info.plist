@@ -48,11 +48,13 @@
 	<key>NSHealthUpdateUsageDescription</key>
 	<string>Record health update usage for ML</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Track location</string>
+	<string>Track location for ML</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Track location for ML</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Record mic usage data for ML</string>
 	<key>NSMotionUsageDescription</key>
-	<string>Track motion</string>
+	<string>Track motion for ML</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
