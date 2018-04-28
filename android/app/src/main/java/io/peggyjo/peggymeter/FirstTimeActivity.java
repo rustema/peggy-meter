@@ -5,7 +5,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.Button;
 
 import io.peggyjo.peggymeter.database.DataController;
@@ -28,6 +30,7 @@ public class FirstTimeActivity extends AppCompatActivity {
             controller.getSettingAdapter().setProperty(OPT_IN_PROPERTY, false);
             finish();
         });
+        ((WebView) findViewById(R.id.webView)).loadUrl("file:///android_asset/welcome.html");
     }
 
 }
