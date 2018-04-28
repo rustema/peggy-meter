@@ -6,7 +6,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.crashlytics.android.Crashlytics;
 
 import io.peggyjo.peggymeter.database.DataController;
 
@@ -28,6 +31,19 @@ public class FirstTimeActivity extends AppCompatActivity {
             controller.getSettingAdapter().setProperty(OPT_IN_PROPERTY, false);
             finish();
         });
+
+        // Adds a button that will crash the app
+        // Is used to test Crashlytics in the console.
+        Button crashButton = new Button(this);
+        crashButton.setText("Crash!");
+        crashButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Crashlytics.getInstance().crash(); // Force a crash
+            }
+        });
+        addContentView(crashButton,
+                new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 
 }
