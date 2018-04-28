@@ -8,7 +8,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import io.peggyjo.peggymeter.model.LogEntry;
 import io.peggyjo.peggymeter.model.MoodListener;
@@ -23,7 +25,7 @@ public class DataController {
     private MoodAdapter moodAdapter;
     private SettingAdapter settingAdapter;
     private String uid;
-    private final List<MoodListener> moodListeners;
+    private final Set<MoodListener> moodListeners;
     private final List<SettingListener> settingListeners;
 
     public List<LogEntry> getLogs() {
@@ -34,7 +36,7 @@ public class DataController {
     }
 
     public DataController() {
-        moodListeners = new ArrayList<>();
+        moodListeners = new HashSet<>();
         settingListeners = new ArrayList<>();
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -89,11 +91,16 @@ public class DataController {
         return settingAdapter;
     }
 
-    public void clearMoodListeners() {
+    public void removeListener(MoodListener listener) {
+        if (listener == null) {
+            return;
+        }
         if (moodAdapter != null) {
-            moodAdapter.clearMoodListeners();
+            moodAdapter.removeListener(listener);
         } else {
-            moodListeners.clear();
+            if (moodListeners.contains(listener)) {
+                moodListeners.remove(listener);
+            }
         }
     }
 }

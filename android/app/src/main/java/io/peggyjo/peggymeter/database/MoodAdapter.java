@@ -27,11 +27,11 @@ public class MoodAdapter implements ValueEventListener {
 
     private final DatabaseReference moods;
     private final List<LogEntry> logs;
-    private final Set<MoodListener> listeners;
+    private final List<MoodListener> listeners;
 
     MoodAdapter(DataController dataController) {
         this.logs = new ArrayList<>();
-        this.listeners = new HashSet<>();
+        this.listeners = new ArrayList<>();
         moods = dataController.getReference().child("mood").getRef();
         moods.addValueEventListener(this);
     }
@@ -83,7 +83,10 @@ public class MoodAdapter implements ValueEventListener {
         this.listeners.add(listener);
     }
 
-    public void clearMoodListeners() {
-        this.listeners.clear();
+    public void removeListener(MoodListener listener) {
+        if (listener == null || !this.listeners.contains(listener)) {
+            return;
+        }
+        this.listeners.remove(listener);
     }
 }

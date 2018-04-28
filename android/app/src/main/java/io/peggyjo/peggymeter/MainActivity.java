@@ -58,7 +58,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         switch (currentMode) {
             case Graph:
-                dataController.clearMoodListeners();
+                dataController.removeListener(historyGraphFragment);
+                dataController.removeListener(historyTextFragment);
+                // It's unclear when to draw a graph, since on re-show CreateView is not called.
+                // Re-creating the whole fragment to have more predictable behavior, hoping overhead
+                // is not too big.
                 historyGraphFragment = new HistoryGraphFragment();
                 dataController.addMoodListener(historyGraphFragment);
                 dataController.addSettingListener((setting) -> {
@@ -81,7 +85,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         .commit();
                 break;
             case Text:
-                dataController.clearMoodListeners();
+                dataController.removeListener(historyGraphFragment);
+                dataController.removeListener(historyTextFragment);
+                // See historyGraphFragment re-creation comment above.
                 historyTextFragment = new HistoryTextFragment();
                 getSupportFragmentManager().beginTransaction().replace(
                         R.id.MOOD_CONTROL_FRAGMENT_CONTAINER, moodControlFragment).
@@ -98,6 +104,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
+        assert actionbar != null;
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
 
