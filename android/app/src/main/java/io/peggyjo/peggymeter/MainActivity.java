@@ -58,9 +58,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         switch (currentMode) {
             case Graph:
-                if (historyGraphFragment == null) {
-                    historyGraphFragment = new HistoryGraphFragment();
-                }
+                dataController.clearMoodListeners();
+                historyGraphFragment = new HistoryGraphFragment();
                 dataController.addMoodListener(historyGraphFragment);
                 dataController.addSettingListener((setting) -> {
                     if (!setting.containsKey(OPT_IN_PROPERTY)) {
@@ -82,13 +81,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         .commit();
                 break;
             case Text:
-                if (historyTextFragment == null) {
-                    historyTextFragment = new HistoryTextFragment();
-                }
+                dataController.clearMoodListeners();
+                historyTextFragment = new HistoryTextFragment();
                 getSupportFragmentManager().beginTransaction().replace(
                         R.id.MOOD_CONTROL_FRAGMENT_CONTAINER, moodControlFragment).
                         replace(R.id.HISTORY_FRAGMENT_CONTAINER, historyTextFragment).commit();
-
                 break;
         }
     }

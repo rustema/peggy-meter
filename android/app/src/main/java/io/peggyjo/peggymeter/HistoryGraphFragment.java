@@ -58,6 +58,7 @@ public class HistoryGraphFragment extends Fragment implements MoodListener {
         View v = inflater.inflate(R.layout.fragment_history_graph, container, false);
         DataController dataController = mainActivity.getDataController();
         dataController.addMoodListener(this);
+        drawGraph(v, dataController.getLogs());
         return v;
     }
 

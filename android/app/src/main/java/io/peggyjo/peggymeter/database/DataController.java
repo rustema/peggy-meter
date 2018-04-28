@@ -10,6 +10,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.peggyjo.peggymeter.model.LogEntry;
 import io.peggyjo.peggymeter.model.MoodListener;
 import io.peggyjo.peggymeter.model.SettingListener;
 
@@ -25,6 +26,12 @@ public class DataController {
     private final List<MoodListener> moodListeners;
     private final List<SettingListener> settingListeners;
 
+    public List<LogEntry> getLogs() {
+        if (moodAdapter != null) {
+            return moodAdapter.getLogs();
+        }
+        return new ArrayList<>();
+    }
 
     public DataController() {
         moodListeners = new ArrayList<>();
@@ -80,5 +87,13 @@ public class DataController {
 
     public SettingAdapter getSettingAdapter() {
         return settingAdapter;
+    }
+
+    public void clearMoodListeners() {
+        if (moodAdapter != null) {
+            moodAdapter.clearMoodListeners();
+        } else {
+            moodListeners.clear();
+        }
     }
 }
