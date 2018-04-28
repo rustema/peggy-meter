@@ -9,5 +9,5 @@ import io.peggyjo.peggymeter.model.LogEntry;
  */
 
 public interface MoodListener {
-    public void refresh(List<LogEntry> entries);
+    void refresh(List<LogEntry> entries);
 }
