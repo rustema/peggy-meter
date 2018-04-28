@@ -44,7 +44,7 @@ public class HistoryTextFragment extends Fragment implements MoodListener {
                 getResources().getString(R.string.smile3),
                 getResources().getString(R.string.smile4)};
         table.setAdapter(new TableRowAdapter(getContext(), R.layout.listview_item_row,
-                reverse(logs), smileys));
+                         reverse(logs), smileys));
     }
 
     @Override

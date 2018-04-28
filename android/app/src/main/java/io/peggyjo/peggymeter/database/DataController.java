@@ -91,7 +91,7 @@ public class DataController {
         return settingAdapter;
     }
 
-    public void removeListener(MoodListener listener) {
+    public synchronized void removeListener(MoodListener listener) {
         if (listener == null) {
             return;
         }

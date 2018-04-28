@@ -27,11 +27,11 @@ public class MoodAdapter implements ValueEventListener {
 
     private final DatabaseReference moods;
     private final List<LogEntry> logs;
-    private final List<MoodListener> listeners;
+    private final Set<MoodListener> listeners;
 
     MoodAdapter(DataController dataController) {
         this.logs = new ArrayList<>();
-        this.listeners = new ArrayList<>();
+        this.listeners = new HashSet<>();
         moods = dataController.getReference().child("mood").getRef();
         moods.addValueEventListener(this);
     }
