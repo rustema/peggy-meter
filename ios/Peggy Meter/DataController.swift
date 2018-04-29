@@ -15,6 +15,7 @@ import PassiveDataKit
 
 protocol DataController {
     func getMoodRecords() -> [MoodRecord]
+    func loadMoodRecords(lastKnown: MoodRecord?)
     func saveMoodRecord(_ record: MoodRecord)
     func deleteMoodRecord(_ record: MoodRecord)
 }
@@ -23,14 +24,17 @@ class FirebaseDataController: NSObject, DataController, PDKDataListener {
     var nextId: Int64 = 1
     var ref: DatabaseReference!
     var db: Firestore!
-    var records: [MoodRecord] = []
-    var completionHandler:(() -> Void)!
+    var completionHandler:(([MoodRecord]) -> Void)!
     var user: User!
     
-    private func setupMoodAddedObserver() {
+    internal func loadMoodRecords(lastKnown: MoodRecord?) {
         let uid = self.user.uid
         // Set up read handler.
-        self.ref.child("users").child(uid).child("moods").observe(.childAdded, with: { (snapshot) in
+        var query = self.ref.child("users").child(uid).child("moods").queryOrdered(byChild: "timestamp")
+        if lastKnown != nil {
+            query = query.queryEnding(atValue: (lastKnown?.timestamp.timeIntervalSince1970)! - 1, childKey: "timestamp")
+        }
+        query.queryLimited(toLast:7).observe(.childAdded, with: { (snapshot) in
             let recordDict = snapshot.value as? [String : AnyObject] ?? [:]
             let moodRecord = MoodRecord()
             moodRecord.id = 0
@@ -39,13 +43,14 @@ class FirebaseDataController: NSObject, DataController, PDKDataListener {
             // Default to 1 since mood levels are 1-based.
             let moodLevel = recordDict["moodLevel"] as? Int ?? 1
             let comment = recordDict["comment"] as? String ?? ""
+            print("Record: \(String(describing: ts))")
             moodRecord.timestamp = Date(timeIntervalSince1970: TimeInterval(ts))
             moodRecord.moodLevel = moodLevel
             moodRecord.comment = comment
-            self.records.append(moodRecord)
-            self.completionHandler()
+            self.completionHandler([moodRecord])
         })
     }
+    
     private func setupFirebase() {
         ref = Database.database().reference()
         db = Firestore.firestore()
@@ -54,7 +59,6 @@ class FirebaseDataController: NSObject, DataController, PDKDataListener {
         if Auth.auth().currentUser != nil {
             self.user = Auth.auth().currentUser!
             print("reusing existing user id: \(self.user.uid)")
-            self.setupMoodAddedObserver()
         } else {
             Auth.auth().signInAnonymously() { (user, error) in
                 guard error == nil else {
@@ -63,21 +67,19 @@ class FirebaseDataController: NSObject, DataController, PDKDataListener {
                 }
                 print("Successfully logged in to FB: \(String(describing: user!.uid))")
                 self.user = user!
-                
-                self.setupMoodAddedObserver()
             }
         }
     }
     
-    init(_ completionHandler: @escaping (() -> Void)) {
+    init(_ completionHandler: @escaping (([MoodRecord]) -> Void)) {
         super.init()
         
         self.completionHandler = completionHandler
         setupFirebase()
     }
-
+    
     func getMoodRecords() -> [MoodRecord] {
-        return self.records
+        return []
     }
     
     func saveMoodRecord(_ record: MoodRecord) {
@@ -161,9 +163,9 @@ class SQLiteDataController: NSObject, DataController {
     let moodRecordMoodLevel = Expression<Int>("mood_level")
     let moodRecordComment = Expression<String>("comment")
     
-    var completionHandler:(() -> Void)!
+    var completionHandler:(([MoodRecord]) -> Void)!
     
-    init(_ completionHandler: @escaping (() -> Void)) {
+    init(_ completionHandler: @escaping (([MoodRecord]) -> Void)) {
         super.init()
         
         self.completionHandler = completionHandler
@@ -221,7 +223,7 @@ class SQLiteDataController: NSObject, DataController {
                 print(error.localizedDescription)
             }
         }
-        self.completionHandler()
+        self.completionHandler([record])
     }
     
     func deleteMoodRecord(_ record: MoodRecord) {
@@ -234,11 +236,23 @@ class SQLiteDataController: NSObject, DataController {
         }
     }
     
+    func loadMoodRecords(lastKnown: MoodRecord?) {
+        completionHandler(getMoodRecords(lastKnown: lastKnown))
+    }
+    
     func getMoodRecords() -> [MoodRecord] {
+        return self.getMoodRecords(lastKnown: nil)
+    }
+
+    func getMoodRecords(lastKnown: MoodRecord?) -> [MoodRecord] {
         var moodRecords: [MoodRecord] = []
         if self.openDatabase() {
             do {
-                for record in try database.prepare(moodRecordsTable) {
+                var query = moodRecordsTable
+                if lastKnown != nil {
+                    query = moodRecordsTable.filter(moodRecordId < (lastKnown?.id)!)
+                }
+                for record in try database.prepare(query.order(moodRecordId.desc).limit(7)) {
                     let moodRecord = MoodRecord()
                     moodRecord.id = record[moodRecordId]
                     moodRecord.timestamp = Date(timeIntervalSince1970: TimeInterval(record[moodRecordTimestamp]))

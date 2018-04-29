@@ -27,6 +27,9 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
     let smileys: [String] = ["😢", "☹️", "😐", "🙂", "😀"]
     let moodLevelDescription: [String] = ["Bad", "So-so", "OK", "Good", "Excellent"]
+    
+    var records: [MoodRecord] = []
+    var loading: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,8 +45,10 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         //login()
 
         // Application logic setup.
-        //dataController = SQLiteDataController(self.reloadViews)
-        dataController = FirebaseDataController(self.reloadViews)
+        loading = true
+//        dataController = SQLiteDataController(self.onRecordsLoaded)
+        dataController = FirebaseDataController(self.onRecordsLoaded)
+        dataController.loadMoodRecords(lastKnown: nil)
 
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .medium
@@ -59,7 +64,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         //updateChart()
 
         self.lineChartView.chartDescription!.text = ""
-        axisFormatDelegate = self as! IAxisValueFormatter
+        axisFormatDelegate = self as IAxisValueFormatter
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.moodLevelClickEventReceived(_:)), name: Notification.Name("MoodLevelClick"), object: nil)
     }
@@ -121,7 +126,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func updateChart() {
         var points: [ChartDataEntry] = []
         //let now = Date()
-        for moodRecord in self.dataController.getMoodRecords() {
+        for moodRecord in self.records {
             //if moodRecord.timestamp >= now.addingTimeInterval(-3 * 24 * 3600) {
                 //points.append(ChartDataEntry(x: Double((moodRecord.timestamp.timeIntervalSince1970 - now.timeIntervalSince1970) / 60), y: Double(moodRecord.moodLevel)))
             //}
@@ -146,6 +151,19 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func reloadViews() {
         self.historyTableView.reloadData()
         self.updateChart()
+    }
+    
+    func loadMore() {
+        dataController.loadMoodRecords(lastKnown: self.records.last)
+    }
+    
+    func onRecordsLoaded(_ records: [MoodRecord]) {
+        self.records.append(contentsOf: records)
+        self.records.sort { (x, y) -> Bool in
+            return x.timestamp.compare(y.timestamp) == .orderedDescending
+        }
+        self.reloadViews()
+        loading = false
     }
 
     @IBAction func toggleGraphButtonClicked(_ sender: Any) {
@@ -190,13 +208,13 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
     func tableView(_ tableView: UITableView,
                    numberOfRowsInSection section: Int) -> Int {
-        return self.dataController.getMoodRecords().count
+        return self.records.count
     }
 
     func tableView(_ tableView: UITableView,
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "MoodRecordCell")!
-        let record: MoodRecord = self.dataController.getMoodRecords()[indexPath.row]
+        let record: MoodRecord = self.records[indexPath.row]
         (cell.viewWithTag(1) as! UILabel).text = dateFormatter.string(from: record.timestamp)
         (cell.viewWithTag(2) as! UILabel).text = self.smileys[record.moodLevel]
         (cell.viewWithTag(3) as! UILabel).text = record.comment
@@ -205,9 +223,18 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            self.dataController.deleteMoodRecord(self.dataController.getMoodRecords()[indexPath.row])
+            self.dataController.deleteMoodRecord(self.records[indexPath.row])
             tableView.deleteRows(at: [indexPath], with: .fade)
             self.updateChart()
+        }
+    }
+
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let lastElement = self.records.count - 1
+        if !loading && indexPath.row == lastElement {
+            //indicator.startAnimating()
+            loading = true
+            loadMore()
         }
     }
 
