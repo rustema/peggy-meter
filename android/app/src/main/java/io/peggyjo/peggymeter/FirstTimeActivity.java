@@ -38,8 +38,7 @@ public class FirstTimeActivity extends AppCompatActivity {
 
         // Adds a button that will crash the app in Debug Mode
         // Is used to test Crashlytics in the console.
-        if(BuildConfig.DEBUG)
-        {
+        if(BuildConfig.DEBUG) {
             Button crashButton = new Button(this);
             crashButton.setText("Crash!");
             crashButton.setOnClickListener(new View.OnClickListener() {
