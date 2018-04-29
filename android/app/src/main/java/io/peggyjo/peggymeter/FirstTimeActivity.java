@@ -5,8 +5,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.Button;
 
 import com.crashlytics.android.Crashlytics;
@@ -31,6 +33,8 @@ public class FirstTimeActivity extends AppCompatActivity {
             controller.getSettingAdapter().setProperty(OPT_IN_PROPERTY, false);
             finish();
         });
+
+        ((WebView) findViewById(R.id.webView)).loadUrl("file:///android_asset/welcome.html");
 
         // Adds a button that will crash the app
         // Is used to test Crashlytics in the console.
