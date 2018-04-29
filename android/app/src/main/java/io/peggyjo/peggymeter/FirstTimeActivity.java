@@ -36,18 +36,22 @@ public class FirstTimeActivity extends AppCompatActivity {
 
         ((WebView) findViewById(R.id.webView)).loadUrl("file:///android_asset/welcome.html");
 
-        // Adds a button that will crash the app
+        // Adds a button that will crash the app in Debug Mode
         // Is used to test Crashlytics in the console.
-        Button crashButton = new Button(this);
-        crashButton.setText("Crash!");
-        crashButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                Crashlytics.getInstance().crash(); // Force a crash
-            }
-        });
-        addContentView(crashButton,
-                new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT));
+        if(BuildConfig.DEBUG)
+        {
+            Button crashButton = new Button(this);
+            crashButton.setText("Crash!");
+            crashButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view) {
+                    Crashlytics.getInstance().crash(); // Force a crash
+                }
+            });
+            addContentView(crashButton,
+                    new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT));
+        }
+
     }
 
 }
