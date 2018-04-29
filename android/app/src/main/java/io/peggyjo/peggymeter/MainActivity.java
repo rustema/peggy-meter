@@ -58,9 +58,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         switch (currentMode) {
             case Graph:
-                if (historyGraphFragment == null) {
-                    historyGraphFragment = new HistoryGraphFragment();
-                }
+                dataController.removeListener(historyGraphFragment);
+                dataController.removeListener(historyTextFragment);
+                // It's unclear when to draw a graph, since on re-show CreateView is not called.
+                // Re-creating the whole fragment to have more predictable behavior, hoping overhead
+                // is not too big.
+                historyGraphFragment = new HistoryGraphFragment();
                 dataController.addMoodListener(historyGraphFragment);
                 dataController.addSettingListener((setting) -> {
                     if (!setting.containsKey(OPT_IN_PROPERTY)) {
@@ -82,13 +85,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         .commit();
                 break;
             case Text:
-                if (historyTextFragment == null) {
-                    historyTextFragment = new HistoryTextFragment();
-                }
+                dataController.removeListener(historyGraphFragment);
+                dataController.removeListener(historyTextFragment);
+                // See historyGraphFragment re-creation comment above.
+                historyTextFragment = new HistoryTextFragment();
                 getSupportFragmentManager().beginTransaction().replace(
                         R.id.MOOD_CONTROL_FRAGMENT_CONTAINER, moodControlFragment).
                         replace(R.id.HISTORY_FRAGMENT_CONTAINER, historyTextFragment).commit();
-
                 break;
         }
     }
@@ -101,6 +104,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
+        assert actionbar != null;
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
 

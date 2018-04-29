@@ -6,43 +6,37 @@
     android:layout_height="match_parent"
     tools:context="io.peggyjo.peggymeter.FirstTimeActivity">
 
-    <LinearLayout
+    <GridLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:rowCount="2"
+        android:columnCount="2">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="368dp"
-            android:layout_height="600dp"
-            android:text="@string/first_time_text"
-            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-            android:textSize="18sp"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="3dp" />
-        <LinearLayout
+        <WebView  xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/webView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_columnSpan="2"
+            android:layout_gravity="top|fill_horizontal"/>
 
-            <Button
-                android:id="@+id/OptInButton"
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="OPT IN" />
+        <Button
+            android:id="@+id/OptInButton"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|start"
+            android:text="Yes" />
 
-            <Button
-                android:id="@+id/OptOutButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Later" />
+        <Button
+            android:id="@+id/OptOutButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:text="Not now" />
 
-        </LinearLayout>
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </android.support.constraint.ConstraintLayout>
-    </LinearLayout>
+    </GridLayout>
 
 </android.support.design.widget.CoordinatorLayout>
