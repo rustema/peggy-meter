@@ -1,2 +1,6 @@
 android/.idea/
 ios/Peggy\ Meter.xcodeproj/xcuserdata/
+android/app/google-services.json
+android/app/src/development/google-services.json
+android/app/src/release/google-services.json
+
