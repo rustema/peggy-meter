@@ -16,7 +16,9 @@ public class LogEntry {
         this.comment = comment;
         this.entryId = "";
     }
-    public String getEntryId() { return entryId; }
+    public String getEntryId() {
+        return entryId;
+    }
 
     public void setEntryId(String id) {
             entryId = id;

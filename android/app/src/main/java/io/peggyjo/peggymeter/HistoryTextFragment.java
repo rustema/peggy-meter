@@ -47,6 +47,9 @@ public class HistoryTextFragment extends Fragment implements MoodListener {
 
                 if (!selectedEntry.getComment().isEmpty()) {
                     note.setText(selectedEntry.getComment());
+
+                    //set the cursor at the end of the comment
+                    note.setSelection(note.getText().length());
                 }
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
@@ -60,9 +63,7 @@ public class HistoryTextFragment extends Fragment implements MoodListener {
                 editor.setButton(AlertDialog.BUTTON_NEUTRAL, "Done", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        LogEntry localEdit = new LogEntry(selectedEntry.getTime(),selectedEntry.getMood_level(), note.getText().toString());
-                        dataController.getMoodAdapter().editEntry(selectedEntry, localEdit, position);
-
+                        dataController.getMoodAdapter().editEntry(selectedEntry, note.getText().toString());
                     }
                 });
 
@@ -72,6 +73,7 @@ public class HistoryTextFragment extends Fragment implements MoodListener {
                         editor.dismiss();
                     }
                 });
+
                 editor.show();
                 return true;
             }

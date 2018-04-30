@@ -11,8 +11,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
 
 import io.peggyjo.peggymeter.model.LogEntry;
 import io.peggyjo.peggymeter.model.MoodListener;
@@ -46,19 +48,24 @@ public class MoodAdapter implements ValueEventListener {
         if (values == null) {
             // TODO init database.
         } else if (values instanceof Map) {
+            int position = 0;
+            Iterator<String> keySetIter;
+
             Map<String, Map<String, Object>> data = (Map<String, Map<String, Object>>) values;
+            keySetIter = data.keySet().iterator();
             Log.i(TAG, "" + data);
             logs.clear();
-            for (Map<String, Object> entry : data.values()) {
+            for (Map<String, Object> entry: data.values()) {
                 logs.add(new LogEntry(
                         new Date((Long) entry.get("timestamp")),
-                        ((Long) entry.get("moodLevel")).intValue(),
+                       ((Long) entry.get("moodLevel")).intValue(),
                         "" +entry.get("comment")));
-            }
-            //set a reference to each entry's id
-            for (int i = 0; i < logs.size(); i++) {
-                logs.get(i).setEntryId(data.keySet().toArray()[i].toString());
 
+                //set reference to entry id
+                if (keySetIter.hasNext()) {
+                        logs.get(position).setEntryId(keySetIter.next());
+                        position++;
+                }
             }
 
             Collections.sort(logs, (a, b) -> a.getTime().compareTo(b.getTime()));
@@ -85,8 +92,7 @@ public class MoodAdapter implements ValueEventListener {
                 .build());
     }
 
-    public void editEntry(LogEntry entry, LogEntry localUpdateEntry, int position) {
-        logs.set(position, localUpdateEntry);
+    public void editEntry(LogEntry entry, String comment) {
 
         for (MoodListener listener : listeners) {
             listener.refresh(logs);
@@ -95,7 +101,7 @@ public class MoodAdapter implements ValueEventListener {
         currentRecord.setValue(ImmutableMap.<String, Object>builder()
                      .put("timestamp", entry.getTime().getTime())
                      .put("moodLevel", entry.getMood_level())
-                     .put("comment", localUpdateEntry.getComment())
+                     .put("comment", comment)
                      .build());
     }
 
