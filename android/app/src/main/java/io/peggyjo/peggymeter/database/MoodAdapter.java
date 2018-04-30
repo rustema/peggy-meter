@@ -55,6 +55,12 @@ public class MoodAdapter implements ValueEventListener {
                         ((Long) entry.get("moodLevel")).intValue(),
                         "" +entry.get("comment")));
             }
+            //set a reference to each entry's id
+            for (int i = 0; i < logs.size(); i++) {
+                logs.get(i).setEntryId(data.keySet().toArray()[i].toString());
+
+            }
+
             Collections.sort(logs, (a, b) -> a.getTime().compareTo(b.getTime()));
             for (MoodListener moodListener : listeners) {
                 moodListener.refresh(logs);
@@ -77,6 +83,20 @@ public class MoodAdapter implements ValueEventListener {
                 .put("moodLevel", entry.getMood_level())
                 .put("comment", entry.getComment())
                 .build());
+    }
+
+    public void editEntry(LogEntry entry, LogEntry localUpdateEntry, int position) {
+        logs.set(position, localUpdateEntry);
+
+        for (MoodListener listener : listeners) {
+            listener.refresh(logs);
+        }
+        DatabaseReference currentRecord = moods.child(entry.getEntryId()).getRef();
+        currentRecord.setValue(ImmutableMap.<String, Object>builder()
+                     .put("timestamp", entry.getTime().getTime())
+                     .put("moodLevel", entry.getMood_level())
+                     .put("comment", localUpdateEntry.getComment())
+                     .build());
     }
 
     void addListener(MoodListener listener) {

@@ -42,7 +42,6 @@ public class HistoryTextFragment extends Fragment implements MoodListener {
         table.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                //used instead of getSelectedItem because getSelectedItem causes a null pointer exception
                 LogEntry selectedEntry = (LogEntry)table.getItemAtPosition(position);
                 EditText note = new EditText(getContext());
 
@@ -58,12 +57,19 @@ public class HistoryTextFragment extends Fragment implements MoodListener {
                 }
                 builder.setView(note);
                 AlertDialog editor = builder.create();
-                editor.setButton(-3, "Done", new DialogInterface.OnClickListener() {
+                editor.setButton(AlertDialog.BUTTON_NEUTRAL, "Done", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                            LogEntry editedEntry = new LogEntry(selectedEntry.getTime(), selectedEntry.getMood_level(), note.getText().toString());
-                                    //editEntry to be implemented
-                                    dataController.getMoodAdapter().addEntry(editedEntry);
+                        LogEntry localEdit = new LogEntry(selectedEntry.getTime(),selectedEntry.getMood_level(), note.getText().toString());
+                        dataController.getMoodAdapter().editEntry(selectedEntry, localEdit, position);
+
+                    }
+                });
+
+                editor.setButton(AlertDialog.BUTTON_POSITIVE, "Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        editor.dismiss();
                     }
                 });
                 editor.show();
