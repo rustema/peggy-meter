@@ -34,7 +34,7 @@ class FirebaseDataController: NSObject, DataController, PDKDataListener {
         if lastKnown != nil {
             query = query.queryEnding(atValue: (lastKnown?.timestamp.timeIntervalSince1970)! - 1, childKey: "timestamp")
         }
-        query.queryLimited(toLast:7).observe(.childAdded, with: { (snapshot) in
+        query.queryLimited(toLast:100).observe(.childAdded, with: { (snapshot) in
             let recordDict = snapshot.value as? [String : AnyObject] ?? [:]
             let moodRecord = MoodRecord()
             moodRecord.id = 0
@@ -264,6 +264,7 @@ class SQLiteDataController: NSObject, DataController {
                 print(error.localizedDescription)
             }
         }
+        completionHandler(moodRecords)
         return moodRecords
     }
 }

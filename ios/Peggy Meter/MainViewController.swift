@@ -126,7 +126,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func updateChart() {
         var points: [ChartDataEntry] = []
         //let now = Date()
-        for moodRecord in self.records {
+        for moodRecord in self.records.reversed() {
             //if moodRecord.timestamp >= now.addingTimeInterval(-3 * 24 * 3600) {
                 //points.append(ChartDataEntry(x: Double((moodRecord.timestamp.timeIntervalSince1970 - now.timeIntervalSince1970) / 60), y: Double(moodRecord.moodLevel)))
             //}
