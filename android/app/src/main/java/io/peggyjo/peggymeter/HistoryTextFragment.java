@@ -83,7 +83,6 @@ public class HistoryTextFragment extends Fragment implements MoodListener {
     }
 
     private void renderLog(View view, List<LogEntry> logs) {
-        table = view.findViewById(R.id.LOG_ENTRIES_CONTAINER);
         String[] smileys = new String[]{
                 getResources().getString(R.string.smile0),
                 getResources().getString(R.string.smile1),
