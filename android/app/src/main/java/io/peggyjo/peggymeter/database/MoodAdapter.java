@@ -15,8 +15,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.Iterator;
-
 
 import io.peggyjo.peggymeter.model.LogEntry;
 import io.peggyjo.peggymeter.model.MoodListener;
@@ -28,12 +26,10 @@ public class MoodAdapter implements ValueEventListener {
     private static final String TAG = "PeggiMeter.MoodAdapter";
 
     private final DatabaseReference moods;
-    private final DataController dataController;
     private final List<LogEntry> logs;
     private final Set<MoodListener> listeners;
 
     MoodAdapter(DataController dataController) {
-        this.dataController = dataController;
         this.logs = new ArrayList<>();
         this.listeners = new HashSet<>();
         moods = dataController.getReference().child("mood").getRef();
@@ -51,10 +47,8 @@ public class MoodAdapter implements ValueEventListener {
             // TODO init database.
         } else if (values instanceof Map) {
             int position = 0;
-            Iterator<String> keySetIter;
 
             Map<String, Map<String, Object>> data = (Map<String, Map<String, Object>>) values;
-            keySetIter = data.keySet().iterator();
             Log.i(TAG, "" + data);
             logs.clear();
             for (Map<String, Object> entry: data.values()) {
@@ -64,8 +58,8 @@ public class MoodAdapter implements ValueEventListener {
                         "" +entry.get("comment")));
 
                 //set reference to entry id
-                if (keySetIter.hasNext()) {
-                        logs.get(position).setEntryId(keySetIter.next());
+                if (data.keySet().iterator().hasNext()) {
+                        logs.get(position).setEntryId(data.keySet().iterator().next());
                         position++;
                 }
             }
