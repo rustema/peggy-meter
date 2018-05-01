@@ -20,9 +20,7 @@ public class LogEntry {
         return entryId;
     }
 
-    public void setEntryId(String id) {
-            entryId = id;
-    }
+    public void setEntryId(String id) { entryId = id; }
     public Date getTime() {
         return time;
     }
