@@ -24,6 +24,11 @@ This is just a short list of ideas, if you have other ideas for contributing ple
 
 * A Pull Request is not necessary. Raise an [Issue](https://github.com/rustema/peggy-meter/issues) and we'll fix it as soon as we can. 
 
+### Branches
+
+We keep master stable. All development is done on the development branch.
+All pull requests should by default go into development.
+
 ### Paperwork for Pull Requests
 
 Please read this whole guide and make sure you agree to our DCO agreement (included below):
