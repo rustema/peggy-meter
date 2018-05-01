@@ -62,8 +62,8 @@ public class MoodAdapter implements ValueEventListener {
 
                 //set reference to entry id
                 if (iterator.hasNext()) {
-				    logs.get(position).setEntryId(iterator.next());
-				    position++;
+		    logs.get(position).setEntryId(iterator.next());
+		    position++;
                 }
             }
 
