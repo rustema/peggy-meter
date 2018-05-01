@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -47,8 +48,10 @@ public class MoodAdapter implements ValueEventListener {
             // TODO init database.
         } else if (values instanceof Map) {
             int position = 0;
+            Iterator<String> iterator;
 
             Map<String, Map<String, Object>> data = (Map<String, Map<String, Object>>) values;
+            iterator = data.keySet().iterator();
             Log.i(TAG, "" + data);
             logs.clear();
             for (Map<String, Object> entry: data.values()) {
@@ -58,8 +61,8 @@ public class MoodAdapter implements ValueEventListener {
                         "" +entry.get("comment")));
 
                 //set reference to entry id
-                if (data.keySet().iterator().hasNext()) {
-                        logs.get(position).setEntryId(data.keySet().iterator().next());
+                if (iterator.hasNext()) {
+                        logs.get(position).setEntryId(iterator.next());
                         position++;
                 }
             }
