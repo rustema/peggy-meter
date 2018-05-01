@@ -17,10 +17,12 @@ public class LogEntry {
         this.entryId = "";
     }
     public String getEntryId() {
-	    return entryId;
+	return entryId;
     }
 
-    public void setEntryId(String id) { entryId = id; }
+    public void setEntryId(String id) { 
+        entryId = id; 
+    }
     public Date getTime() {
         return time;
     }
