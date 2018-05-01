@@ -11,10 +11,12 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiConsumer;
+import java.util.Set;
+
 
 import io.peggyjo.peggymeter.model.LogEntry;
 import io.peggyjo.peggymeter.model.MoodListener;
@@ -28,12 +30,12 @@ public class MoodAdapter implements ValueEventListener {
     private final DatabaseReference moods;
     private final DataController dataController;
     private final List<LogEntry> logs;
-    private final List<MoodListener> listeners;
+    private final Set<MoodListener> listeners;
 
     MoodAdapter(DataController dataController) {
         this.dataController = dataController;
         this.logs = new ArrayList<>();
-        this.listeners = new ArrayList<>();
+        this.listeners = new HashSet<>();
         moods = dataController.getReference().child("mood").getRef();
         moods.addValueEventListener(this);
     }
@@ -107,5 +109,12 @@ public class MoodAdapter implements ValueEventListener {
 
     void addListener(MoodListener listener) {
         this.listeners.add(listener);
+    }
+
+    public void removeListener(MoodListener listener) {
+        if (listener == null || !this.listeners.contains(listener)) {
+            return;
+        }
+        this.listeners.remove(listener);
     }
 }
