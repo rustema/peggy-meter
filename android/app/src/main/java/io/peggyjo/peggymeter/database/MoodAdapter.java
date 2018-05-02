@@ -47,24 +47,18 @@ public class MoodAdapter implements ValueEventListener {
         if (values == null) {
             // TODO init database.
         } else if (values instanceof Map) {
-            int position = 0;
-            Iterator<String> iterator;
 
             Map<String, Map<String, Object>> data = (Map<String, Map<String, Object>>) values;
-            iterator = data.keySet().iterator();
             Log.i(TAG, "" + data);
             logs.clear();
-            for (Map<String, Object> entry: data.values()) {
+            for(Map.Entry<String, Map<String, Object>> entry : data.entrySet()) {
+                String entryId = entry.getKey();
+                Map<String, Object> moodEntry = entry.getValue();
                 logs.add(new LogEntry(
-                        new Date((Long) entry.get("timestamp")),
-                       ((Long) entry.get("moodLevel")).intValue(),
-                        "" +entry.get("comment")));
-
-                //set reference to entry id
-                if (iterator.hasNext()) {
-		    logs.get(position).setEntryId(iterator.next());
-		    position++;
-                }
+                        new Date((Long)moodEntry.get("timestamp")),
+                        ((Long)moodEntry.get("moodLevel")).intValue(),
+                        ""+moodEntry.get("comment"),
+                        entryId));
             }
 
             Collections.sort(logs, (a, b) -> a.getTime().compareTo(b.getTime()));

@@ -30,8 +30,11 @@ public class UpdateMoodActivity extends AppCompatActivity {
         if (getIntent().getAction().startsWith("SET_MOOD_")) {
             Log.i(TAG, getIntent().getAction());
             int mood = Integer.valueOf(getIntent().getAction().substring(9));
+            //@param id is empty because
+            // entryId is set
+            // in MoodAdapter
             controller.getMoodAdapter().addEntry(new LogEntry(
-                    new Date(), mood, ""));
+                    new Date(), mood, "", ""));
             Toast toast = Toast.makeText(getApplicationContext(), messages.get(mood), Toast.LENGTH_SHORT);
             toast.show();
         }

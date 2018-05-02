@@ -8,21 +8,18 @@ public class LogEntry {
     private final Date time;
     private final int mood_level;
     private final String comment;
-    private String entryId;
+    private final String entryId;
 
-    public LogEntry(Date time, int mood_level, String comment) {
+    public LogEntry(Date time, int mood_level, String comment, String id) {
         this.time = time;
         this.mood_level = mood_level;
         this.comment = comment;
-        this.entryId = "";
+        this.entryId = id;
     }
     public String getEntryId() {
 	return entryId;
     }
 
-    public void setEntryId(String id) { 
-        entryId = id; 
-    }
     public Date getTime() {
         return time;
     }
