@@ -71,6 +71,7 @@
 		0A3195AC209062D70041B2EE /* Peggy Meter WIdget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Peggy Meter WIdget.entitlements"; sourceTree = "<group>"; };
 		0AB5D7E4205A5757002DB9D5 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		0AB5D7E6205A592E002DB9D5 /* ConsentTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentTask.swift; sourceTree = "<group>"; };
+		0ABC02C520997B82002A51C3 /* Peggy Meter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Peggy Meter.entitlements"; sourceTree = "<group>"; };
 		0AC2A691204CC5D300DAA619 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0AF47D16204C80A2003FC236 /* PassiveDataKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PassiveDataKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EB2FBCDF45A673F99769701 /* Pods-Peggy Meter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Peggy Meter.release.xcconfig"; path = "Pods/Target Support Files/Pods-Peggy Meter/Pods-Peggy Meter.release.xcconfig"; sourceTree = "<group>"; };
@@ -161,6 +162,7 @@
 		6A1FB3D8204C0AEF00352D78 /* Peggy Meter */ = {
 			isa = PBXGroup;
 			children = (
+				0ABC02C520997B82002A51C3 /* Peggy Meter.entitlements */,
 				0AC2A691204CC5D300DAA619 /* GoogleService-Info.plist */,
 				6A1FB3D9204C0AEF00352D78 /* AppDelegate.swift */,
 				6A1FB3DF204C0AEF00352D78 /* Main.storyboard */,
@@ -244,19 +246,21 @@
 				TargetAttributes = {
 					6A1FB3D5204C0AEF00352D78 = {
 						CreatedOnToolsVersion = 8.3.2;
-						ProvisioningStyle = Automatic;
+						DevelopmentTeam = 465NRB28WP;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.Push = {
-								enabled = 0;
+								enabled = 1;
 							};
 						};
 					};
 					6A24DCBB206FF5160004B48A = {
 						CreatedOnToolsVersion = 9.3;
-						ProvisioningStyle = Automatic;
+						DevelopmentTeam = 465NRB28WP;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.Push = {
-								enabled = 0;
+								enabled = 1;
 							};
 						};
 					};
@@ -549,10 +553,11 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Peggy Meter/Peggy Meter.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: PeggyJo Co. (465NRB28WP)";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 465NRB28WP;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/PassiveDataKit-iOS-master/build/Debug-iphoneos",
@@ -564,8 +569,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.peggyjo.peggymeter2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "f0375c0d-c21b-4967-ad39-15fd39d34207";
+				PROVISIONING_PROFILE_SPECIFIER = "Peggy Meter App Store Distribution";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -576,10 +581,11 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Peggy Meter/Peggy Meter.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: PeggyJo Co. (465NRB28WP)";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 465NRB28WP;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/PassiveDataKit-iOS-master/build/Debug-iphoneos",
@@ -589,8 +595,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.peggyjo.peggymeter2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "f0375c0d-c21b-4967-ad39-15fd39d34207";
+				PROVISIONING_PROFILE_SPECIFIER = "Peggy Meter App Store Distribution";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -609,17 +615,18 @@
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_ENTITLEMENTS = "Peggy Meter WIdget/Peggy Meter WIdget.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 465NRB28WP;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "Peggy Meter WIdget/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.peggyjo.peggymeter2.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "080a4956-4f15-4827-a005-32a14c833845";
+				PROVISIONING_PROFILE_SPECIFIER = "Peggy Meter Widget App Store Distribution";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -640,17 +647,18 @@
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_ENTITLEMENTS = "Peggy Meter WIdget/Peggy Meter WIdget.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 465NRB28WP;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "Peggy Meter WIdget/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.peggyjo.peggymeter2.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "080a4956-4f15-4827-a005-32a14c833845";
+				PROVISIONING_PROFILE_SPECIFIER = "Peggy Meter Widget App Store Distribution";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
