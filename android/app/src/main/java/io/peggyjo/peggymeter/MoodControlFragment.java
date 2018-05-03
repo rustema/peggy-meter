@@ -73,7 +73,10 @@ public class MoodControlFragment extends Fragment implements View.OnClickListene
 
         MainActivity mainActivity = (MainActivity)getActivity();
         TextView commentView = getView().findViewById(R.id.mood_comment);
-        LogEntry entry = new LogEntry(Calendar.getInstance().getTime(), mood,
+        //@param id is empty because
+        // entryId is set
+        // in MoodAdapter
+        LogEntry entry = new LogEntry("", Calendar.getInstance().getTime(), mood,
                 commentView.getText().toString());
         commentView.setText("");
         InputMethodManager imm = (InputMethodManager)mainActivity.getSystemService(

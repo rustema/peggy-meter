@@ -46,15 +46,20 @@ public class MoodAdapter implements ValueEventListener {
         if (values == null) {
             // TODO init database.
         } else if (values instanceof Map) {
+
             Map<String, Map<String, Object>> data = (Map<String, Map<String, Object>>) values;
             Log.i(TAG, "" + data);
             logs.clear();
-            for (Map<String, Object> entry : data.values()) {
+            for(Map.Entry<String, Map<String, Object>> entry : data.entrySet()) {
+                String entryId = entry.getKey();
+                Map<String, Object> moodEntry = entry.getValue();
                 logs.add(new LogEntry(
-                        new Date((Long) entry.get("timestamp")),
-                        ((Long) entry.get("moodLevel")).intValue(),
-                        "" +entry.get("comment")));
+                        entryId,
+                        new Date((Long)moodEntry.get("timestamp")),
+                        ((Long)moodEntry.get("moodLevel")).intValue(),
+                        ""+moodEntry.get("comment")));
             }
+
             Collections.sort(logs, (a, b) -> a.getTime().compareTo(b.getTime()));
             for (MoodListener moodListener : listeners) {
                 moodListener.refresh(logs);
@@ -77,6 +82,19 @@ public class MoodAdapter implements ValueEventListener {
                 .put("moodLevel", entry.getMood_level())
                 .put("comment", entry.getComment())
                 .build());
+    }
+
+    public void editEntry(LogEntry entry, String comment) {
+
+        for (MoodListener listener : listeners) {
+            listener.refresh(logs);
+        }
+        DatabaseReference currentRecord = moods.child(entry.getEntryId()).getRef();
+        currentRecord.setValue(ImmutableMap.<String, Object>builder()
+                     .put("timestamp", entry.getTime().getTime())
+                     .put("moodLevel", entry.getMood_level())
+                     .put("comment", comment)
+                     .build());
     }
 
     void addListener(MoodListener listener) {
