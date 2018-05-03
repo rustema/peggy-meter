@@ -10,7 +10,7 @@ public class LogEntry {
     private final String comment;
     private final String entryId;
 
-    public LogEntry(Date time, int mood_level, String comment, String id) {
+    public LogEntry(String id, Date time, int mood_level, String comment) {
         this.time = time;
         this.mood_level = mood_level;
         this.comment = comment;
