@@ -25,7 +25,7 @@ import static com.google.common.collect.Lists.reverse;
  * Created by vyakunin on 3/18/18.
  */
 
-public class HistoryTextFragment extends Fragment implements MoodListener {
+public class HistoryTextFragment extends Fragment implements MoodListener, AdapterView.OnItemLongClickListener {
     private ListView table;
 
     public HistoryTextFragment() {
@@ -39,45 +39,7 @@ public class HistoryTextFragment extends Fragment implements MoodListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_history_text, container, false);
         table = view.findViewById(R.id.LOG_ENTRIES_CONTAINER);
-        table.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                LogEntry selectedEntry = (LogEntry)table.getItemAtPosition(position);
-                EditText note = new EditText(getContext());
-
-                if (!selectedEntry.getComment().isEmpty()) {
-                    note.setText(selectedEntry.getComment());
-
-                    //set the cursor at the end of the comment
-                    note.setSelection(note.getText().length());
-                }
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-
-                if (!selectedEntry.getComment().isEmpty()) {
-                    builder.setTitle("Edit note");
-                } else {
-                    builder.setTitle("Add a note");
-                }
-                builder.setView(note);
-                AlertDialog editor = builder.create();
-                editor.setButton(AlertDialog.BUTTON_NEUTRAL, "Done", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dataController.getMoodAdapter().editEntry(selectedEntry, note.getText().toString());
-                    }
-                });
-
-                editor.setButton(AlertDialog.BUTTON_POSITIVE, "Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        editor.dismiss();
-                    }
-                });
-
-                editor.show();
-                return true;
-            }
-        });
+        table.setOnItemLongClickListener(this);
         renderLog(view, dataController.getMoodAdapter().getLogs());
         return view;
     }
@@ -96,5 +58,44 @@ public class HistoryTextFragment extends Fragment implements MoodListener {
     @Override
     public void refresh(List<LogEntry> entries) {
         renderLog(getView(), entries);
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+        LogEntry selectedEntry = (LogEntry)table.getItemAtPosition(position);
+        EditText note = new EditText(getContext());
+
+        if (!selectedEntry.getComment().isEmpty()) {
+            note.setText(selectedEntry.getComment());
+
+            //set the cursor at the end of the comment
+            note.setSelection(note.getText().length());
+        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+        if (!selectedEntry.getComment().isEmpty()) {
+            builder.setTitle("Edit note");
+        } else {
+            builder.setTitle("Add a note");
+        }
+        builder.setView(note);
+        AlertDialog editor = builder.create();
+        editor.setButton(AlertDialog.BUTTON_NEUTRAL, "Done", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                MainActivity activity = (MainActivity)getActivity();
+                activity.getDataController().getMoodAdapter().editEntry(selectedEntry, note.getText().toString());
+            }
+        });
+
+        editor.setButton(AlertDialog.BUTTON_POSITIVE, "Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                editor.dismiss();
+            }
+        });
+
+        editor.show();
+        return true;
     }
 }
