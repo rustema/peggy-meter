@@ -26,7 +26,7 @@ import static com.google.common.collect.Lists.reverse;
  */
 
 public class HistoryTextFragment extends Fragment implements MoodListener, 
-AdapterView.OnItemLongClickListener {
+    AdapterView.OnItemLongClickListener {
     private ListView table;
 
     public HistoryTextFragment() {
