@@ -54,10 +54,10 @@ public class MoodAdapter implements ValueEventListener {
                 String entryId = entry.getKey();
                 Map<String, Object> moodEntry = entry.getValue();
                 logs.add(new LogEntry(
+                        entryId,
                         new Date((Long)moodEntry.get("timestamp")),
                         ((Long)moodEntry.get("moodLevel")).intValue(),
-                        ""+moodEntry.get("comment"),
-                        entryId));
+                        ""+moodEntry.get("comment")));
             }
 
             Collections.sort(logs, (a, b) -> a.getTime().compareTo(b.getTime()));
