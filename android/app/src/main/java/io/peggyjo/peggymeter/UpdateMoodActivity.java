@@ -34,7 +34,7 @@ public class UpdateMoodActivity extends AppCompatActivity {
             // entryId is set
             // in MoodAdapter
             controller.getMoodAdapter().addEntry(new LogEntry(
-                    new Date(), mood, "", ""));
+                    "", new Date(), mood, ""));
             Toast toast = Toast.makeText(getApplicationContext(), messages.get(mood), Toast.LENGTH_SHORT);
             toast.show();
         }
