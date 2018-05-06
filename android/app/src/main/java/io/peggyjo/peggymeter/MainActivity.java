@@ -70,7 +70,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         startFirstTimeActivity();
                     } else if ((boolean) setting.get(OPT_IN_PROPERTY)) {
                         PassiveDataKit pdk = PassiveDataKit.getInstance(this);
-                        pdk.setStartForegroundService(true);
+                        // Do not run as a service since it drains the battery.
+                        // pdk.setStartForegroundService(true);
                         pdk.start();
                         pdkListener = new PDKListener();
                         pdkListener.initialize(this);
