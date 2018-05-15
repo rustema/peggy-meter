@@ -17,39 +17,29 @@ import com.google.firebase.firestore.WriteBatch;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 
 public class PDKListener implements Generators.GeneratorUpdatedListener,
         OnCompleteListener<Void> {
-    private HashMap<String, Long> timestamps = new HashMap<>();
-    private  final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final HashMap<String, Long> timestamps = new HashMap<>();
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     public void onGeneratorUpdated(String identifier, long timestamp, Bundle data) {
-       //Log.i("PDK listener", "id: " + identifier + " | ts: " + timestamp + " | data.size = " + data.size());
+
         if (!timestamps.containsKey(identifier)) {
+            String docKey = uid + "-" + identifier + "-" + timestamp;
+            uploadBatch(data, docKey);
             timestamps.put(identifier, timestamp);
         } else {
             Date lastEntry = new Date(timestamps.get(identifier));
             Date current = Calendar.getInstance().getTime();
-
             long deltaMins = calculateDeltaMins(current, lastEntry);
-            Log.i(identifier, "" + deltaMins);
 
             if (deltaMins > 20) {
-                // TODO: implement uploading to Firebase.
-
-                //Sample generator data
-               String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                HashMap<String, Object> dataMap = new HashMap<>();
-                dataMap.put("data", data.toString());
-                //write the data to a collection
-                WriteBatch batch = db.batch();
                 String docKey = uid + "-" + identifier + "-" + timestamp;
-                DocumentReference docRef = db.collection("pdk").document(docKey);
-                batch.set(docRef, dataMap);
-                batch.commit().addOnCompleteListener(this);
-
-                //update the timestamp for this generator
+                uploadBatch(data, docKey);
                 timestamps.put(identifier, timestamp);
             }
         }
@@ -70,17 +60,17 @@ public class PDKListener implements Generators.GeneratorUpdatedListener,
     }
 
     private long calculateDeltaMins(Date current, Date previous) {
-        long secondsInMills = 1000;
-        long minutesInMills = secondsInMills * 60;
-        long hoursInMills = minutesInMills * 60;
-        long daysInMills = hoursInMills * 24;
+        long diffMills = current.getTime() - previous.getTime();
+        long deltaMins = TimeUnit.MINUTES.convert(diffMills, TimeUnit.MILLISECONDS);
+        return deltaMins;
+    }
 
-        long difActual = current.getTime() - previous.getTime();
-
-        difActual = difActual % daysInMills;
-        difActual = difActual % hoursInMills;
-
-        long minuteDiff = difActual / minutesInMills;
-        return minuteDiff;
+    private void uploadBatch(Bundle data, String docKey) {
+        HashMap<String, Object> dataMap = new HashMap<>();
+        DocumentReference docRef = db.collection("pdk").document(docKey);
+        WriteBatch batch = db.batch();
+        dataMap.put("data", data.toString());
+        batch.set(docRef, dataMap);
+        batch.commit().addOnCompleteListener(this);
     }
 }
