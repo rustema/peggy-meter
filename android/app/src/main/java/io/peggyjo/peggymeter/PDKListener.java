@@ -9,14 +9,12 @@ import com.audacious_software.passive_data_kit.generators.Generators;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.WriteBatch;
 
 
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 
@@ -27,21 +25,11 @@ public class PDKListener implements Generators.GeneratorUpdatedListener,
     private final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     public void onGeneratorUpdated(String identifier, long timestamp, Bundle data) {
+        boolean shouldUpload = shouldUpload(identifier, timestamp);
 
-        if (!timestamps.containsKey(identifier)) {
+        if (shouldUpload) {
             String docKey = uid + "-" + identifier + "-" + timestamp;
-            uploadBatch(data, docKey);
-            timestamps.put(identifier, timestamp);
-        } else {
-            Date lastEntry = new Date(timestamps.get(identifier));
-            Date current = Calendar.getInstance().getTime();
-            long deltaMins = calculateDeltaMins(current, lastEntry);
-
-            if (deltaMins > 20) {
-                String docKey = uid + "-" + identifier + "-" + timestamp;
-                uploadBatch(data, docKey);
-                timestamps.put(identifier, timestamp);
-            }
+            uploadData(data, docKey);
         }
     }
 
@@ -53,9 +41,9 @@ public class PDKListener implements Generators.GeneratorUpdatedListener,
     @Override
     public void onComplete(@NonNull Task<Void> task) {
         if (task.isSuccessful()) {
-            Log.i("PDKListener", "Batch write succeeded.");
+            Log.i("PDKListener", "File write succeeded.");
         } else {
-            Log.i("PDKListener", "Error writing batch.");
+            Log.i("PDKListener", "Error writing file.");
         }
     }
 
@@ -65,12 +53,27 @@ public class PDKListener implements Generators.GeneratorUpdatedListener,
         return deltaMins;
     }
 
-    private void uploadBatch(Bundle data, String docKey) {
+    private boolean shouldUpload(String identifier, long timestamp) {
+        if (!timestamps.containsKey(identifier)) {
+            timestamps.put(identifier, timestamp);
+            return true;
+        } else {
+            Date now = Calendar.getInstance().getTime();
+            Date entry = new Date(timestamps.get(identifier));
+            long deltaMins = calculateDeltaMins(now, entry);
+
+            if(deltaMins > 20) {
+                timestamps.put(identifier, timestamp);
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    private void uploadData(Bundle data, String docKey) {
         HashMap<String, Object> dataMap = new HashMap<>();
-        DocumentReference docRef = db.collection("pdk").document(docKey);
-        WriteBatch batch = db.batch();
         dataMap.put("data", data.toString());
-        batch.set(docRef, dataMap);
-        batch.commit().addOnCompleteListener(this);
+        db.collection("pdk").document(docKey).set(dataMap).addOnCompleteListener(this);
     }
 }
