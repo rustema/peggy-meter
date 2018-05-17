@@ -11,12 +11,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
-
 
 public class PDKListener implements Generators.GeneratorUpdatedListener,
         OnCompleteListener<Void> {
@@ -25,7 +23,7 @@ public class PDKListener implements Generators.GeneratorUpdatedListener,
     private final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     public void onGeneratorUpdated(String identifier, long timestamp, Bundle data) {
-        boolean shouldUpload = shouldUpload(identifier, timestamp);
+        boolean shouldUpload = shouldUploadData(identifier, timestamp);
 
         if (shouldUpload) {
             String docKey = uid + "-" + identifier + "-" + timestamp;
@@ -49,31 +47,33 @@ public class PDKListener implements Generators.GeneratorUpdatedListener,
 
     private long calculateDeltaMins(Date current, Date previous) {
         long diffMills = current.getTime() - previous.getTime();
-        long deltaMins = TimeUnit.MINUTES.convert(diffMills, TimeUnit.MILLISECONDS);
+        long deltaMins = TimeUnit.MINUTES.convert(
+                diffMills, TimeUnit.MILLISECONDS);
         return deltaMins;
     }
 
-    private boolean shouldUpload(String identifier, long timestamp) {
+    private boolean shouldUploadData(String identifier, long timestamp) {
         if (!timestamps.containsKey(identifier)) {
             timestamps.put(identifier, timestamp);
             return true;
-        } else {
-            Date now = Calendar.getInstance().getTime();
-            Date entry = new Date(timestamps.get(identifier));
-            long deltaMins = calculateDeltaMins(now, entry);
-
-            if(deltaMins > 20) {
-                timestamps.put(identifier, timestamp);
-                return true;
-            } else {
-                return false;
-            }
         }
+        Date now = Calendar.getInstance().getTime();
+        Date entry = new Date(timestamps.get(identifier));
+        long deltaMins = calculateDeltaMins(now, entry);
+
+        if (deltaMins > 20) {
+            timestamps.put(identifier, timestamp);
+            return true;
+        }
+        return false;
     }
 
     private void uploadData(Bundle data, String docKey) {
         HashMap<String, Object> dataMap = new HashMap<>();
         dataMap.put("data", data.toString());
-        db.collection("pdk").document(docKey).set(dataMap).addOnCompleteListener(this);
+        db.collection("pdk")
+                .document(docKey)
+                .set(dataMap)
+                .addOnCompleteListener(this);
     }
 }
