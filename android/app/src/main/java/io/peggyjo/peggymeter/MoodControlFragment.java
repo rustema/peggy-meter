@@ -3,10 +3,12 @@ package io.peggyjo.peggymeter;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.speech.SpeechRecognizer;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.Calendar;
+import java.util.Random;
 
 import io.peggyjo.peggymeter.model.LogEntry;
 
@@ -23,14 +26,34 @@ import static android.support.v4.content.PermissionChecker.checkCallingOrSelfPer
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MoodControlFragment extends Fragment implements View.OnClickListener {
+public class MoodControlFragment extends Fragment implements View.OnClickListener,
+        MediaPlayer.OnCompletionListener {
     private final int[] buttonIds = {
             R.id.mood0, R.id.mood1, R.id.mood2,
             R.id.mood3, R.id.mood4};
+
     private SpeechRecognizer speechRecognizer;
+    private final int [] soundCache = {
+               R.raw.peggyjoemojitap1,
+               R.raw.peggyjoemojitap2,
+               R.raw.peggyjoemojitap3,
+               R.raw.peggyjoemojitap4,
+               R.raw.peggyjoemojitap5 };
+    private MediaPlayer sfxPlayer;
 
     public MoodControlFragment() {
         // Required empty public constructor
+    }
+
+    public MediaPlayer generateSfxPlayer() {
+        Random selector = new Random();
+        int low = 0;
+        int high = 5;
+        int selection = selector.nextInt(high - low) + low;
+
+        MediaPlayer mp = MediaPlayer.create(getContext(), soundCache[selection]);
+        mp.setOnCompletionListener(this);
+        return mp;
     }
 
 
@@ -70,6 +93,12 @@ public class MoodControlFragment extends Fragment implements View.OnClickListene
         if (mood == -1) {
             return;
         }
+        sfxPlayer = generateSfxPlayer();
+
+        //if a sound isn't already playing
+        if (!sfxPlayer.isPlaying()) {
+            sfxPlayer.start();
+        }
 
         MainActivity mainActivity = (MainActivity)getActivity();
         TextView commentView = getView().findViewById(R.id.mood_comment);
@@ -87,7 +116,8 @@ public class MoodControlFragment extends Fragment implements View.OnClickListene
         mainActivity.getDataController().getMoodAdapter().addEntry(entry);
 
                 // intentservice (separate background thread ) or async task
-        //Log.d("MoodControlFragment -->", "" + b.getId());
+                //Log.d("MoodControlFragment -->", "" + b.getId());
+
     }
 
     private void requestRecordAudioPermission() {
@@ -114,7 +144,22 @@ public class MoodControlFragment extends Fragment implements View.OnClickListene
 //        speechRecognizer.startListening(intent);
     }
 
-//    private class MoodRecognitionListener implements RecognitionListener {
+    public MediaPlayer getSfxPlayer() {
+        return sfxPlayer;
+    }
+
+    public int[] getSoundCache() {
+        return soundCache;
+    }
+
+    @Override
+    public void onCompletion(MediaPlayer mediaPlayer) {
+        //free resources
+        mediaPlayer.release();
+        mediaPlayer = null;
+    }
+
+    //    private class MoodRecognitionListener implements RecognitionListener {
 //        private View fragmentView;
 //        private TextView output;
 //
